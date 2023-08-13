@@ -1,5 +1,5 @@
 export default defineEventHandler((event) => {
   return {
-    api: 'news',
+    background: '/1604314813_classify_img.jpg',
   };
 });

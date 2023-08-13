@@ -1,10 +1,12 @@
 <template>
   <div class="common-banner">
-    <div class="mark">
+    <div class="mark" v-if="title">
       <h1>{{ title }}</h1>
     </div>
-
     <img :src="img" alt="" srcset="" />
+    <div class="container">
+      <BreadCrumbsItem v-if="breadTo" :to="breadTo" :text="breadText" />
+    </div>
   </div>
 </template>
 
@@ -15,6 +17,14 @@ const { title, img } = defineProps({
     default: '',
   },
   img: {
+    type: String,
+    default: '',
+  },
+  breadTo: {
+    type: String,
+    default: '',
+  },
+  breadText: {
     type: String,
     default: '',
   },
@@ -43,6 +53,12 @@ const { title, img } = defineProps({
       font-size: 60px;
       font-weight: bold;
     }
+  }
+  .container {
+    position: absolute;
+    transform: translateX(-50%);
+    top: 0;
+    left: 50%;
   }
 }
 </style>

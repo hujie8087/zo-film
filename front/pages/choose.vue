@@ -11,7 +11,7 @@
           <div class="choose-content">
             {{ chooseData?.content }}
           </div>
-          <nuxt-link to="" class="more-btn"
+          <nuxt-link to="/store" class="more-btn"
             ><i class="fa fa-map-marker"></i>挑选专业门店</nuxt-link
           >
         </el-col>
@@ -39,7 +39,7 @@
             <el-col :span="14" class="supply-right">
               <h3 class="supply-title">{{ supply.title }}</h3>
               <p class="supply-content">{{ supply.content }}</p>
-              <nuxt-link to="" class="more-btn" v-if="supply.showBtn"
+              <nuxt-link to="/store" class="more-btn" v-if="supply.showBtn"
                 ><i class="fa fa-map-marker"></i>挑选专业门店</nuxt-link
               >
               <div v-else>
@@ -129,14 +129,22 @@ import { Navigation, Pagination, A11y } from 'swiper/modules';
 import { VideoType } from 'types';
 const menuList = await useMenuList();
 const routeInfo = menuList.value.find((item) => item.path === '/choose');
-console.log(routeInfo);
-if (routeInfo) {
-  definePageMeta({
-    title: routeInfo?.title,
-    description: routeInfo?.path,
-    keywords: routeInfo?.keyWord.join(','),
-  });
-}
+console.log(routeInfo?.keyWord);
+onMounted(() => {
+  if (routeInfo) {
+    // definePageMeta({
+    //   title: routeInfo?.title || '',
+    //   description: routeInfo?.path || '',
+    //   keywords: routeInfo?.keyWord.join(',') || '',
+    // });
+    definePageMeta({
+      title: '挑选专业门店',
+      description: '挑选专业门店',
+      keywords: '挑选专业门店',
+    });
+    console.log(routeInfo?.keyWord);
+  }
+});
 
 const modules = [Navigation, Pagination, A11y];
 const { data: chooseData } = await useFetch('/api/choose');
@@ -324,5 +332,8 @@ const playVideo = (video: VideoType) => {
   text-transform: uppercase;
   background: #f5af05;
   border-radius: 4px;
+  i {
+    margin-right: 5px;
+  }
 }
 </style>

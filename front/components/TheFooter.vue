@@ -15,9 +15,7 @@
             </nuxt-link>
           </el-col>
           <el-col :span="12">
-            <nuxt-link
-              to="https://daokeshi.tthweixin.com/app/index.php?i=4&c=entry&eid=297&op=query&wxref=mp.weixin.qq.com"
-            >
+            <nuxt-link to="/store">
               <span class="icon-span">
                 <i class="fa fa-search"></i>
               </span>

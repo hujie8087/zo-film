@@ -19,6 +19,9 @@
 .header {
   background-color: #1c1b1b;
   height: 98px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 .header__logo {
   width: 166px;
