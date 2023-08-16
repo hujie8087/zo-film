@@ -11,7 +11,7 @@ export default defineEventHandler((event): MenuListType[] => {
     },
     {
       title: '公司新闻',
-      path: '/news',
+      path: '/news/management',
       children: [
         {
           title: '管理信息',
@@ -51,25 +51,25 @@ export default defineEventHandler((event): MenuListType[] => {
       children: [
         {
           title: 'Z&O隐形车衣',
-          path: '/products/car',
+          path: '/products/cover',
           children: [
             {
               title: 'Z-Pro',
-              path: '/products/car/zpro',
+              path: '/products/cover/1',
               children: [],
               keyWord: ['Z&O', '产品介绍', 'Z&O隐形车衣', 'Z-Pro'],
               isFoot: false,
             },
             {
               title: 'Z-Nano',
-              path: '/products/car/znano',
+              path: '/products/cover/2',
               children: [],
               keyWord: ['Z&O', '产品介绍', 'Z&O隐形车衣', 'Z-Nano'],
               isFoot: false,
             },
             {
               title: 'ASP',
-              path: '/products/car/asp',
+              path: '/products/cover/3',
               children: [],
               keyWord: ['Z&O', '产品介绍', 'Z&O隐形车衣', 'Z-ASP'],
               isFoot: false,
@@ -80,32 +80,32 @@ export default defineEventHandler((event): MenuListType[] => {
         },
         {
           title: '汽车改色膜',
-          path: '/products/film',
+          path: '/products/car',
           children: [
             {
               title: '幻彩系列',
-              path: '/products/film/huancai',
+              path: '/products/car',
               children: [],
               keyWord: ['Z&O', '产品介绍', '汽车改色膜', '幻彩系列'],
               isFoot: false,
             },
             {
               title: '金属系列',
-              path: '/products/film/jinshu',
+              path: '/products/car',
               children: [],
               keyWord: ['Z&O', '产品介绍', '汽车改色膜', '金属系列'],
               isFoot: false,
             },
             {
               title: '磨砂系列',
-              path: '/products/film/mosha',
+              path: '/products/car',
               children: [],
               keyWord: ['Z&O', '产品介绍', '汽车改色膜', '磨砂系列'],
               isFoot: false,
             },
             {
               title: '碳纤维系列',
-              path: '/products/film/tanxianwei',
+              path: '/products/car',
               children: [],
               keyWord: ['Z&O', '产品介绍', '汽车改色膜', '碳纤维系列'],
               isFoot: false,
@@ -116,32 +116,32 @@ export default defineEventHandler((event): MenuListType[] => {
         },
         {
           title: '专业施工套件',
-          path: '/products/kit',
+          path: '/products/construction',
           children: [
             {
               title: '安装液',
-              path: '/products/kit/anzhuangye',
+              path: '/products/construction/1',
               children: [],
               keyWord: ['Z&O', '产品介绍', '专业施工套件', '安装液'],
               isFoot: false,
             },
             {
               title: '洗车液',
-              path: '/products/kit/xicheye',
+              path: '/products/construction/2',
               children: [],
               keyWord: ['Z&O', '产品介绍', '专业施工套件', '洗车液'],
               isFoot: false,
             },
             {
               title: '封装液',
-              path: '/products/kit/ximoye',
+              path: '/products/construction/3',
               children: [],
               keyWord: ['Z&O', '产品介绍', '专业施工套件', '洗膜液'],
               isFoot: false,
             },
             {
               title: '封装液',
-              path: '/products/kit/fengzhuangye',
+              path: '/products/construction/4',
               children: [],
               keyWord: ['Z&O', '产品介绍', '专业施工套件', '封装液'],
               isFoot: false,
@@ -160,7 +160,7 @@ export default defineEventHandler((event): MenuListType[] => {
       children: [
         {
           title: '全球汽车版型数据预处理系统',
-          path: '/software/car',
+          path: '/software',
           children: [],
           keyWord: [
             'Z&O',
@@ -172,7 +172,7 @@ export default defineEventHandler((event): MenuListType[] => {
         },
         {
           title: '裁膜机技术支持',
-          path: '/software/cut',
+          path: '/help?typeId=5',
           children: [],
           keyWord: ['Z&O', '软件应用', '裁膜机技术支持', '裁膜机技术支持'],
           isFoot: false,
@@ -191,7 +191,7 @@ export default defineEventHandler((event): MenuListType[] => {
           children: [
             {
               title: '漆面保护膜培训',
-              path: '/solution/train/car',
+              path: '/solution/train',
               children: [],
               keyWord: ['Z&O', '解决方案', '培训', '漆面保护膜培训'],
               isFoot: true,
@@ -202,11 +202,11 @@ export default defineEventHandler((event): MenuListType[] => {
         },
         {
           title: '成为经销商',
-          path: '/solution/dealer',
+          path: '/solution/installer',
           children: [
             {
               title: '专业安装人员',
-              path: '/solution/dealer/installer',
+              path: '/solution/installer',
               children: [],
               keyWord: ['Z&O', '解决方案', '成为经销商', '专业安装人员'],
               isFoot: true,
@@ -239,28 +239,28 @@ export default defineEventHandler((event): MenuListType[] => {
       children: [
         {
           title: '电子质保查询',
-          path: '/help/warranty',
+          path: 'https://daokeshi.tthweixin.com/app/index.php?i=4&c=entry&eid=297&op=query&wxref=mp.weixin.qq.com',
           children: [],
           keyWord: ['Z&O', '帮助', '电子质保查询', '电子质保查询'],
           isFoot: true,
         },
         {
           title: '保修信息',
-          path: '/help/warranty',
+          path: '/help?type=2',
           children: [],
           keyWord: ['Z&O', '帮助', '保修信息', '保修信息'],
           isFoot: true,
         },
         {
           title: '常见问题',
-          path: '/help/warranty',
+          path: '/help?type=3',
           children: [],
           keyWord: ['Z&O', '帮助', '常见问题', '常见问题'],
           isFoot: true,
         },
         {
           title: '膜面护理',
-          path: '/help/warranty',
+          path: '/help?type=4',
           children: [],
           keyWord: ['Z&O', '帮助', '膜面护理', '膜面护理'],
           isFoot: true,

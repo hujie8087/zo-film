@@ -19,3 +19,9 @@ export interface VideoType {
   subtitle: string;
   videoUrl: string;
 }
+
+export interface MenuType {
+  _id: string;
+  title: string;
+  path: string;
+}

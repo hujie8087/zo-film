@@ -1,6 +1,20 @@
+import { el } from 'element-plus/es/locale';
+
 export default defineEventHandler((event) => {
+  let { type } = getQuery(event);
+  let bannerUrl = '';
+  if (type === 'news') {
+    bannerUrl = '/1603682728_classify_img.jpg';
+  } else if (type === 'activity') {
+    bannerUrl = '/1604468948_classify_img.jpg';
+  } else if (type === 'recruitment') {
+    bannerUrl = '/1603682728_classify_img.jpg';
+  } else if (type === 'management') {
+    bannerUrl = '/1603682728_classify_img.jpg';
+  }
+
   return {
-    banner: '/1603682728_classify_img.jpg',
+    banner: bannerUrl,
     newsList: [
       {
         _id: '1',

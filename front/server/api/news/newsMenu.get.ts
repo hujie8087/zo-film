@@ -13,7 +13,7 @@ export default defineEventHandler((event) => {
     {
       _id: '3',
       title: '新闻中心',
-      path: '/news',
+      path: '/news/news',
     },
     {
       _id: '4',

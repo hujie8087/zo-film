@@ -172,6 +172,9 @@ const { data: menuList } = await useFetch('/api/footMenu');
       a {
         display: block;
         color: #ffffff;
+        &:hover {
+          color: #f5af05;
+        }
       }
     }
     .footer-main-social ul {

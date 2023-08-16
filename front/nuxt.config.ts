@@ -5,9 +5,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@element-plus/nuxt'],
   css: [
-    '@/assets/css/index.less',
     '@/assets/css/bootstrap.min.css',
     '@/assets/css/font-awesome.min.css',
+    '@/assets/css/index.less',
   ],
 
   vite: {
