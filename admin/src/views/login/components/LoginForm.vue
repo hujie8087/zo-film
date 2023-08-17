@@ -71,6 +71,7 @@ const login = (formEl: FormInstance | undefined) => {
       // 1.执行登录接口
       const { data } = await loginApi({ ...loginForm, password: md5(loginForm.password) });
       userStore.setToken(data.access_token);
+      userStore.setUserInfo({ name: data.username });
 
       // 2.添加动态路由
       await initDynamicRouter();
@@ -83,7 +84,7 @@ const login = (formEl: FormInstance | undefined) => {
       router.push(HOME_URL);
       ElNotification({
         title: getTimeState(),
-        message: "欢迎登录 Geeker-Admin",
+        message: "欢迎登录 zo-film管理后台",
         type: "success",
         duration: 3000
       });

@@ -13,6 +13,14 @@ export class News {
   @IsString()
   title: string;
   @Prop()
+  @ApiProperty({ description: '新闻关键字', example: '关键字' })
+  @IsString()
+  keywords: string;
+  @Prop()
+  @ApiProperty({ description: '新闻描述', example: '描述' })
+  @IsString()
+  description: string;
+  @Prop()
   @ApiProperty({ description: '新闻内容', example: '新闻内容1' })
   @IsString()
   content: string;

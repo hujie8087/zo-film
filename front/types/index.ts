@@ -1,3 +1,9 @@
+export type ResponseType<T> = {
+  code: number;
+  data: T;
+  msg: string;
+};
+
 export type MenuListType = {
   title: string;
   path: string;

@@ -1,23 +1,14 @@
 {
-  "name": "geeker-admin",
+  "name": "zo-film-admin",
   "private": true,
   "version": "1.1.0",
   "type": "module",
-  "description": "geeker-admin open source management system",
+  "description": "zo-film官网管理后台",
   "author": {
-    "name": "Geeker",
-    "email": "848130454@qq.com",
-    "url": "https://github.com/HalseySpicy"
+    "name": "Jayden",
+    "email": "80776811@qq.com"
   },
   "license": "MIT",
-  "homepage": "https://github.com/HalseySpicy/Geeker-Admin",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:HalseySpicy/Geeker-Admin.git"
-  },
-  "bugs": {
-    "url": "https://github.com/HalseySpicy/Geeker-Admin/issues"
-  },
   "scripts": {
     "dev": "vite",
     "serve": "vite",

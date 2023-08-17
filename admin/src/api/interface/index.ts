@@ -38,6 +38,7 @@ export namespace Login {
   }
   export interface ResLogin {
     access_token: string;
+    username: string;
   }
   export interface ResAuthButtons {
     [key: string]: string[];
@@ -86,5 +87,38 @@ export namespace User {
     id: string;
     name: string;
     children?: ResDepartment[];
+  }
+}
+
+export namespace Classify {
+  export interface ReqClassifyParams extends ReqPage {
+    title: string;
+    status: number;
+  }
+  export interface ResClassifyList {
+    _id: string;
+    date: string;
+    pid: string;
+    pid_name: string;
+    title: string;
+    keywords: string;
+    description: string;
+    url: string;
+    note: string;
+    en_title: string;
+    content: string;
+    intro: string;
+    sort: number;
+    image_url: string;
+    page_img: string;
+    is_delete: boolean;
+    sub_title: string;
+    remark: string;
+    upload_img: string;
+    status: number;
+  }
+  export interface ResStatus {
+    statusLabel: string;
+    statusValue: number;
   }
 }

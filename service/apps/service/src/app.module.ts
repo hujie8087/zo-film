@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { MulterModule } from '@nestjs/platform-express';
 import { DbModule } from '@libs/db';
 import { NewsModule } from './news/news.module';
+import { NewsTypeController } from './news-type/news-type.controller';
+import { NewsTypeModule } from './news-type/news-type.module';
 
 @Module({
   imports: [
@@ -12,8 +14,9 @@ import { NewsModule } from './news/news.module';
       dest: 'uploads',
     }),
     NewsModule,
+    NewsTypeModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, NewsTypeController],
   providers: [AppService],
 })
 export class AppModule {}
