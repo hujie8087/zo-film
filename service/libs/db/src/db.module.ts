@@ -4,7 +4,6 @@ import { TypegooseModule } from 'nestjs-typegoose';
 import { News } from './models/news.model';
 import { User } from './models/user.model';
 import { NewsType } from './models/newsType.model';
-
 const models = TypegooseModule.forFeature([News, User, NewsType]);
 
 @Global()

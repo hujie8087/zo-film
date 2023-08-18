@@ -9,16 +9,19 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { NewsTypeService } from './news-type.service';
-import { NewsType } from '@libs/db/models/newsType.model';
+import { NewsType, NewsTypeDto } from '@libs/db/models/newsType.model';
 
 @Controller('news-type')
 @ApiTags('新闻类型')
 export class NewsTypeController {
   constructor(private readonly newsTypeService: NewsTypeService) {}
-
+  @Put('changeStatus')
+  changeStatus(@Body() body: { status: number; _id: string }) {
+    return this.newsTypeService.changeStatus(body);
+  }
   @Post()
-  create(@Body() createArticleTag: NewsType) {
-    return this.newsTypeService.create(createArticleTag);
+  create(@Body() createNewsType: NewsType) {
+    return this.newsTypeService.create(createNewsType);
   }
 
   @Get()
@@ -32,8 +35,8 @@ export class NewsTypeController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateArticleTagDto: NewsType) {
-    return this.newsTypeService.update(id, updateArticleTagDto);
+  update(@Param('id') id: string, @Body() updateNewsTypeDto: NewsTypeDto) {
+    return this.newsTypeService.update(id, updateNewsTypeDto);
   }
 
   @Delete(':id')

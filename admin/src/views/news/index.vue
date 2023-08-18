@@ -11,7 +11,8 @@
     <el-table
       ref="tableRef"
       :data="tableData"
-      row-key="id"
+      default-expand-all
+      row-key="_id"
       :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
       @selection-change="selectionChange"
     >
@@ -19,18 +20,23 @@
       <el-table-column type="selection" width="55" />
       <el-table-column prop="title" label="分类名称" />
       <el-table-column prop="pid_name" label="父级" />
+      <el-table-column prop="image_url" label="图片">
+        <template #default="scope">
+          <img height="50" :src="scope.row.image_url" alt="" srcset="" />
+        </template>
+      </el-table-column>
       <el-table-column prop="sort" label="排序" />
       <el-table-column prop="status" label="状态">
         <template #default="scope">
-          <el-tag :type="scope.row.status === 1 ? 'success' : 'danger'">
-            {{ scope.row.status === 1 ? "显示" : "不显示" }}
-          </el-tag>
+          <el-switch v-model="scope.row.status" :active-value="1" :inactive-value="0" @change="changeStatus(scope.row)">
+          </el-switch>
         </template>
       </el-table-column>
       <el-table-column prop="remark" label="备注" />
       <el-table-column label="操作">
         <!-- 表格操作 -->
         <template #default="scope">
+          <el-button type="success" link :icon="Plus" @click="openDrawer(2, scope.row)">新增</el-button>
           <el-button type="warning" link :icon="EditPen" @click="openDrawer(3, scope.row)">编辑</el-button>
           <el-button type="danger" link :icon="Delete" @click="deleteAccount(scope.row)">删除</el-button>
         </template>
@@ -51,9 +57,9 @@
 
 <script lang="tsx" setup name="newsType">
 import { NewsType } from "@/api/interface/news";
-import { deleteNewsType, getNewsTypeList, addNewsType, editNewsType } from "@/api/modules/news";
+import { deleteNewsType, getNewsTypeList, addNewsType, editNewsType, changeNewsTypeStatus } from "@/api/modules/news";
 import { useHandleData } from "@/hooks/useHandleData";
-import { CirclePlus, Delete, EditPen } from "@element-plus/icons-vue";
+import { CirclePlus, Delete, EditPen, Plus } from "@element-plus/icons-vue";
 import { ref } from "vue";
 import NewsTypeDrawer from "./components/NewsTypeDrawer.vue";
 const tableData = ref();
@@ -78,29 +84,36 @@ const deleteAccount = async (params: NewsType.ResNewsTypeList) => {
 const drawerRef = ref();
 const openDrawer = async (num: number, rowData: Partial<NewsType.ResNewsTypeList> = {}) => {
   let title;
+  let infoData = {};
   switch (num) {
     case 1:
       title = "新增";
       break;
     case 2:
       title = "新增";
+      infoData = { pid: rowData._id, pid_name: rowData.title };
       break;
     case 3:
       title = "编辑";
+      infoData = { ...rowData };
       break;
     default:
       break;
   }
   let params = {
     title,
-    rowData: { ...rowData },
-    tableData: tableData.value.filter((item: NewsType.ResNewsTypeList) => item._id === rowData.type_id)[0],
+    rowData: { ...infoData },
+    tableData: tableData.value.filter((item: NewsType.ResNewsTypeList) => item._id === rowData._id)[0],
     isView: false,
     api: num !== 3 ? addNewsType : editNewsType,
     getTableList: getTableList,
     newsTypeTree: [{ title: "公司新闻", _id: 0, children: tableData.value }]
   };
   drawerRef.value.acceptParams(params);
+};
+const changeStatus = async (params: NewsType.ResNewsTypeList) => {
+  await useHandleData(changeNewsTypeStatus, { _id: params._id, status: params.status === 0 ? 0 : 1 }, "修改新闻分类状态");
+  getTableList();
 };
 getTableList();
 </script>

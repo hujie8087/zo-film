@@ -9,10 +9,6 @@ import { IsString } from 'class-validator';
 })
 export class NewsType {
   @Prop()
-  @ApiProperty({ description: '新闻分类id', example: '' })
-  @IsString()
-  _id: string;
-  @Prop()
   @ApiProperty({ description: '新闻分类标题', example: '' })
   @IsString()
   title: string;
@@ -65,7 +61,11 @@ export class NewsType {
   @IsString()
   page_img: string;
   @Prop()
-  @ApiProperty({ description: '新闻分类是否删除', example: false })
+  @ApiProperty({
+    description: '新闻分类是否删除',
+    example: false,
+    default: false,
+  })
   @IsString()
   is_delete: boolean;
   @Prop()
@@ -87,7 +87,11 @@ export class NewsType {
   @Prop()
   @ApiProperty({ description: '新闻分类父级标题', example: '' })
   pid_name: string;
+  @Prop({ ref: () => 'NewsType' })
+  @ApiProperty({ description: '新闻分类子类', example: [] })
+  children?: NewsTypeDto[];
+  hasChildren?: boolean;
 }
-export class NewsTypeTree extends NewsType {
-  children?: NewsType[];
+export class NewsTypeDto extends NewsType {
+  _id?: string;
 }

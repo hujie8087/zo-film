@@ -7,8 +7,8 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AdminModule);
 
   // 开启静态文件托管
-  app.useStaticAssets('uploads', {
-    prefix: '/uploads',
+  app.useStaticAssets('Uploads', {
+    prefix: '/Uploads',
   });
   const options = new DocumentBuilder()
     .setTitle('管理后台接口')
@@ -17,7 +17,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api-admin', app, document);
-  await app.listen(3000);
-  console.log('http://localhost:3000/api-admin');
+  await app.listen(3200);
+  console.log('http://localhost:3200/api-admin');
 }
 bootstrap();

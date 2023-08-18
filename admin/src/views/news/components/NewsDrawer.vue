@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="drawerVisible" :destroy-on-close="true" size="450px" :title="`${drawerProps.title}`">
+  <el-dialog v-model="drawerVisible" :destroy-on-close="true" :width="1100" :title="`${drawerProps.title}`">
     <el-form
       ref="ruleFormRef"
       label-width="80px"
@@ -10,53 +10,36 @@
       :hide-required-asterisk="drawerProps.isView"
       style="height: 70vh; overflow-y: auto; padding: 0 10px"
     >
-      <el-form-item label="父级" prop="pid">
+      <el-form-item label="新闻分类" prop="pid">
         <el-tree-select
-          v-model="drawerProps.rowData.pid"
+          v-model="drawerProps.rowData!.type_id"
           :data="drawerProps?.newsTypeTree"
           check-strictly
-          :key="drawerProps.rowData._id"
+          :key="drawerProps.rowData?.type_id"
           :props="newsTypeTreeProps"
           :render-after-expand="false"
         />
       </el-form-item>
-      <el-form-item label="标题" prop="title">
-        <el-input v-model="drawerProps.rowData!.title" placeholder="请输入新闻分类标题" clearable></el-input>
+      <el-form-item label="标题" prop="news_title">
+        <el-input v-model="drawerProps.rowData!.news_title" placeholder="请输入新闻标题" clearable></el-input>
       </el-form-item>
-      <el-form-item label="描述" prop="description">
-        <WangEditor id="description" v-model:value="drawerProps.rowData!.description" height="400px" />
+      <el-form-item label="作者" prop="news_author">
+        <el-input v-model="drawerProps.rowData!.news_author" placeholder="请输入新闻作者" clearable></el-input>
       </el-form-item>
-      <el-form-item label="英文标题" prop="en_title">
-        <el-input v-model="drawerProps.rowData!.note" placeholder="请输入新闻分类英文标题" clearable></el-input>
+      <el-form-item label="来源" prop="news_source">
+        <el-input v-model="drawerProps.rowData!.news_source" placeholder="请输入新闻来源" clearable></el-input>
       </el-form-item>
-      <el-form-item label="内容" prop="content">
-        <!-- <el-input v-model="drawerProps.rowData!.content" placeholder="请输入新闻分类内容" clearable></el-input> -->
-        <WangEditor id="content" v-model:value="drawerProps.rowData!.content" height="400px" />
+      <el-form-item label="内容" prop="news_content">
+        <WangEditor id="news_content" v-model:value="drawerProps.rowData!.news_content" height="400px" />
       </el-form-item>
-      <el-form-item label="简介" prop="intro">
-        <el-input v-model="drawerProps.rowData!.intro" placeholder="请输入新闻分类简介" clearable></el-input>
+      <el-form-item label="简介" prop="news_intro">
+        <WangEditor id="news_intro" v-model:value="drawerProps.rowData!.news_intro" height="400px" />
       </el-form-item>
       <el-form-item label="排序" prop="sort">
         <el-input-number v-model="drawerProps.rowData!.sort" :min="0" :step="1"></el-input-number>
       </el-form-item>
-      <el-form-item label="分类图片" prop="image_url">
-        <UploadImg v-model:image-url="drawerProps.rowData.image_url" width="250px">
-          <template #empty>
-            <el-icon><Picture /></el-icon>
-            <span>请上传分类图片</span>
-          </template>
-        </UploadImg>
-      </el-form-item>
-      <el-form-item label="内页图片" prop="page_img">
-        <UploadImg v-model:image-url="drawerProps.rowData.page_img" width="250px">
-          <template #empty>
-            <el-icon><Picture /></el-icon>
-            <span>请上传内页图片</span>
-          </template>
-        </UploadImg>
-      </el-form-item>
-      <el-form-item label="图片上传" prop="upload_img">
-        <UploadImg v-model:image-url="drawerProps.rowData.upload_img" width="250px">
+      <el-form-item label="图片" prop="news_img">
+        <UploadImg v-model:image-url="drawerProps.rowData!.news_img" width="250px">
           <template #empty>
             <el-icon><Picture /></el-icon>
             <span>请上传图片</span>
@@ -64,21 +47,15 @@
         </UploadImg>
       </el-form-item>
       <el-form-item label="关键字" prop="keywords">
-        <el-input v-model="drawerProps.rowData!.keywords" placeholder="请输入新闻分类关键字" clearable></el-input>
-      </el-form-item>
-      <el-form-item label="自定义链接" prop="url">
-        <el-input v-model="drawerProps.rowData!.url" placeholder="请输入新闻分类链接" clearable></el-input>
-      </el-form-item>
-      <el-form-item label="备注" prop="remark">
-        <el-input v-model="drawerProps.rowData!.remark" placeholder="请输入新闻分类备注" clearable></el-input>
+        <el-input v-model="drawerProps.rowData!.keywords" placeholder="请输入新闻关键字" clearable></el-input>
       </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-switch
           v-model="drawerProps.rowData!.status"
           active-text="显示"
           inactive-text="隐藏"
-          :active-value="1"
-          :inactive-value="0"
+          active-value="1"
+          inactive-value="0"
         />
       </el-form-item>
     </el-form>
@@ -97,7 +74,7 @@ import WangEditor from "@/components/WangEditor/index.vue";
 import UploadImg from "@/components/Upload/Img.vue";
 
 const rules = reactive({
-  title: [{ required: true, message: "请输入新闻分类标题", trigger: "blur" }]
+  title: [{ required: true, message: "请输入新闻标题", trigger: "blur" }]
 });
 
 interface DrawerProps {
@@ -129,11 +106,7 @@ const acceptParams = (params: DrawerProps): void => {
 // 提交数据（新增/编辑）
 const ruleFormRef = ref<FormInstance>();
 const handleSubmit = () => {
-  ruleFormRef.value!.validate(async valid => {
-    if (!valid) return;
-    if (!drawerProps.value.rowData.pid) {
-      drawerProps.value.rowData = { ...drawerProps.value.rowData, pid: 0 };
-    }
+  ruleFormRef.value!.validate(async () => {
     try {
       await drawerProps.value.api!(drawerProps.value.rowData);
       ElMessage.success({

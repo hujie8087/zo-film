@@ -1,5 +1,13 @@
-import { Controller, Get } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { AdminService } from './admin.service';
+import { ApiOperation, ApiProperty } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller()
 export class AdminController {
@@ -8,5 +16,19 @@ export class AdminController {
   @Get()
   getHello(): string {
     return this.adminService.getHello();
+  }
+
+  @Post('upload')
+  @ApiProperty({ description: '单文件上传' })
+  @ApiOperation({ summary: '单文件上传' })
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadFile(@UploadedFile() file: Express.Multer.File) {
+    return {
+      data: {
+        fileUrl: `/uploads/${file.filename}`,
+        code: 200,
+        msg: '文件上传成功',
+      },
+    };
   }
 }

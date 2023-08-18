@@ -38,9 +38,15 @@ dependencies:
   crypto-js:
     specifier: ^4.1.1
     version: 4.1.1
+  mongodb:
+    specifier: ^5.7.0
+    version: 5.7.0
   mongoose:
     specifier: ^7.4.2
     version: 7.4.2
+  mongoose-auto-increment:
+    specifier: ^5.0.1
+    version: 5.0.1(mongoose@7.4.2)
   nestjs-mongoose-crud:
     specifier: ^2.1.2
     version: 2.1.2
@@ -2650,6 +2656,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
+  /extend@3.0.2:
+    resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
+    dev: false
+
   /external-editor@3.1.0:
     resolution: {integrity: sha512-hMQ4CX1p1izmuLYyZqLMO/qGNw10wSv9QDCPfzXfyFrOaCSSoRfqE1Kf1s5an66J5JZC62NewG+mK49jOCtQew==}
     engines: {node: '>=4'}
@@ -3988,6 +3998,15 @@ packages:
       socks: 2.7.1
     optionalDependencies:
       saslprep: 1.0.3
+    dev: false
+
+  /mongoose-auto-increment@5.0.1(mongoose@7.4.2):
+    resolution: {integrity: sha512-fuSw0np0ZZXYjNBBrD6Wg0y70N0i5NhBuH3AIETTXCchaq45FeHpISoQ3fFbbdSFhfVEDRtg+hVxEDpFjdI2lw==}
+    peerDependencies:
+      mongoose: ^4.1.12
+    dependencies:
+      extend: 3.0.2
+      mongoose: 7.4.2
     dev: false
 
   /mongoose@7.4.2:
