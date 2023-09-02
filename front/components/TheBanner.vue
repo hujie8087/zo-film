@@ -7,15 +7,9 @@
     :loop="true"
     :pagination="{ clickable: true }"
   >
-    <swiper-slide>
-      <img src="~/assets/images/banner_img1.jpg" alt="" srcset="" />
+    <swiper-slide v-for="banner in props.bannerList" :key="banner._id">
+      <img :src="banner.banner_img" alt="" srcset="" />
     </swiper-slide>
-    <swiper-slide>
-      <img src="~/assets/images/banner_img2.jpg" alt="" srcset=""
-    /></swiper-slide>
-    <swiper-slide>
-      <img src="~/assets/images/banner_img3.png" alt="" srcset=""
-    /></swiper-slide>
   </swiper>
 </template>
 
@@ -26,6 +20,15 @@ import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Pagination, A11y } from 'swiper/modules';
 const modules = [Navigation, Pagination, A11y];
+import { BannerType } from 'types';
+
+// 接收父级组件传递的参数
+const props = defineProps({
+  bannerList: {
+    type: Array as PropType<BannerType[]>,
+    required: true,
+  },
+});
 </script>
 
 <style scoped>

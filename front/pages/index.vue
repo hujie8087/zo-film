@@ -1,41 +1,44 @@
 <template>
-  <TheBanner />
+  <TheBanner :banner-list="homeData?.bannerList || []" />
   <div class="home-section-con">
     <div class="container">
       <el-row type="flex">
         <el-col :span="8">
           <div class="logo">
-            <img src="~/assets/logo.png" alt="" srcset="" />
+            <img :src="homeData?.picture?.classify_img" alt="" srcset="" />
           </div>
         </el-col>
         <el-col :span="16">
           <div class="home-section-link">
             <ul>
-              <li>
-                <nuxt-link
-                  to="https://daokeshi.tthweixin.com/app/index.php?i=4&c=entry&eid=297&op=query&wxref=mp.weixin.qq.com"
-                >
-                  <i class="fa fa-file-text"></i>电子质保查询<i
-                    class="fa fa-arrow-right"
-                  ></i>
+              <li v-for="link in footLinks" :key="link.classify_id">
+                <nuxt-link :to="link.classify_url">
+                  <i
+                    class="fa"
+                    :class="
+                      link.classify_id === '25'
+                        ? 'fa-file-text'
+                        : 'fa-map-marker'
+                    "
+                  ></i
+                  >{{ link.classify_name }}<i class="fa fa-arrow-right"></i>
                 </nuxt-link>
               </li>
-              <li>
-                <nuxt-link to="">
-                  <i class="fa fa-map-marker"></i>挑选专业门店<i
-                    class="fa fa-arrow-right"
-                  ></i>
+              <li v-for="link in links" :key="link.classify_id">
+                <nuxt-link class="outline" :to="link.classify_url"
+                  ><img
+                    v-if="link.classify_id === '128'"
+                    src="~/assets/images/tm1.png"
+                    alt=""
+                    srcset=""
+                  />
+                  <img
+                    v-else-if="link.classify_id === '129'"
+                    src="~/assets/images/jd1.png"
+                    alt=""
+                    srcset=""
+                  />
                 </nuxt-link>
-              </li>
-              <li>
-                <nuxt-link to="/admin" class="outline"
-                  ><img src="~/assets/images/tm1.png" alt="" srcset=""
-                /></nuxt-link>
-              </li>
-              <li>
-                <nuxt-link to="/admin" class="outline"
-                  ><img src="~/assets/images/jd1.png" alt="" srcset=""
-                /></nuxt-link>
               </li>
             </ul>
           </div>
@@ -45,22 +48,26 @@
   </div>
   <div class="home-section">
     <div class="home-banner">
-      <img src="~/assets/images/home_banner.jpg" alt="" srcset="" />
+      <img :src="homeData?.picture?.page_img" alt="" srcset="" />
     </div>
   </div>
   <div class="home-section2">
     <div class="container">
-      <h2 class="home-title">选择您需要的装贴部位</h2>
+      <h2 class="home-title">{{ homeData?.mounting?.classify_name }}</h2>
       <el-row :gutter="20">
         <el-col
           :span="8"
           :xs="24"
-          v-for="(mounting, index) in homeData?.mountingList"
-          :key="mounting.id"
+          v-for="(mounting, index) in homeData?.mounting?.children"
+          :key="mounting._id"
         >
           <div class="item">
-            <img :src="mounting.img" :alt="mounting.title" srcset="" />
-            <h5>{{ mounting.title }}</h5>
+            <img
+              :src="mounting.goods_img"
+              :alt="mounting.goods_name"
+              srcset=""
+            />
+            <h5>{{ mounting.goods_name }}</h5>
           </div>
         </el-col>
       </el-row>
@@ -69,7 +76,7 @@
   </div>
   <div class="video-layout-content">
     <div class="container">
-      <h2 class="home-title">Z&O视频</h2>
+      <h2 class="home-title">{{ homeData?.video?.classify_name }}</h2>
       <swiper
         :modules="modules"
         :slides-per-view="3"
@@ -78,14 +85,17 @@
         :loop="true"
         :pagination="{ clickable: true }"
       >
-        <swiper-slide v-for="video in homeData?.videoList" :key="video._id">
+        <swiper-slide
+          v-for="video in homeData?.video?.children"
+          :key="video._id"
+        >
           <div class="item">
             <div class="link" @click="playVideo(video)">
-              <img :src="video.imageUrl" :alt="video.title" srcset="" />
+              <img :src="video.img" :alt="video.name" srcset="" />
               <i class="fa fa-play-circle-o"></i>
             </div>
-            <h5 class="title">{{ video.title }}</h5>
-            <p class="content">{{ video.subtitle }}</p>
+            <h5 class="title">{{ video.name }}</h5>
+            <p class="content">{{ video.intro }}</p>
           </div>
         </swiper-slide>
       </swiper>
@@ -110,21 +120,22 @@
 <script setup lang="ts">
 import 'swiper/css';
 import 'swiper/css/pagination';
-import type { Action } from 'element-plus';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Pagination, A11y } from 'swiper/modules';
 import { VideoType } from 'types';
 
 const modules = [Navigation, Pagination, A11y];
-const { data: homeData } = useFetch('/api/homeData');
+const footLinks = useFootLinks();
+const links = useLinks();
+const { data: homeData } = await useFetch('/api/homeData');
 
 const dialogVisible = ref(false);
 const dialogTitle = ref('');
 const dialogVideo = ref('');
 
 const playVideo = (video: VideoType) => {
-  dialogTitle.value = video.title;
-  dialogVideo.value = video.videoUrl;
+  dialogTitle.value = video.name;
+  dialogVideo.value = video.upload_video;
   dialogVisible.value = true;
 };
 </script>
@@ -198,6 +209,7 @@ const playVideo = (video: VideoType) => {
   .home-title {
     font-weight: 600;
     font-size: 30px;
+    margin-top: 30px;
   }
   .item {
     margin-top: 20px;

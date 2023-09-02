@@ -1,24 +1,26 @@
 <template>
   <CommonBanner
-    :img="productData?.banner"
+    :img="productData?.classify_img"
     breadTo="/products"
-    :breadText="productData?.title"
-    :title="productData?.subtitle"
+    :breadText="productData?.classify_name"
+    :title="productData?.sub_name"
   />
   <div class="products">
     <div class="container">
       <el-row type="flex" :gutter="50">
         <el-col
           :span="12"
-          v-for="product in productData?.list"
+          v-for="product in productData?.children"
           :key="product._id"
         >
-          <nuxt-link :to="product.url">
+          <nuxt-link :to="product.classify_url">
             <div class="item">
               <div class="images">
-                <img :src="product.imageUrl" alt="" srcset="" />
+                <img :src="product.page_img" alt="" srcset="" />
               </div>
-              <h4>{{ product.title }} <i class="fa fa-arrow-right"></i></h4>
+              <h4>
+                {{ product.classify_name }} <i class="fa fa-arrow-right"></i>
+              </h4>
             </div>
           </nuxt-link>
         </el-col>

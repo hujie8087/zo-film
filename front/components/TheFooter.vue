@@ -1,25 +1,24 @@
 <template>
-  <div class="footer">
+  <div
+    class="footer"
+    :style="{
+      backgroundImage: `url(https://www.zo-film.com/${footBg.classify_img})`,
+    }"
+  >
     <div class="footer-super">
       <div class="container">
         <el-row type="flex">
-          <el-col :span="12">
-            <nuxt-link
-              to="https://daokeshi.tthweixin.com/app/index.php?i=4&c=entry&eid=297&op=query&wxref=mp.weixin.qq.com"
-            >
+          <el-col :span="12" v-for="link in footLinks" :key="link.classify_id">
+            <nuxt-link :to="link.classify_url">
               <span class="icon-span">
-                <i class="fa fa-map-marker"></i>
+                <i
+                  class="fa"
+                  :class="
+                    link.classify_id === '25' ? 'fa-map-marker' : 'fa-search'
+                  "
+                ></i>
               </span>
-              <span class="title">电子质保查询</span>
-              <i class="fa fa-arrow-right"></i>
-            </nuxt-link>
-          </el-col>
-          <el-col :span="12">
-            <nuxt-link to="/store">
-              <span class="icon-span">
-                <i class="fa fa-search"></i>
-              </span>
-              <span class="title">挑选专业门店</span>
+              <span class="title">{{ link.classify_name }}</span>
               <i class="fa fa-arrow-right"></i>
             </nuxt-link>
           </el-col>
@@ -32,18 +31,20 @@
           <el-row type="flex">
             <el-col
               :span="5"
-              v-for="(item, index) in menuList"
-              :key="item.path"
+              v-for="(item, index) in footData?.menu"
+              :key="item._id"
             >
               <div class="title">
-                <nuxt-link :to="item.path">{{ item.title }}</nuxt-link>
+                <nuxt-link :to="item.classify_url">{{
+                  item.classify_name
+                }}</nuxt-link>
               </div>
               <div class="content">
                 <nuxt-link
                   v-for="(child, index) in item.children"
-                  :key="child.path"
-                  :to="child.path"
-                  >{{ child.title }}</nuxt-link
+                  :key="child._id"
+                  :to="child.classify_url"
+                  >{{ child.classify_name }}</nuxt-link
                 >
               </div>
             </el-col>
@@ -51,44 +52,48 @@
         </div>
         <div class="footer-main-social">
           <ul style="display: flex; float: right; padding-right: 50px">
-            <li>
+            <li v-for="link in footData?.links" :key="link._id">
               <a
-                href="https://weibo.com/"
-                target="_blank"
+                :href="link.classify_url || 'javascript:;'"
+                :target="link.classify_url ? '_blank' : '_self'"
+                :alt="link.classify_name"
+                :title="link.classify_name"
                 rel="external nofollow"
-                ><i class="fa fa-weibo" style="font-size: 40px"></i
-                ><span>微博</span></a
               >
-            </li>
-            <li>
-              <a
-                href="https://www.youku.com/"
-                target="_blank"
-                rel="external nofollow"
-                ><img
-                  src="~/assets/images/youku.png"
-                  alt=""
-                  style="height: 40px"
-              /></a>
-            </li>
-            <li>
-              <a
-                href="https://detail.tmall.com/item.htm?spm=a230r.1.14.31.5a667aa6cTxBu6&amp;id=625536775855&amp;ns=1&amp;abbucket=6"
-                target="_blank"
-                rel="external nofollow"
-                ><img src="~/assets/images/tm.png" alt="" style="height: 40px"
-              /></a>
-            </li>
-            <li>
-              <a
-                href="https://mall.jd.com/index-10337440.html"
-                target="_blank"
-                rel="external nofollow"
-                ><img src="~/assets/images/jd.png" alt="" style="height: 40px"
-              /></a>
-            </li>
-            <li>
-              <i id="weixin" class="fa fa-weixin" style="font-size: 40px"></i>
+                <template v-if="link.classify_id === '75'">
+                  <i class="fa fa-weibo" style="font-size: 40px"></i>
+                  <span>{{ link.classify_name }}</span>
+                </template>
+                <template v-if="link.classify_id === '76'">
+                  <img
+                    src="~/assets/images/youku.png"
+                    alt=""
+                    style="height: 40px"
+                  />
+                </template>
+                <template v-if="link.classify_id === '77'">
+                  <img
+                    src="~/assets/images/tm.png"
+                    alt=""
+                    style="height: 40px"
+                  />
+                </template>
+                <template v-if="link.classify_id === '78'">
+                  <img
+                    src="~/assets/images/jd.png"
+                    alt=""
+                    style="height: 40px"
+                  />
+                </template>
+                <template v-if="link.classify_id === '79'">
+                  <i
+                    id="weixin"
+                    class="fa fa-weixin"
+                    style="font-size: 40px"
+                    @click="showWeixin(link)"
+                  ></i>
+                </template>
+              </a>
             </li>
           </ul>
         </div>
@@ -98,29 +103,58 @@
       <div class="container">
         <div class="footer-legal-copyright">
           <p>
-            <nuxt-link to="https://beian.miit.gov.cn" target="_blank"
-              >粤ICP备10069293号</nuxt-link
+            <nuxt-link
+              :to="footData?.technology[0].classify_url"
+              target="_blank"
+              >{{ footData?.technology[0].classify_name }}</nuxt-link
             >
           </p>
           <p>
             技术支持:
-            <nuxt-link to="/">Z&O</nuxt-link>
+            <nuxt-link to="/">{{
+              footData?.technology[1].classify_name
+            }}</nuxt-link>
           </p>
         </div>
       </div>
     </div>
+    <client-only>
+      <el-dialog
+        :title="title"
+        v-model="dialogVisible"
+        width="300px"
+        :close-on-click-modal="false"
+      >
+        <div style="text-align: center">
+          <img :src="weixinUrl" alt="" style="width: 200px; height: 200px" />
+        </div> </el-dialog
+    ></client-only>
   </div>
 </template>
 
 <script setup lang="ts">
-const { data: menuList } = await useFetch('/api/footMenu');
-// console.log(menuList.value);
+import { ClassifyType } from '~/types';
+const { data: footData } = await useFetch('/api/footMenu');
+const { data: footLinks } = await useFetch('/api/footLinks');
+const dialogVisible = ref(false);
+const weixinUrl = ref('');
+const title = ref();
+const footBg = ref();
+footBg.value = footData.value?.footBg;
+const showWeixin = (link: ClassifyType) => {
+  weixinUrl.value = link.classify_img;
+  title.value = link.classify_name;
+  dialogVisible.value = true;
+};
+const footLink = useFootLinks();
+footLink.value = footLinks.value!;
 </script>
 
 <style scoped lang="less">
 .footer {
   background-color: #323232;
-  background: url('~/assets/images/footer-bg.jpg') no-repeat center top;
+  background-repeat: no-repeat;
+  background-position: top center;
   background-size: cover;
   .footer-super {
     background-color: #f5af05;

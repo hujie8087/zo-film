@@ -1,42 +1,165 @@
 <template>
   <div class="menu">
     <el-menu class="el-menu" mode="horizontal">
-      <template v-for="item in menu" :key="item.path">
+      <template v-for="item in menu" :key="item.classify_id">
         <el-menu-item
-          :index="item.path"
           v-if="item.children && item.children.length === 0"
+          :index="item.classify_url"
         >
-          <nuxt-link :to="item.path">{{ item.title }}</nuxt-link>
+          <nuxt-link :to="item.classify_url">{{
+            item.classify_name
+          }}</nuxt-link>
         </el-menu-item>
         <el-sub-menu
           v-if="item.children && item.children.length > 0"
-          :index="item.path"
+          :index="item.classify_url"
         >
           <template #title>
-            <nuxt-link :to="item.path">{{ item.title }}</nuxt-link></template
+            <nuxt-link :to="item.classify_url">{{
+              item.classify_name
+            }}</nuxt-link></template
           >
-          <el-menu-item v-for="child in item.children"
-            ><nuxt-link :to="child.path">{{
-              child.title
-            }}</nuxt-link></el-menu-item
-          >
+          <template v-if="item.classify_id === '7'">
+            <div class="product">
+              <div class="coverage">
+                <nuxt-link :to="productOther?.other.classify_url">
+                  <img
+                    :src="
+                      'https://www.zo-film.com/' +
+                      productOther?.other.classify_img
+                    "
+                    alt=""
+                    srcset=""
+                  />
+                  <div class="sub-title">
+                    {{ productOther?.other.sub_name }}
+                  </div>
+                  <div class="title">
+                    {{ productOther?.other.classify_name
+                    }}<i class="fa fa-arrow-right"></i>
+                  </div>
+                </nuxt-link>
+              </div>
+              <el-row>
+                <el-col
+                  class="item"
+                  :span="8"
+                  v-for="child in item.children"
+                  :key="child.classify_id"
+                >
+                  <nuxt-link :to="child.classify_url" class="level2">{{
+                    child.classify_name
+                  }}</nuxt-link>
+                  <ul v-if="child.children && child.children.length > 0">
+                    <template v-if="child.classify_id === '67'">
+                      <li
+                        v-for="son in productOther?.coverList"
+                        :key="son.goods_id"
+                      >
+                        <nuxt-link
+                          :to="'/products/cover/' + son.goods_classify_id"
+                          class="level3"
+                        >
+                          {{ son.goods_name }}
+                        </nuxt-link>
+                      </li>
+                    </template>
+                    <template v-if="child.classify_id === '101'">
+                      <li
+                        v-for="son in productOther?.carList"
+                        :key="son.classify_id"
+                      >
+                        <nuxt-link
+                          :to="'/products/car#more' + son.classify_id"
+                          class="level3"
+                        >
+                          {{ son.classify_name }}
+                        </nuxt-link>
+                      </li>
+                    </template>
+                    <template v-else>
+                      <li v-for="son in child?.children" :key="son.classify_id">
+                        <nuxt-link
+                          :to="'/products/construction/' + son.classify_id"
+                          class="level3"
+                        >
+                          {{ son.classify_name }}
+                        </nuxt-link>
+                      </li>
+                    </template>
+                  </ul>
+                </el-col></el-row
+              >
+            </div>
+          </template>
+          <template v-else-if="item.classify_id === '9'">
+            <div class="product solution">
+              <el-row>
+                <el-col
+                  class="item"
+                  :span="8"
+                  v-for="solution in productOther?.solutionList"
+                  :key="solution.classify_id"
+                >
+                  <nuxt-link :to="solution.classify_url" class="level2">{{
+                    solution.classify_name
+                  }}</nuxt-link>
+                  <ul>
+                    <li v-for="son in solution.children" :key="son.classify_id">
+                      <nuxt-link :to="son.classify_url" class="level3">
+                        {{ son.classify_name }}
+                      </nuxt-link>
+                    </li>
+                  </ul>
+                </el-col>
+              </el-row>
+            </div>
+          </template>
+          <template v-else>
+            <el-menu-item
+              v-for="child in item.children"
+              :key="child.classify_id"
+            >
+              <nuxt-link :to="child.classify_url">{{
+                child.classify_name
+              }}</nuxt-link>
+            </el-menu-item>
+          </template>
         </el-sub-menu>
       </template>
-      <nuxt-link to="/admin" class="outline"
-        ><img src="~/assets/images/tm1.png" alt="" srcset=""
-      /></nuxt-link>
-      <nuxt-link to="/admin" class="outline"
-        ><img src="~/assets/images/jd1.png" alt="" srcset=""
-      /></nuxt-link>
+
+      <nuxt-link
+        class="outline"
+        v-for="link in links"
+        :key="link.classify_id"
+        :to="link.classify_url"
+        ><img
+          v-if="link.classify_id === '128'"
+          src="~/assets/images/tm1.png"
+          alt=""
+          srcset=""
+        />
+        <img
+          v-else-if="link.classify_id === '129'"
+          src="~/assets/images/jd1.png"
+          alt=""
+          srcset=""
+        />
+      </nuxt-link>
     </el-menu>
   </div>
 </template>
 
 <script setup lang="ts">
-import { MenuListType } from 'types';
+import { ClassifyTreeType, ClassifyType } from 'types';
+
 const { data: menu } = await useFetch('/api/menu');
 const menuList = useMenuList();
-menuList.value = menu.value as MenuListType[];
+menuList.value = menu.value as ClassifyTreeType<ClassifyType>[];
+const { data: links } = await useFetch('/api/links');
+const link = useLinks();
+link.value = links.value!;
+const { data: productOther } = await useFetch('/api/header');
 </script>
 
 <style scoped lang="less">
@@ -44,7 +167,7 @@ menuList.value = menu.value as MenuListType[];
   height: 98px;
   line-height: 98px;
   a {
-    color: #fff;
+    color: #fff !important;
     &:hover {
       color: #fff;
     }
@@ -103,5 +226,74 @@ menuList.value = menu.value as MenuListType[];
       }
     }
   }
+}
+</style>
+
+<style lang="less">
+.product {
+  width: 1306px;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  position: absolute;
+  border-radius: var(--el-popper-border-radius);
+  background-color: #fff;
+  margin-left: 100px;
+  display: flex;
+  .el-row {
+    .item {
+      padding: 25px 30px;
+      border-left: 1px solid #ebebeb;
+      .level2 {
+        text-transform: uppercase;
+        font-size: 16px;
+        font-weight: 700;
+        color: #323232;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+        display: block;
+      }
+      .level3 {
+        display: block;
+        padding: 5px 0;
+        color: #323232;
+        font-weight: 400;
+        font-size: 16px;
+      }
+    }
+    flex: 1;
+  }
+  .coverage {
+    background-color: #f5f5f5;
+    width: 350px;
+    padding: 25px 30px;
+    img {
+      width: 100%;
+      height: auto;
+    }
+    .sub-title {
+      font-size: 16px;
+      font-weight: 400;
+      color: #1c1b1b;
+      margin-bottom: 10px;
+    }
+    .title {
+      color: #1c1b1b;
+      font-size: 22px;
+      font-weight: bold;
+      line-height: 40px;
+      i {
+        font-size: 1rem;
+        color: #f5af05;
+        position: relative;
+        margin-left: 10px;
+        position: relative;
+        bottom: 1px;
+      }
+    }
+  }
+}
+.solution {
+  margin-left: -150px;
 }
 </style>

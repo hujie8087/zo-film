@@ -1,6 +1,6 @@
 <template>
   <div class="footer flx-center">
-    <a href="https://github.com/HalseySpicy" target="_blank"> 2022 © Geeker-Admin By Geeker Technology. </a>
+    <a href="http://www.zo-film.com/admin" target="_blank"> 2023 © Z&O zo-film 管理后台 </a>
   </div>
 </template>
 

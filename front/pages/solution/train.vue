@@ -1,19 +1,19 @@
 <template>
   <CommonBanner
-    :img="trainData?.banner"
-    :title="trainData?.title"
+    :img="`https://www.zo-film.com/${trainData?.classify_img}`"
+    :title="trainData?.classify_name"
     breadTo="/solution/train"
-    :breadText="trainData?.title"
+    :breadText="trainData?.classify_name"
   />
   <div class="train">
     <div class="container">
       <el-row class="shop-list">
         <el-col :span="14">
           <div class="train-left">
-            <h2>{{ trainData?.list[0].title }}</h2>
+            <h2>{{ trainData?.children[2].classify_name }}</h2>
             <div
               class="train-content"
-              v-html="trainData?.list[0].content"
+              v-html="trainData?.children[2].classify_intro2"
             ></div>
             <nuxt-link to="/" class="more-btn"
               >了解更多信息 <i class="fa fa-arrow-down"></i
@@ -21,19 +21,25 @@
           </div>
         </el-col>
         <el-col :span="10">
-          <div class="train-right" v-html="trainData?.list[0].desc"></div>
+          <div
+            class="train-right"
+            v-html="trainData?.children[2].classify_intro"
+          ></div>
         </el-col>
       </el-row>
       <div class="shop-list course">
-        <h1>{{ trainData?.list[1].title }}</h1>
-        <div class="course-content" v-html="trainData?.list[1].content"></div>
+        <h1>{{ trainData?.children[3].classify_name }}</h1>
+        <div
+          class="course-content"
+          v-html="trainData?.children[3].classify_intro"
+        ></div>
       </div>
       <div class="shop-list">
         <el-row type="flex">
           <el-col :span="14">
             <div
               class="train-content"
-              v-html="trainData?.list[2].content"
+              v-html="trainData?.children[1].classify_intro"
             ></div>
             <nuxt-link to="/" class="more-btn"
               >了解更多信息 <i class="fa fa-arrow-down"></i
@@ -41,17 +47,24 @@
           </el-col>
           <el-col :span="10">
             <div class="train-install">
-              <h1>{{ trainData?.list[2].title }}</h1>
-              <img :src="trainData?.list[2].imageUrl" alt="" srcset="" />
+              <h1>{{ trainData?.children[1].classify_name }}</h1>
+              <img
+                :src="`https://www.zo-film.com/${trainData?.children[1].classify_img}`"
+                alt=""
+                srcset=""
+              />
             </div>
           </el-col>
         </el-row>
       </div>
       <div class="shop-list course">
-        <h1>{{ trainData?.list[3].title }}</h1>
+        <h1>{{ trainData?.children[0].classify_name }}</h1>
         <el-row :gutter="30">
-          <el-col :span="8" v-for="(item, index) in trainData?.list[3].images">
-            <img :src="item" />
+          <el-col
+            :span="8"
+            v-for="(item, index) in trainData?.children[0].children"
+          >
+            <img :src="`https://www.zo-film.com/${item.upload_img}`" />
           </el-col>
         </el-row>
       </div>
@@ -87,6 +100,7 @@ const { data: trainData } = useFetch('/api/train');
       background-color: #f5af05;
       padding: 30px;
       font-size: 16px;
+      font-style: italic;
     }
     .more-btn {
       padding: 20px 24px;

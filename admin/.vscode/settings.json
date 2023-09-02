@@ -88,5 +88,6 @@
     "xiaoxi",
     "zhongyingwen",
     "zhuti"
-  ]
+  ],
+  "commentTranslate.multiLineMerge": true
 }

@@ -69,3 +69,7 @@ export const getUserDepartment = () => {
 export const getUserRole = () => {
   return http.get<User.ResRole[]>(PORT1 + `/user/role`);
 };
+// 修改用户密码
+export const changeUserPassword = (params: User.ReqChangePassword) => {
+  return http.put<string>(PORT1 + `/user/change_password`, params);
+};

@@ -11,14 +11,14 @@
       style="height: 70vh; overflow-y: auto; padding: 0 10px"
     >
       <el-form-item label="新闻分类" prop="pid">
-        <el-tree-select
-          v-model="drawerProps.rowData!.type_id"
-          :data="drawerProps?.newsTypeTree"
-          check-strictly
-          :key="drawerProps.rowData?.type_id"
-          :props="newsTypeTreeProps"
-          :render-after-expand="false"
-        />
+        <el-select v-model="drawerProps.rowData!.pid" :data="newsTypeList">
+          <el-option
+            v-for="newsType in newsTypeList"
+            :key="newsType.value"
+            :label="newsType.label"
+            :value="newsType.value"
+          ></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="标题" prop="news_title">
         <el-input v-model="drawerProps.rowData!.news_title" placeholder="请输入新闻标题" clearable></el-input>
@@ -30,13 +30,10 @@
         <el-input v-model="drawerProps.rowData!.news_source" placeholder="请输入新闻来源" clearable></el-input>
       </el-form-item>
       <el-form-item label="内容" prop="news_content">
-        <WangEditor id="news_content" v-model:value="drawerProps.rowData!.news_content" height="400px" />
+        <WangEditor id="news_content" v-model:value="drawerProps.rowData!.news_content" height="200px" />
       </el-form-item>
       <el-form-item label="简介" prop="news_intro">
-        <WangEditor id="news_intro" v-model:value="drawerProps.rowData!.news_intro" height="400px" />
-      </el-form-item>
-      <el-form-item label="排序" prop="sort">
-        <el-input-number v-model="drawerProps.rowData!.sort" :min="0" :step="1"></el-input-number>
+        <WangEditor id="news_intro" v-model:value="drawerProps.rowData!.news_intro" height="200px" />
       </el-form-item>
       <el-form-item label="图片" prop="news_img">
         <UploadImg v-model:image-url="drawerProps.rowData!.news_img" width="250px">
@@ -68,13 +65,15 @@
 
 <script setup lang="ts" name="NewsTypeDrawer">
 import { ref, reactive } from "vue";
-import { NewsType } from "@/api/interface/news";
 import { ElMessage, FormInstance } from "element-plus";
 import WangEditor from "@/components/WangEditor/index.vue";
 import UploadImg from "@/components/Upload/Img.vue";
+import { Comment } from "@/api/interface";
+import { getClassifyList } from "@/api/modules/frontPage";
 
 const rules = reactive({
-  title: [{ required: true, message: "请输入新闻标题", trigger: "blur" }]
+  pid: [{ required: true, message: "请选择新闻分类", trigger: "change" }],
+  news_title: [{ required: true, message: "请输入新闻标题", trigger: "blur" }]
 });
 
 interface DrawerProps {
@@ -83,25 +82,30 @@ interface DrawerProps {
   rowData?: any;
   api?: (params: any) => Promise<any>;
   getTableList?: () => Promise<any>;
-  newsTypeTree?: NewsType.ResNewsTypeList[];
 }
 
-const newsTypeTreeProps = {
-  label: "title",
-  value: "_id",
-  children: "children",
-  isLeaf: "hasChildren"
-};
 // drawer框状态
 const drawerVisible = ref(false);
 const drawerProps = ref<DrawerProps>({
   isView: false,
   title: ""
 });
+
+const newsTypeList = ref<Comment.ResStatus[]>();
+const getNewsType = async () => {
+  const data = await getClassifyList({ type_id: "14" });
+  newsTypeList.value = data.data.map(item => {
+    return {
+      label: item.classify_name,
+      value: item.classify_id
+    };
+  });
+};
 // 接收父组件传过来的参数
 const acceptParams = (params: DrawerProps): void => {
   drawerProps.value = params;
   drawerVisible.value = true;
+  getNewsType();
 };
 // 提交数据（新增/编辑）
 const ruleFormRef = ref<FormInstance>();

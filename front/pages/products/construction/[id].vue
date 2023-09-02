@@ -1,35 +1,51 @@
 <template>
   <div class="detail">
     <div class="container">
-      <BreadCrumbsItem to="/products/construction" :text="detailData?.title" />
+      <BreadCrumbsItem
+        to="/products/construction"
+        :text="detailData?.classify_name"
+      />
       <el-row type="flex" :gutter="30" class="detail-info">
         <el-col :span="6">
           <keep-alive>
-            <NewsMenu
-              :active="active"
-              :menuList="menuList!"
-              @select="menuChange"
-            />
+            <NewsMenu :active="active" :menuList="menuList!" />
           </keep-alive>
         </el-col>
         <el-col :span="12">
-          <h2>{{ detailData?.title }}</h2>
-          <div class="detail-content" v-html="detailData?.content"></div>
-          <h3>使用说明</h3>
-          <div class="detail-content" v-html="detailData?.description"></div>
+          <h2>{{ detailData?.classify_name }}</h2>
+          <div class="detail-content" v-html="detailData?.classify_intro"></div>
+          <h3>{{ detailData?.children[0].classify_name }}</h3>
+          <div
+            class="detail-content"
+            v-html="detailData?.children[0].classify_intro"
+          ></div>
         </el-col>
         <el-col :span="6">
           <nuxt-link to="/store" class="store-btn btn">
             <i class="fa fa-map-marker"></i> 挑选专业门店
           </nuxt-link>
-          <h4 class="cover-buy">购买{{ detailData?.title }}的方法</h4>
-          <nuxt-link :to="detailData?.tmallLink" class="cover-link">
-            Z&O天猫旗舰店 <i class="fa fa-arrow-right"></i>
+          <h4 class="cover-buy">购买{{ detailData?.classify_name }}的方法</h4>
+          <nuxt-link
+            v-if="detailData?.children[1]"
+            :to="detailData?.children[1].classify_url"
+            class="cover-link"
+          >
+            {{ detailData?.children[1].classify_name }}
+            <i class="fa fa-arrow-right"></i>
           </nuxt-link>
-          <nuxt-link :to="detailData?.jdLink" class="cover-link">
-            Z&O京东自营店 <i class="fa fa-arrow-right"></i>
+          <nuxt-link
+            v-if="detailData?.children[2]"
+            :to="detailData?.children[2].classify_url"
+            class="cover-link"
+          >
+            {{ detailData?.children[2].classify_name }}
+            <i class="fa fa-arrow-right"></i>
           </nuxt-link>
-          <img :src="detailData?.imageUrl" alt="" srcset="" />
+          <img
+            :src="'https://www.zo-film.com/' + detailData?.page_img"
+            alt=""
+            srcset=""
+          />
         </el-col>
       </el-row>
     </div>
@@ -44,18 +60,14 @@ const { data: detailData } = useFetch('/api/products/constructionDetail', {
     id: route.params.id,
   },
 });
-// const active = ref([route.params.id])
-const active = ref('');
-const menuList = constructionMenu.value?.list.map((item) => {
+const active = ref(`/products/construction/${route.params.id}`);
+const menuList = constructionMenu.value?.children.map((item) => {
   return {
     _id: item._id,
-    title: item.title,
-    path: `/products/construction/${item._id}`,
+    title: item.classify_name,
+    path: '/products/construction/' + item.classify_id,
   };
 });
-const menuChange = (path: string) => {
-  active.value = path;
-};
 </script>
 
 <style lang="less" scoped>

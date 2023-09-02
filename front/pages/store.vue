@@ -2,12 +2,12 @@
   <div
     class="store"
     :style="{
-      backgroundImage: `url(${storeData?.background})`,
+      backgroundImage: `url(${storeData?.classify_img})`,
     }"
   >
     <div class="container">
-      <BreadCrumbsItem :to="'/store'" text="挑选专业安装门店" />
-      <h1>查找授权的Z&O安装门店</h1>
+      <BreadCrumbsItem :to="'/store'" :text="storeData?.classify_name" />
+      <h1>{{ storeData?.sub_name }}</h1>
       <div class="search">
         <el-form
           :inline="true"
@@ -16,17 +16,26 @@
           label-position="top"
         >
           <el-form-item label="国家">
-            <el-select v-model="searchStore.country" placeholder="国家">
-              <el-option label="中国" value="86" />
+            <el-select
+              v-model="searchStore.country"
+              placeholder="国家"
+              style="width: 100%"
+            >
+              <el-option label="中国" value="1" />
             </el-select>
           </el-form-item>
           <el-form-item label="省">
-            <el-select v-model="searchStore.province" placeholder="省">
+            <el-select
+              v-model="searchStore.province"
+              placeholder="省"
+              @change="changeLocation(searchStore.province, '1')"
+              style="width: 100%"
+            >
               <el-option
-                v-for="province in (Object.keys(data[searchStore.country]) as string[])"
-                :key="province"
-                :label="data[searchStore.country][province]"
-                :value="province"
+                v-for="province in provinceList"
+                :key="province.region_id"
+                :label="province.region_name"
+                :value="province.region_id"
               />
             </el-select>
           </el-form-item>
@@ -35,13 +44,14 @@
               v-model="searchStore.city"
               placeholder="城市"
               @change="changeCity"
+              style="width: 100%"
             >
               <template v-if="searchStore.province !== '省'">
                 <el-option
-                  v-for="city in (Object.keys(data[searchStore.province]) as string[])"
-                  :key="city"
-                  :label="data[searchStore.province][city]"
-                  :value="city"
+                  v-for="city in cityList"
+                  :key="city.region_id"
+                  :label="city.region_name"
+                  :value="city.region_id"
                 />
               </template>
             </el-select>
@@ -53,25 +63,28 @@
           <el-col
             :span="6"
             class="locations-item"
-            v-for="location in Object.keys(locations)"
-            :key="location"
+            v-for="location in locations"
+            :key="location.region_id"
           >
-            <div class="item" @click="changeLocation(location, level)">
-              {{ locations[location] }}
+            <div
+              class="item"
+              @click="changeLocation(location.region_id, location.region_type)"
+            >
+              {{ location.region_name }}
             </div>
           </el-col>
         </el-row>
         <div class="store-list" v-else>
           <el-collapse v-model="activeNames">
             <el-collapse-item
-              :title="store.title"
+              :title="store.name"
               v-for="(store, index) in storeList"
               :key="store._id"
               :name="store._id"
             >
               <template #title>
                 <div class="title">
-                  <span>{{ index + 1 }}.{{ store.title }}</span>
+                  <span>{{ index + 1 }}.{{ store.name }}</span>
                   <span
                     >（）<i
                       :class="
@@ -93,18 +106,24 @@
 </template>
 
 <script setup lang="ts">
-import data from 'china-area-data';
+import { RegionType } from 'types';
 const { data: storeData } = await useFetch('/api/store');
+const locations = ref<RegionType[]>([]);
+const cityList = ref<RegionType[]>([]);
+const { data: provinceList } = await useFetch('/api/region', {
+  query: {
+    pid: '1',
+  },
+});
+locations.value = provinceList.value!;
 const searchStore = ref({
-  country: '86',
+  country: '1',
   province: '省',
   city: '市',
 });
 const storeList = ref();
-const locations = ref(data[86]);
 const level = ref(1);
 const activeNames = ref<string[]>([]);
-
 const changeCity = async (val: string) => {
   level.value = 3;
   const { data: StoreList } = await useFetch('/api/storeList', {
@@ -112,11 +131,18 @@ const changeCity = async (val: string) => {
   });
   storeList.value = StoreList.value;
 };
-const changeLocation = (val: string, num: number) => {
-  if (num === 1) {
+const changeLocation = async (val: string, type: string) => {
+  if (type === '1') {
     level.value = 2;
-    locations.value = data[val];
+    const { data } = await useFetch('/api/region', {
+      query: {
+        pid: val,
+      },
+    });
+    locations.value = data.value!;
+    cityList.value = data.value!;
     searchStore.value.province = val;
+    searchStore.value.city = '';
   } else {
     searchStore.value.city = val;
     changeCity(val);
@@ -124,11 +150,16 @@ const changeLocation = (val: string, num: number) => {
 };
 </script>
 
+<style>
+.el-popper .el-menu--horizontal {
+  display: block !important;
+}
+</style>
 <style scoped lang="less">
 .store {
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center;
+  background-position: top center;
   text-align: center;
   .container {
     padding: 50px 0;

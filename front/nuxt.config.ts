@@ -9,7 +9,6 @@ export default defineNuxtConfig({
     '@/assets/css/font-awesome.min.css',
     '@/assets/css/index.less',
   ],
-
   vite: {
     css: {
       postcss: {
@@ -29,6 +28,15 @@ export default defineNuxtConfig({
           //   landscape: false, // 是否处理横屏情况
           // }),
         ],
+      },
+    },
+    server: {
+      proxy: {
+        '/Uploads': {
+          target: 'http://localhost:3100',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/Uploads/, '/Uploads'),
+        },
       },
     },
   },

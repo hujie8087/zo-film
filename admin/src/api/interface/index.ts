@@ -1,6 +1,6 @@
 // 请求响应参数（不包含data）
 export interface Result {
-  code: string;
+  code: number;
   msg: string;
 }
 
@@ -23,6 +23,18 @@ export interface ReqPage {
   pageSize: number;
 }
 
+// 图形验证码模块
+export namespace Captcha {
+  export interface ResCaptcha {
+    data: any;
+  }
+  // 验证图形验证码
+  export interface ReqCaptcha {
+    captcha: string;
+    captchaId: string;
+  }
+}
+
 // 文件上传模块
 export namespace Upload {
   export interface ResFileUrl {
@@ -35,6 +47,9 @@ export namespace Login {
   export interface ReqLoginForm {
     username: string;
     password: string;
+  }
+  export interface ReqLoginFormParams extends ReqLoginForm {
+    captcha: string;
   }
   export interface ResLogin {
     access_token: string;
@@ -88,6 +103,11 @@ export namespace User {
     name: string;
     children?: ResDepartment[];
   }
+  export interface ReqChangePassword {
+    oldPassword: string;
+    newPassword: string;
+    username: string;
+  }
 }
 
 export namespace Classify {
@@ -120,5 +140,47 @@ export namespace Classify {
   export interface ResStatus {
     statusLabel: string;
     statusValue: number;
+  }
+}
+
+export namespace Comment {
+  export interface ReqComment {
+    classify_name?: string;
+    classify_pid?: string;
+    type_id?: string;
+  }
+  export interface ReqCommentParams extends ReqPage, ReqComment {}
+  export interface ResCommentList {
+    _id: string;
+    classify_id: string;
+    classify_pid: string;
+    type_id: string;
+    level_id: string;
+    date: string;
+    title: string;
+    keywords: string;
+    description: string;
+    version_id: string;
+    note: string;
+    classify_name: string;
+    classify_url: string;
+    classify_note: string;
+    en_name: string;
+    classify_intro: string;
+    classify_img: string;
+    page_img: string;
+    is_delete: boolean;
+    sub_name: string;
+    beizhu: string;
+    classify_intro2: string;
+    upload_img: string;
+    sort: number;
+  }
+  export interface ResCommentTree extends ResCommentList {
+    children?: ResCommentTree[];
+  }
+  export interface ResStatus {
+    label: string;
+    value: string;
   }
 }

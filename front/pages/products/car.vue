@@ -1,66 +1,103 @@
 <template>
   <CommonBanner
-    :img="carData?.banner"
+    :img="'https://www.zo-film.com/' + carData?.classify_img"
     breadTo="/products"
-    :breadText="carData?.title"
+    :breadText="carData?.classify_name"
   />
   <div class="car">
     <div class="container">
       <el-row type="flex" class="car-detail" :gutter="50">
         <el-col :span="14">
-          <h2>{{ carData?.subtitle }}</h2>
-          <div class="car-content" v-html="carData?.content"></div>
+          <h2>{{ carData?.sub_name }}</h2>
+          <div class="car-content" v-html="carData?.classify_intro"></div>
         </el-col>
         <el-col :span="10">
           <div class="car-video">
-            <video :src="carData?.file" controls muted></video>
+            <video
+              :src="
+                'https://www.zo-film.com/' + carData?.children[0].classify_img
+              "
+              controls
+              muted
+            ></video>
           </div>
         </el-col>
       </el-row>
       <el-divider></el-divider>
       <div class="car-index">
-        <h2>{{ carData?.index.title }}</h2>
+        <h2>{{ carData?.children[2].classify_name }}</h2>
         <nuxt-link class="more" to="#"
           >了解更多信息 <i class="fa fa-arrow-down"></i
         ></nuxt-link>
         <el-row type="flex" :gutter="30">
           <el-col
             :span="12"
-            v-for="item in carData?.index.list"
+            v-for="item in carData?.children[2].children"
             :key="item._id"
             class="item"
           >
-            <img :src="item.productUrl" alt="" srcset="" />
-            <h3>{{ item.title }}</h3>
+            <img
+              :src="'https://www.zo-film.com/' + item.classify_img"
+              alt=""
+              srcset=""
+            />
+            <h3>{{ item.classify_name }}</h3>
           </el-col>
         </el-row>
       </div>
     </div>
     <div class="car-other">
       <div class="container">
-        <h2>{{ carData?.other.title }}</h2>
+        <h2>{{ carData?.children[1].classify_name }}</h2>
         <el-row type="flex" :gutter="50">
-          <el-col :span="8" v-for="item in carData?.other.list" :key="item._id">
-            <img :src="item.imageUrl" alt="" srcset="" />
+          <el-col
+            :span="8"
+            v-for="item in carData?.children[1].children"
+            :key="item._id"
+          >
+            <img
+              :src="'https://www.zo-film.com/' + item.classify_img"
+              alt=""
+              srcset=""
+            />
             <h3>{{ item.title }}</h3>
           </el-col>
         </el-row>
       </div>
     </div>
-    <div class="car-list" v-for="item in carData?.index.list">
-      <div class="container">
+    <div class="car-list" v-for="item in carData?.children[2].children">
+      <div class="container" :id="'more' + item.classify_id">
         <div class="car-item">
-          <img :src="item.imageUrl" alt="" srcset="" />
+          <img
+            :src="'https://www.zo-film.com/' + item.page_img"
+            alt=""
+            srcset=""
+          />
           <div class="car-content">
-            <h2>{{ item.title }}</h2>
+            <h2>{{ item.classify_name }}</h2>
 
             <nuxt-link to="/store" class="more">
               <i class="fa fa-map-marker"></i> 挑选专业门店
             </nuxt-link>
-            <el-row type="flex" :gutter="50">
-              <el-col :span="12" v-for="img in item.imageList.split(',')">
-                <img :src="img" alt="" srcset="" />
+            <el-row type="flex">
+              <el-col :span="12">
+                <img
+                  :src="'https://www.zo-film.com/' + item.upload_img"
+                  alt=""
+                  srcset=""
+                />
               </el-col>
+              <el-col :span="12">
+                <div
+                  class="content"
+                  v-html="
+                    item.classify_intro2.replaceAll(
+                      '&quot;Uploads',
+                      '&quot;https://www.zo-film.com/Uploads'
+                    )
+                  "
+                ></div
+              ></el-col>
             </el-row>
           </div>
         </div>
@@ -154,6 +191,12 @@ const { data: carData } = useFetch('/api/products/car');
           font-size: 22px;
           font-weight: bold;
           color: #323232;
+        }
+        .content {
+          width: 100%;
+          :deep(img) {
+            width: 100%;
+          }
         }
       }
     }

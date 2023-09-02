@@ -38,8 +38,9 @@ class RequestHttp {
         // 当前请求不需要显示 loading，在 api 服务中通过指定的第三个参数: { noLoading: true } 来控制
         config.noLoading || showFullScreenLoading();
         if (config.headers && typeof config.headers.set === "function") {
-          config.headers.set("x-access-token", userStore.token);
+          config.headers.set("Authorization", "Bearer " + userStore.token);
         }
+
         return config;
       },
       (error: AxiosError) => {
@@ -57,7 +58,8 @@ class RequestHttp {
         const userStore = useUserStore();
         tryHideFullScreenLoading();
         // 登陆失效
-        if (data.code == ResultEnum.OVERDUE) {
+
+        if (response.status == ResultEnum.OVERDUE) {
           userStore.setToken("");
           router.replace(LOGIN_URL);
           ElMessage.error(data.msg);
@@ -79,6 +81,12 @@ class RequestHttp {
         if (error.message.indexOf("Network Error") !== -1) ElMessage.error("网络错误！请您稍后重试");
         // 根据服务器响应的错误状态码，做不同的处理
         if (response) checkStatus(response.status);
+        if (response && response.status === 401) {
+          const userStore = useUserStore();
+          userStore.setToken("");
+          router.replace(LOGIN_URL);
+          return Promise.reject(error);
+        }
         // 服务器结果都没有返回(可能服务器错误可能客户端断网)，断网处理:可以跳转到断网页面
         if (!window.navigator.onLine) router.replace("/500");
         return Promise.reject(error);

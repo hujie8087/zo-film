@@ -50,8 +50,8 @@ export const editNews = (params: News.ResNewsList) => {
 };
 
 // 删除新闻
-export const deleteNews = (params: News.ResNewsList) => {
-  return http.delete(PORT1 + `/news/${params._id}`, params);
+export const deleteNews = (id: string) => {
+  return http.delete(PORT1 + `/news/${id}`);
 };
 
 // 切换新闻状态

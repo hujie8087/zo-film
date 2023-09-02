@@ -1,25 +1,36 @@
 <template>
   <CommonBanner
-    :img="coverDetail?.banner"
+    :img="`https://www.zo-film.com/${coverDetail?.data.goods_bigimg}`"
     breadTo="/products"
-    :breadText="coverDetail?.title"
+    :breadText="coverDetail?.data.goods_name"
   />
   <div class="cover-detail">
     <div class="container">
       <el-row type="flex" :gutter="80">
         <el-col :span="16">
-          <h1>{{ coverDetail?.title }}</h1>
-          <div class="cover-content" v-html="coverDetail?.content"></div>
+          <h1>{{ coverDetail?.data.goods_name }}</h1>
+          <div
+            class="cover-content"
+            v-html="
+              coverDetail?.data.goods_content.replaceAll(
+                '&quot;Uploads',
+                '&quot;https://www.zo-film.com/Uploads'
+              )
+            "
+          ></div>
         </el-col>
         <el-col :span="8">
           <nuxt-link to="/store" class="store-btn btn">
             <i class="fa fa-map-marker"></i> 挑选专业门店
           </nuxt-link>
-          <h4 class="cover-buy">购买{{ coverDetail?.title }}的方法</h4>
-          <nuxt-link :to="coverDetail?.tmallLink" class="cover-link">
-            Z&O天猫旗舰店 <i class="fa fa-arrow-right"></i>
+          <h4 class="cover-buy">
+            购买{{ coverDetail?.data.goods_name }}的方法
+          </h4>
+          <nuxt-link :to="coverDetail?.data.tianmao" class="cover-link">
+            Z&O天猫旗舰店
+            <i class="fa fa-arrow-right"></i>
           </nuxt-link>
-          <nuxt-link :to="coverDetail?.jdLink" class="cover-link">
+          <nuxt-link :to="coverDetail?.data.jingdong" class="cover-link">
             Z&O京东自营店 <i class="fa fa-arrow-right"></i>
           </nuxt-link>
         </el-col>
@@ -27,7 +38,10 @@
     </div>
     <div class="video-wrap">
       <div class="container">
-        <video :src="coverDetail?.file" controls></video>
+        <video
+          :src="'https://www.zo-film.com/' + coverDetail?.data.upload_video"
+          controls
+        ></video>
       </div>
     </div>
     <div class="cover-function">
@@ -36,18 +50,22 @@
         <el-row type="flex" :gutter="30">
           <el-col
             :span="8"
-            v-for="item in coverDetail?.list"
+            v-for="item in coverDetail?.imgList"
             :key="item._id"
             class="item"
           >
-            <img :src="item.imageUrl" alt="" srcset="" />
-            <h3>{{ item.title }}</h3>
-            <div class="content">{{ item.content }}</div>
+            <img
+              :src="'https://www.zo-film.com/' + item.imgs"
+              alt=""
+              srcset=""
+            />
+            <h3>{{ item.name }}</h3>
+            <div class="content">{{ item.intro }}</div>
           </el-col>
         </el-row>
       </div>
     </div>
-    <h2 class="video-title">{{ coverDetail?.title }}视频</h2>
+    <h2 class="video-title">{{ coverDetail?.data.goods_name }}视频</h2>
     <div class="installer-video">
       <div class="container">
         <el-row type="flex">
@@ -66,10 +84,14 @@
               >
                 <div class="item">
                   <div class="link" @click="playVideo(video)">
-                    <img :src="video.imageUrl" :alt="video.title" srcset="" />
+                    <img
+                      :src="'https://www.zo-film.com/' + video.img"
+                      :alt="video.name"
+                      srcset=""
+                    />
                     <i class="fa fa-play-circle-o"></i>
                   </div>
-                  <h5 class="title">{{ video.title }}</h5>
+                  <h5 class="title">{{ video.name }}</h5>
                 </div>
               </swiper-slide>
             </swiper></el-col
@@ -90,11 +112,11 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Pagination, A11y } from 'swiper/modules';
-import { VideoType } from 'types';
+import { GoodVideo } from 'types';
 const modules = [Navigation, Pagination, A11y];
 const route = useRoute();
 const { data: coverDetail } = useFetch('/api/products/coverDetail', {
-  params: {
+  query: {
     id: route.params.id,
   },
 });
@@ -102,9 +124,9 @@ const { data: coverDetail } = useFetch('/api/products/coverDetail', {
 const dialogVisible = ref(false);
 const dialogTitle = ref('');
 const dialogVideo = ref('');
-const playVideo = (video: VideoType) => {
-  dialogTitle.value = video.title;
-  dialogVideo.value = video.videoUrl;
+const playVideo = (video: GoodVideo) => {
+  dialogTitle.value = video.name;
+  dialogVideo.value = video.upload_video;
   dialogVisible.value = true;
 };
 </script>

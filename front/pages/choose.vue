@@ -1,6 +1,6 @@
 <template>
   <CommonBanner
-    title="为何选择Z&O"
+    :title="chooseData?.classify_name"
     img="https://www.zo-film.com/Uploads/images/2020/10/29/1603959885_classify_img.jpg"
   >
   </CommonBanner>
@@ -8,9 +8,7 @@
     <div class="container">
       <el-row type="flex">
         <el-col :span="16" :offset="4">
-          <div class="choose-content">
-            {{ chooseData?.content }}
-          </div>
+          <div class="choose-content" v-html="chooseData?.classify_intro"></div>
           <nuxt-link to="/store" class="more-btn"
             ><i class="fa fa-map-marker"></i>挑选专业门店</nuxt-link
           >
@@ -20,26 +18,26 @@
   </div>
   <div class="choose-supply">
     <div class="container">
-      <h2 class="title">我们提供什么</h2>
+      <h2 class="title">{{ chooseData?.children[0].classify_name }}</h2>
       <div class="list">
         <div
           class="item"
-          v-for="supply in chooseData?.supply"
+          v-for="supply in chooseData?.children[0].children"
           :key="supply._id"
         >
           <el-row type="flex">
             <el-col :span="10" style="padding: 0 15px">
               <img
                 class="supply-image"
-                :src="supply.imageUrl"
-                :alt="supply.title"
+                :src="supply.img"
+                :alt="supply.name"
                 srcset=""
               />
             </el-col>
             <el-col :span="14" class="supply-right">
-              <h3 class="supply-title">{{ supply.title }}</h3>
-              <p class="supply-content">{{ supply.content }}</p>
-              <nuxt-link to="/store" class="more-btn" v-if="supply.showBtn"
+              <h3 class="supply-title">{{ supply.name }}</h3>
+              <p class="supply-content">{{ supply.intro }}</p>
+              <nuxt-link to="/store" class="more-btn" v-if="!supply.e_mail"
                 ><i class="fa fa-map-marker"></i>挑选专业门店</nuxt-link
               >
               <div v-else>
@@ -47,7 +45,7 @@
                 <nuxt-link
                   class="link-arrow"
                   to="mailto:dowcause@dowcause.com.cn"
-                  >mailto:dowcause@dowcause.com.cn
+                  >dowcause@dowcause.com.cn
                 </nuxt-link>
                 <span class="link-pipe">|</span>
                 <strong class="tip">联系电话</strong>
@@ -63,7 +61,7 @@
   </div>
   <div class="choose-topic">
     <div class="container">
-      <h2 class="title">专题报道</h2>
+      <h2 class="title">{{ chooseData?.children[2].classify_name }}</h2>
 
       <swiper
         :modules="modules"
@@ -73,14 +71,17 @@
         :loop="true"
         :pagination="{ clickable: true }"
       >
-        <swiper-slide v-for="video in chooseData?.topic" :key="video._id">
+        <swiper-slide
+          v-for="video in chooseData?.children[2].children"
+          :key="video._id"
+        >
           <div class="item">
             <div class="link" @click="playVideo(video)">
-              <img :src="video.imageUrl" :alt="video.title" srcset="" />
+              <img :src="video.img" :alt="video.name" srcset="" />
               <i class="fa fa-play-circle-o"></i>
             </div>
-            <h5 class="item-title">{{ video.title }}</h5>
-            <p class="item-content">{{ video.subtitle }}</p>
+            <h5 class="item-title">{{ video.name }}</h5>
+            <p class="item-content">{{ video.intro }}</p>
           </div>
         </swiper-slide>
       </swiper>
@@ -93,27 +94,27 @@
   </div>
   <div class="choose-approval">
     <div class="container">
-      <h2 class="title">客户赞许</h2>
+      <h2 class="title">{{ chooseData?.children[1].classify_name }}</h2>
       <div class="content">
-        <p>听听我们的客户和经销商对Z&O的看法。如果您有话要说？</p>
-        <p>请通过4006999590向我们提供反馈。</p>
+        <p>{{ chooseData?.children[1].sub_name }}</p>
+        <p>{{ chooseData?.children[1].en_name }}</p>
       </div>
       <el-row class="list" :gutter="120">
         <el-col
           :span="8"
           class="item"
-          v-for="approval in chooseData?.approval"
+          v-for="approval in chooseData?.children[1].children"
           :key="approval._id"
         >
           <div class="approval-image">
-            <img :src="approval.imageUrl" :alt="approval.title" srcset="" />
+            <img :src="approval.img" :alt="approval.name" srcset="" />
           </div>
           <h4>
             <i class="fa fa-quote-left"></i>
-            {{ approval.title }}
+            {{ approval.name }}
           </h4>
           <div class="approval-content">
-            {{ approval.content }}
+            {{ approval.intro }}
           </div>
         </el-col>
       </el-row>
@@ -128,21 +129,16 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Pagination, A11y } from 'swiper/modules';
 import { VideoType } from 'types';
 const menuList = await useMenuList();
-const routeInfo = menuList.value.find((item) => item.path === '/choose');
-console.log(routeInfo?.keyWord);
+const routeInfo = menuList.value.find(
+  (item) => item.classify_url === '/choose'
+);
 onMounted(() => {
   if (routeInfo) {
-    // definePageMeta({
-    //   title: routeInfo?.title || '',
-    //   description: routeInfo?.path || '',
-    //   keywords: routeInfo?.keyWord.join(',') || '',
-    // });
     definePageMeta({
       title: '挑选专业门店',
       description: '挑选专业门店',
       keywords: '挑选专业门店',
     });
-    console.log(routeInfo?.keyWord);
   }
 });
 
@@ -151,10 +147,11 @@ const { data: chooseData } = await useFetch('/api/choose');
 const dialogVisible = ref(false);
 const dialogTitle = ref('');
 const dialogVideo = ref('');
+console.log(chooseData.value);
 
 const playVideo = (video: VideoType) => {
-  dialogTitle.value = video.title;
-  dialogVideo.value = video.videoUrl;
+  dialogTitle.value = video.name;
+  dialogVideo.value = video.upload_video;
   dialogVisible.value = true;
 };
 </script>

@@ -1,5 +1,6 @@
-export default defineEventHandler((event) => {
-  return {
-    background: '/1604314813_classify_img.jpg',
-  };
+import { ClassifyType } from '../../types';
+
+export default defineEventHandler(async (event) => {
+  const data = await $fetch<ClassifyType>(`http://localhost:3100/store`);
+  return data;
 });

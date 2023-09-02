@@ -1,7 +1,11 @@
 <template>
-  <CommonBanner :img="newsData?.banner" breadTo="/news" breadText="管理信息">
+  <CommonBanner
+    :img="`https://www.zo-film.com/${management?.classify_img}`"
+    breadTo="/news"
+    :breadText="management?.classify_name"
+  >
   </CommonBanner>
-  <CateName title="管理信息" category="公司新闻" />
+  <CateName :title="management?.classify_name" category="公司新闻" />
   <div class="list-content">
     <div class="container">
       <el-row type="flex">
@@ -12,26 +16,28 @@
         </el-col>
         <el-col :span="16" :offset="2">
           <div class="news-list">
-            <p>
-              在Z&O，我们非常清晰的认识到，要提供优质的服务必须要有强大的团队。虽然我们在保护膜行业里从一家小小的公司发展到具有全球影响力的公司，我们的初心时刻不变，与我们服务的客户需求时刻保持一致。我们的一些团队成员如下。
-            </p>
+            <div v-html="management?.classify_intro"></div>
             <div class="news-list-content">
               <div class="manage-list">
-                <div class="item" v-for="item in management" :key="item._id">
+                <div
+                  class="item"
+                  v-for="item in management?.children"
+                  :key="item._id"
+                >
                   <el-divider />
-                  <h2>{{ item.title }}</h2>
+                  <h2>{{ item.classify_name }}</h2>
                   <el-row type="flex">
                     <el-col
                       :span="8"
                       :xs="12"
-                      v-for="person in item.list"
+                      v-for="person in item.children"
                       :key="person._id"
                     >
                       <div class="title">
-                        {{ person.title }}
+                        {{ person.name }}
                       </div>
                       <div class="post">
-                        {{ person.post }}
+                        {{ person.position }}
                       </div>
                     </el-col>
                   </el-row>
@@ -47,11 +53,6 @@
 
 <script setup lang="ts">
 const { data: MenuList } = useFetch('/api/news/newsMenu');
-const { data: newsData } = useFetch('/api/news/news', {
-  params: {
-    type: 'news',
-  },
-});
 const { data: management } = useFetch('/api/news/management');
 </script>
 

@@ -1,4 +1,4 @@
-import { News, NewsDto, NewsQueryDto } from '@libs/db/models/news.model';
+import { News, NewsDto } from '@libs/db/models/news.model';
 import { Injectable, Logger } from '@nestjs/common';
 import { IResponse } from 'libs/interface/response.interface';
 import { Model } from 'mongoose';
@@ -11,15 +11,33 @@ export class NewsService {
   ) {}
   private response: IResponse;
 
-  async create(newsType: News) {
-    const createNewsType = new this.newsModel({
-      ...newsType,
-      is_delete: false,
-    });
-    await createNewsType.save();
-    Logger.log(`新闻${newsType.title}添加成功`);
-    this.response = { code: 200, data: '', msg: '添加新闻类型成功' };
-    return this.response;
+  async create(news: News) {
+    await this.newsModel
+      .find()
+      .collation({
+        locale: 'zh',
+        numericOrdering: true,
+      })
+      .sort({ news_id: -1 })
+      .limit(1)
+      .then(async (res) => {
+        const news_id = +res[0].news_id + 1 + '';
+        const createNews = new this.newsModel({
+          ...news,
+          date: (new Date().getTime() / 1000).toFixed(0),
+          is_delete: false,
+          type_id: '14',
+          news_id,
+          title: '',
+          keywords: '',
+          description: '',
+          version_id: '1',
+        });
+        await createNews.save();
+        Logger.log(`新闻${news.news_title}添加成功`);
+        this.response = { code: 200, data: '', msg: '添加新闻类型成功' };
+        return this.response;
+      });
   }
 
   async findAll(query) {
@@ -32,14 +50,14 @@ export class NewsService {
       is_delete: false,
     });
     const data = await this.newsModel
-      .find({ is_delete: false }, { __v: 0, is_delete: 0 })
-      .sort('sort')
+      .find({ ...params, is_delete: false }, { __v: 0, is_delete: 0 })
+      .sort({ date: -1 })
       .skip(pageNum ? (pageNum - 1) * pageSize : 0)
       .limit(pageSize);
 
     this.response = {
       code: 200,
-      msg: '新闻类型列表',
+      msg: '新闻列表',
       data: {
         list: data,
         total,
@@ -99,12 +117,12 @@ export class NewsService {
 
   async remove(_id: string) {
     return await this.newsModel
-      .findOne({ _id: _id })
+      .findOne({ _id })
       .then(async () => {
-        await this.newsModel.findOneAndUpdate({ _id }, { isDel: true }, {});
+        await this.newsModel.findOneAndUpdate({ _id }, { is_delete: true }, {});
         this.response = {
           code: 200,
-          msg: '新闻类型删除成功',
+          msg: '新闻删除成功',
           data: '',
         };
         return this.response;
@@ -113,7 +131,7 @@ export class NewsService {
         Logger.error(err);
         return (this.response = {
           code: 500,
-          msg: '新闻类型不存在',
+          msg: '新闻不存在',
           data: '',
         });
       });
@@ -124,7 +142,7 @@ export class NewsService {
       .then(async () => {
         this.response = {
           code: 200,
-          msg: '新闻类型状态修改成功',
+          msg: '新闻状态修改成功',
           data: '',
         };
         return this.response;
@@ -133,7 +151,7 @@ export class NewsService {
         Logger.error(err);
         return (this.response = {
           code: 500,
-          msg: '新闻类型不存在',
+          msg: '新闻不存在',
           data: '',
         });
       });

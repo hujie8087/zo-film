@@ -1,5 +1,5 @@
-import { MenuListType } from 'types';
+import { ClassifyTreeType, ClassifyType } from 'types';
 
 export const useMenuList = () => {
-  return useState('menuList', (): MenuListType[] => []);
+  return useState('menuList', (): ClassifyTreeType<ClassifyType>[] => []);
 };

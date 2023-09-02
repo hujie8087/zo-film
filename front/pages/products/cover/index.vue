@@ -1,44 +1,54 @@
 <template>
   <CommonBanner
-    :img="coverData?.banner"
+    :img="`https://www.zo-film.com/${coverData?.classify_img}`"
     breadTo="/products"
-    :breadText="coverData?.title"
-    :title="coverData?.title"
+    :breadText="coverData?.classify_name"
+    :title="coverData?.classify_name"
   />
   <div class="cover">
     <div class="container">
       <div class="cover-video">
-        <video :src="coverData?.file" controls muted autoplay loop></video>
+        <video
+          :src="'https://www.zo-film.com/' + coverData?.video.classify_img"
+          controls
+          muted
+          autoplay
+          loop
+        ></video>
       </div>
       <div class="cover-list">
-        <h3>探索我们的漆面保护膜</h3>
+        <h3>{{ coverData?.sub_name }}</h3>
         <div
           class="cover-item"
-          v-for="cover in coverData?.list"
+          v-for="cover in coverData?.children"
           :key="cover._id"
         >
           <el-row type="flex" :gutter="50">
             <el-col :span="10">
               <div class="cover-image">
-                <nuxt-link :to="`/products/cover/${cover._id}`">
-                  <img :src="cover.imageUrl" alt="" srcset="" />
+                <nuxt-link :to="`/products/cover/${cover.goods_id}`">
+                  <img
+                    :src="`https://www.zo-film.com/${cover?.goods_img}`"
+                    alt=""
+                    srcset=""
+                  />
                 </nuxt-link>
               </div>
             </el-col>
             <el-col :span="14">
-              <nuxt-link :to="`/products/cover/${cover._id}`">
-                <h2>{{ cover.title }}</h2></nuxt-link
+              <nuxt-link :to="`/products/cover/${cover.goods_id}`">
+                <h2>{{ cover.goods_name }}</h2></nuxt-link
               >
-              <h4>{{ cover.subtitle }}</h4>
+              <h4>{{ cover.erji_title }}</h4>
               <div class="cover-content">
-                {{ cover.description }}
+                {{ cover.goods_intro }}
               </div>
               <div class="cover-link">
                 <nuxt-link to="/store" class="store-btn btn">
                   <i class="fa fa-map-marker"></i> 挑选专业门店
                 </nuxt-link>
                 <nuxt-link
-                  :to="`/products/cover/${cover._id}`"
+                  :to="`/products/cover/${cover.goods_id}`"
                   class="more-btn btn"
                 >
                   了解更多信息
@@ -54,7 +64,11 @@
 </template>
 
 <script setup lang="ts">
-const { data: coverData } = useFetch('/api/products/cover');
+const { data: coverData } = useFetch('/api/products/cover', {
+  query: {
+    id: '67',
+  },
+});
 </script>
 
 <style scoped lang="less">

@@ -7,10 +7,13 @@ import http from "@/api";
  */
 // 图片上传
 export const uploadImg = (params: FormData) => {
-  return http.post<Upload.ResFileUrl>(PORT1 + `/file/upload/img`, params);
+  return http.post<Upload.ResFileUrl>(PORT1 + `/upload`, params, {
+    // 设置请求头utf-8
+    headers: { "Content-Type": "charset=utf-8;multipart/form-data;" }
+  });
 };
 
 // 视频上传
 export const uploadVideo = (params: FormData) => {
-  return http.post<Upload.ResFileUrl>(PORT1 + `/file/upload/video`, params);
+  return http.post<Upload.ResFileUrl>(PORT1 + `/upload/video`, params);
 };

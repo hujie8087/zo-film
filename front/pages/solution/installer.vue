@@ -1,19 +1,19 @@
 <template>
   <CommonBanner
-    :img="installerData?.banner"
-    :title="installerData?.title"
-    breadTo="/solution/installer"
-    :breadText="installerData?.title"
+    :img="`https://www.zo-film.com/${installerData?.classify_img}`"
+    :title="installerData?.classify_name"
+    breadTo="/solution/train"
+    :breadText="installerData?.classify_name"
   />
   <div class="installer">
     <div class="container">
       <el-row class="shop-list">
         <el-col :span="14">
           <div class="train-left">
-            <h2>{{ installerData?.list[0].title }}</h2>
+            <h2>{{ installerData?.children[3].classify_name }}</h2>
             <div
               class="train-content"
-              v-html="installerData?.list[0].content"
+              v-html="installerData?.children[3].classify_intro2"
             ></div>
             <nuxt-link to="/store" class="more-btn"
               ><i class="fa fa-map-marker"></i> 挑选专业门店</nuxt-link
@@ -21,7 +21,10 @@
           </div>
         </el-col>
         <el-col :span="10">
-          <div class="train-right" v-html="installerData?.list[0].desc"></div>
+          <div
+            class="train-right"
+            v-html="installerData?.children[3].classify_intro"
+          ></div>
         </el-col>
       </el-row>
       <el-divider />
@@ -32,16 +35,23 @@
             <div class=""></div>
             <div
               class="train-content"
-              v-html="installerData?.list[1].content"
+              v-html="installerData?.children[2].classify_intro"
             ></div>
           </el-col>
           <el-col :span="10">
             <div class="train-install">
-              <h1>{{ installerData?.list[1].title }}</h1>
-              <img :src="installerData?.list[1].imageUrl" alt="" srcset="" />
-              <h4>{{ installerData?.list[1].subtitle }}</h4>
+              <h1>{{ installerData?.children[2].classify_name }}</h1>
+              <img
+                :src="
+                  'https://www.zo-film.com/' +
+                  installerData?.children[2].classify_img
+                "
+                alt=""
+                srcset=""
+              />
+              <h4>{{ installerData?.children[2].sub_name }}</h4>
               <div class="train-address">
-                {{ installerData?.list[1].address }}
+                {{ installerData?.children[2].en_name }}
               </div>
             </div>
           </el-col>
@@ -50,17 +60,21 @@
     </div>
     <div class="success-wrap">
       <div class="container">
-        <h1>{{ installerData?.list[2].title }}</h1>
+        <h1>{{ installerData?.children[0].classify_name }}</h1>
         <el-row type="flex" :gutter="50">
           <el-col
             :span="12"
-            v-for="item in installerData?.list[2].list"
+            v-for="item in installerData?.children[0].children"
             :key="item._id"
           >
             <div class="item">
-              <img :src="item.imageUrl" alt="" srcset="" />
+              <img
+                :src="'https://www.zo-film.com/' + item.img"
+                alt=""
+                srcset=""
+              />
               <div class="content">
-                <h3>{{ item.title }}</h3>
+                <h3>{{ item.name }}</h3>
                 <p v-html="item.content"></p>
               </div>
             </div>
@@ -68,7 +82,7 @@
         </el-row>
       </div>
     </div>
-    <h2 class="video-title">{{ installerData?.list[3].title }}</h2>
+    <h2 class="video-title">{{ installerData?.children[1].classify_name }}</h2>
     <div class="installer-video">
       <div class="container">
         <el-row type="flex">
@@ -82,15 +96,19 @@
               :pagination="{ clickable: true }"
             >
               <swiper-slide
-                v-for="video in installerData?.list[3].list"
+                v-for="video in installerData?.children[1].children"
                 :key="video._id"
               >
                 <div class="item">
                   <div class="link" @click="playVideo(video)">
-                    <img :src="video.imageUrl" :alt="video.title" srcset="" />
+                    <img
+                      :src="'https://www.zo-film.com/' + video.img"
+                      :alt="video.name"
+                      srcset=""
+                    />
                     <i class="fa fa-play-circle-o"></i>
                   </div>
-                  <h5 class="title">{{ video.title }}</h5>
+                  <h5 class="title">{{ video.name }}</h5>
                 </div>
               </swiper-slide>
             </swiper></el-col
@@ -113,7 +131,6 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Pagination, A11y } from 'swiper/modules';
 import { VideoType } from 'types';
 const { data: installerData } = useFetch('/api/installer');
-console.log(installerData.value);
 
 const modules = [Navigation, Pagination, A11y];
 
@@ -121,8 +138,8 @@ const dialogVisible = ref(false);
 const dialogTitle = ref('');
 const dialogVideo = ref('');
 const playVideo = (video: VideoType) => {
-  dialogTitle.value = video.title;
-  dialogVideo.value = video.videoUrl;
+  dialogTitle.value = video.name;
+  dialogVideo.value = video.upload_video;
   dialogVisible.value = true;
 };
 </script>

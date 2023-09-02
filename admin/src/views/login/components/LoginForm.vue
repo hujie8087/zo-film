@@ -1,7 +1,7 @@
 <template>
   <el-form ref="loginFormRef" :model="loginForm" :rules="loginRules" size="large">
     <el-form-item prop="username">
-      <el-input v-model="loginForm.username" placeholder="用户名：admin / user">
+      <el-input v-model="loginForm.username" placeholder="请输入用户名">
         <template #prefix>
           <el-icon class="el-input__icon">
             <user />
@@ -10,11 +10,23 @@
       </el-input>
     </el-form-item>
     <el-form-item prop="password">
-      <el-input v-model="loginForm.password" type="password" placeholder="密码：123456" show-password autocomplete="new-password">
+      <el-input v-model="loginForm.password" type="password" placeholder="请输入密码" show-password autocomplete="new-password">
         <template #prefix>
           <el-icon class="el-input__icon">
             <lock />
           </el-icon>
+        </template>
+      </el-input>
+    </el-form-item>
+    <el-form-item prop="captcha">
+      <el-input v-model="loginForm.captcha" placeholder="请输入验证码">
+        <template #prefix>
+          <el-icon class="el-input__icon">
+            <lock />
+          </el-icon>
+        </template>
+        <template #suffix>
+          <span v-html="captcha" @click="getCaptchaData" style="width: 100px; height: 34px" />
         </template>
       </el-input>
     </el-form-item>
@@ -41,7 +53,7 @@ import { useKeepAliveStore } from "@/stores/modules/keepAlive";
 import { initDynamicRouter } from "@/routers/modules/dynamicRouter";
 import { CircleClose, UserFilled } from "@element-plus/icons-vue";
 import type { ElForm } from "element-plus";
-import md5 from "md5";
+import { getCaptcha, sendCaptcha } from "@/api/modules/captcha";
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -52,14 +64,25 @@ type FormInstance = InstanceType<typeof ElForm>;
 const loginFormRef = ref<FormInstance>();
 const loginRules = reactive({
   username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
-  password: [{ required: true, message: "请输入密码", trigger: "blur" }]
+  password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+  captcha: [{ required: true, message: "请输入验证码", trigger: "blur" }]
 });
 
 const loading = ref(false);
-const loginForm = reactive<Login.ReqLoginForm>({
-  username: "",
-  password: ""
+const loginForm = reactive<Login.ReqLoginFormParams>({
+  username: "admin",
+  password: "123456",
+  captcha: ""
 });
+
+const captcha = ref();
+
+const getCaptchaData = async () => {
+  const data = await getCaptcha();
+  captcha.value = data;
+};
+
+getCaptchaData();
 
 // login
 const login = (formEl: FormInstance | undefined) => {
@@ -67,29 +90,49 @@ const login = (formEl: FormInstance | undefined) => {
   formEl.validate(async valid => {
     if (!valid) return;
     loading.value = true;
-    try {
-      // 1.执行登录接口
-      const { data } = await loginApi({ ...loginForm, password: md5(loginForm.password) });
-      userStore.setToken(data.access_token);
-      userStore.setUserInfo({ name: data.username });
-
-      // 2.添加动态路由
-      await initDynamicRouter();
-
-      // 3.清空 tabs、keepAlive 数据
-      tabsStore.closeMultipleTab();
-      keepAliveStore.setKeepAliveName();
-
-      // 4.跳转到首页
-      router.push(HOME_URL);
+    const data = await sendCaptcha({ captcha: loginForm.captcha });
+    if (data.code !== 200) {
       ElNotification({
-        title: getTimeState(),
-        message: "欢迎登录 zo-film管理后台",
-        type: "success",
+        message: "验证码错误",
+        type: "error",
         duration: 3000
       });
-    } finally {
       loading.value = false;
+      return;
+    } else {
+      try {
+        // 1.执行登录接口
+        const res = await loginApi({ username: loginForm.username, password: loginForm.password });
+        if (res.code !== 200) {
+          userStore.setToken(res.data.access_token);
+          userStore.setUserInfo({ name: res.data.username });
+
+          // 2.添加动态路由
+          await initDynamicRouter();
+
+          // 3.清空 tabs、keepAlive 数据
+          tabsStore.closeMultipleTab();
+          keepAliveStore.setKeepAliveName();
+
+          // 4.跳转到首页
+          router.push(HOME_URL);
+          ElNotification({
+            title: getTimeState(),
+            message: "欢迎登录 zo-film管理后台",
+            type: "success",
+            duration: 3000
+          });
+        } else {
+          loading.value = false;
+          ElNotification({
+            message: res.msg || "登录失败",
+            type: "error",
+            duration: 3000
+          });
+        }
+      } finally {
+        loading.value = false;
+      }
     }
   });
 };

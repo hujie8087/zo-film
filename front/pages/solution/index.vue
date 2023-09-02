@@ -1,16 +1,14 @@
 <template>
   <CommonBanner
-    :img="solutionData?.banner"
-    title="解决方案"
+    :img="solutionData?.classify_img"
+    :title="solutionData?.classify_name"
     breadTo="/help"
-    breadText="解决方案"
+    :breadText="solutionData?.classify_name"
   />
   <div class="solution">
     <div class="container">
-      <h2>{{ solutionData?.subtitle }}</h2>
-      <div class="content">
-        {{ solutionData?.content }}
-      </div>
+      <h2>{{ solutionData?.sub_name }}</h2>
+      <div class="content" v-html="solutionData?.classify_intro"></div>
       <nuxt-link class="more" to="#"
         >请求更多信息 <i class="fa fa-arrow-down"></i
       ></nuxt-link>
@@ -18,20 +16,22 @@
         <el-row type="flex" :gutter="50">
           <el-col
             :span="8"
-            v-for="item in solutionData?.trainList"
+            v-for="item in solutionData?.children"
             :key="item._id"
           >
             <div class="item">
-              <nuxt-link :to="item.path">
-                <img :src="item.imgUrl" :alt="item.title" srcset="" />
-                <h4>{{ item.title }}<i class="fa fa-arrow-right"></i></h4>
+              <nuxt-link :to="item.classify_url">
+                <img :src="item.page_img" :alt="item.classify_name" srcset="" />
+                <h4>
+                  {{ item.classify_name }}<i class="fa fa-arrow-right"></i>
+                </h4>
               </nuxt-link>
             </div>
           </el-col>
         </el-row>
       </div>
     </div>
-    <h2 class="dealer-title">经销商聚焦</h2>
+    <h2 class="dealer-title">{{ solutionData?.video.classify_name }}</h2>
     <div class="solution-dealer">
       <div class="container">
         <el-row type="flex">
@@ -45,16 +45,16 @@
               :pagination="{ clickable: true }"
             >
               <swiper-slide
-                v-for="video in solutionData?.dealerList"
+                v-for="video in solutionData?.video.children"
                 :key="video._id"
               >
                 <div class="item">
                   <div class="link" @click="playVideo(video)">
-                    <img :src="video.imageUrl" :alt="video.title" srcset="" />
+                    <img :src="video.img" :alt="video.goods_name" srcset="" />
                     <i class="fa fa-play-circle-o"></i>
                   </div>
-                  <h5 class="title">{{ video.title }}</h5>
-                  <p class="content">{{ video.subtitle }}</p>
+                  <h5 class="title">{{ video.name }}</h5>
+                  <p class="content">{{ video.intro }}</p>
                 </div>
               </swiper-slide>
             </swiper></el-col
@@ -84,8 +84,8 @@ const dialogVisible = ref(false);
 const dialogTitle = ref('');
 const dialogVideo = ref('');
 const playVideo = (video: VideoType) => {
-  dialogTitle.value = video.title;
-  dialogVideo.value = video.videoUrl;
+  dialogTitle.value = video.name;
+  dialogVideo.value = video.upload_video;
   dialogVisible.value = true;
 };
 </script>

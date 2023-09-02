@@ -27,6 +27,7 @@ export namespace News {
     status: string;
     is_delete: boolean;
     sort: number;
+    pid: string;
   }
   export interface ResNewsParams {
     news_title?: string;

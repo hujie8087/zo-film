@@ -2,10 +2,12 @@ import { NestFactory } from '@nestjs/core';
 import { AdminModule } from './admin.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as session from 'express-session';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AdminModule);
 
+  app.use(session({ secret: 'zo-film', rolling: true, name: 'My.sid' }));
   // 开启静态文件托管
   app.useStaticAssets('Uploads', {
     prefix: '/Uploads',

@@ -5,7 +5,8 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-
+  // 允许跨域
+  app.enableCors();
   // 开启静态文件托管
   app.useStaticAssets('uploads', {
     prefix: '/uploads',
@@ -17,7 +18,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api-front', app, document);
-  await app.listen(3000);
+  await app.listen(3100);
   console.log('http://localhost:3100/api-front');
 }
 bootstrap();

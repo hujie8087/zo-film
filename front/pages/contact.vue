@@ -2,16 +2,26 @@
   <div class="contact">
     <div class="container">
       <div class="bread">
-        <BreadCrumbsItem to="/contact" text="联系我们" />
+        <BreadCrumbsItem to="/contact" :text="contactData?.classify_name" />
       </div>
       <div class="contact-content">
-        <div v-html="contactData?.content"></div>
+        <img
+          :src="contactData?.classify_img"
+          :alt="contactData?.classify_name"
+          srcset=""
+        />
+        <div v-html="contactData?.classify_intro"></div>
       </div>
       <el-divider />
       <div class="contact-form">
-        <el-form :model="form" label-width="120px" :rules="rules">
-          <el-form-item label="主题" prop="subject">
-            <el-input v-model="form.subject" />
+        <el-form
+          ref="ruleFormRef"
+          :model="form"
+          label-width="120px"
+          :rules="rules"
+        >
+          <el-form-item label="主题" prop="theme">
+            <el-input v-model="form.theme" />
           </el-form-item>
           <el-form-item label="联系电话" prop="tel">
             <el-input v-model="form.tel" />
@@ -19,8 +29,8 @@
           <el-form-item label="QQ号" prop="qq">
             <el-input v-model="form.qq" />
           </el-form-item>
-          <el-form-item label="邮箱地址" prop="email">
-            <el-input v-model="form.email" />
+          <el-form-item label="邮箱地址" prop="e_mail">
+            <el-input v-model="form.e_mail" />
           </el-form-item>
           <el-form-item label="留言内容" prop="content">
             <el-input v-model="form.content" type="textarea" rows="5" />
@@ -36,12 +46,14 @@
 </template>
 
 <script setup lang="ts">
+import { FormInstance } from 'element-plus';
+
 const { data: contactData } = useFetch('/api/contact');
-const form = ref({
-  subject: '',
+const form = reactive({
+  theme: '',
   tel: '',
   qq: '',
-  email: '',
+  e_mail: '',
   content: '',
 });
 const validate_email = (rule: any, value: any, callback: any) => {
@@ -57,30 +69,34 @@ const validate_email = (rule: any, value: any, callback: any) => {
   }
 };
 const rules = reactive({
-  subject: [{ required: true, message: '请输入主题', trigger: 'blur' }],
+  theme: [{ required: true, message: '请输入主题', trigger: 'blur' }],
   tel: [{ required: true, message: '请输入联系电话', trigger: 'blur' }],
   qq: [{ required: true, message: '请输入QQ号', trigger: 'blur' }],
-  email: [
+  e_mail: [
     { validator: validate_email, trigger: ['blur'] },
     { required: true, message: '请输入邮箱地址', trigger: 'blur' },
   ],
 });
-
+const ruleFormRef = ref<FormInstance>();
 const onSubmit = () => {
-  const { data: res } = useFetch('/api/messages', {
-    method: 'POST',
-    body: form.value,
+  ruleFormRef.value?.validate(async (valid, fields) => {
+    if (valid) {
+      const { data: res } = await useFetch('/api/messages', {
+        method: 'POST',
+        body: form,
+      });
+      if (res.value?.code === 200) {
+        ElMessage.success('提交成功');
+      } else {
+        ElMessage.error(res.value?.msg);
+      }
+    } else {
+      console.log('error submit!', fields);
+    }
   });
-  console.log(res);
 };
 const reset = () => {
-  form.value = {
-    subject: '',
-    tel: '',
-    qq: '',
-    email: '',
-    content: '',
-  };
+  ruleFormRef.value?.resetFields();
 };
 </script>
 

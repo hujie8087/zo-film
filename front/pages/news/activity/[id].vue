@@ -1,7 +1,11 @@
 <template>
-  <CommonBanner :img="newsData?.banner" breadTo="/news" breadText="公司活动">
+  <CommonBanner
+    :img="`https://www.zo-film.com/${newsData?.classify_img}`"
+    breadTo="/news"
+    :breadText="newsData?.classify_name"
+  >
   </CommonBanner>
-  <CateName title="公司活动" category="公司新闻" />
+  <CateName :title="newsData?.classify_name" category="公司新闻" />
   <div class="list-content">
     <div class="container">
       <el-row type="flex">
@@ -17,10 +21,20 @@
                 ><i class="fa fa-arrow-left"></i> 返回所有公司活动</nuxt-link
               >
             </div>
-            <h2>{{ newsDetail?.title }}</h2>
-            <div class="time">发布于{{ newsDetail?.time }}</div>
+            <h2>{{ newsDetail?.news_title }}</h2>
+            <div class="time">
+              发布于 {{ formateDate(newsDetail?.date + '000') }}
+            </div>
             <el-divider />
-            <div class="content" v-html="newsDetail?.content"></div>
+            <div
+              class="content"
+              v-html="
+                newsDetail?.news_content?.replaceAll(
+                  '&quot;Uploads',
+                  '&quot;https://www.zo-film.com/Uploads'
+                )
+              "
+            ></div>
           </div>
         </el-col>
       </el-row>
@@ -30,18 +44,11 @@
 
 <script setup lang="ts">
 const { data: MenuList } = useFetch('/api/news/newsMenu');
-const { data: newsData } = useFetch('/api/news/news', {
-  params: {
-    type: 'activity',
-  },
-});
+const { data: newsData } = await useFetch(`/api/news/news?classify_id=17`);
 const route = useRoute();
-console.log(route.params.id);
-const { data: newsDetail } = useFetch('/api/news/newsDetail', {
-  params: {
-    id: route.params.id,
-  },
-});
+const { data: newsDetail } = useFetch(
+  `/api/news/newsDetail?id=${route.params.id}`
+);
 </script>
 
 <style scoped lang="less">

@@ -1,34 +1,44 @@
 <template>
   <div class="construction">
     <div class="container">
-      <BreadCrumbsItem :to="constructionData?.title" />
+      <BreadCrumbsItem
+        :to="constructionData?.classify_name"
+        :text="constructionData?.classify_name"
+      />
       <h2>
-        {{ constructionData?.title }}
+        {{ constructionData?.classify_name }}
       </h2>
       <div class="construction-list">
         <div
           class="construction-item"
-          v-for="item in constructionData?.list"
-          :key="item._id"
+          v-for="item in constructionData?.children"
+          :key="item.classify_id"
         >
           <el-row type="flex" :gutter="50">
             <el-col :span="10">
-              <nuxt-link :to="`/products/construction/${item._id}`">
-                <img :src="item.imageUrl" :alt="item.title" srcset="" />
+              <nuxt-link :to="`/products/construction/${item.classify_id}`">
+                <img
+                  :src="'https://www.zo-film.com/' + item.classify_img"
+                  :alt="item.classify_name"
+                  srcset=""
+                />
               </nuxt-link>
             </el-col>
             <el-col :span="14">
               <div class="construction-info">
-                <nuxt-link :to="`/products/construction/${item._id}`"
-                  ><h1>{{ item.title }}</h1>
+                <nuxt-link :to="`/products/construction/${item.classify_id}`"
+                  ><h1>{{ item.classify_name }}</h1>
                 </nuxt-link>
-                <div class="construction-content" v-html="item.content"></div>
+                <div
+                  class="construction-content"
+                  v-html="item.classify_intro"
+                ></div>
                 <div class="construction-link">
                   <nuxt-link to="/store" class="store-btn btn">
                     <i class="fa fa-map-marker"></i> 挑选专业门店
                   </nuxt-link>
                   <nuxt-link
-                    :to="`/products/construction/${item._id}`"
+                    :to="`/products/construction/${item.classify_id}`"
                     class="more-btn btn"
                   >
                     了解更多信息

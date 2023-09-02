@@ -1,7 +1,11 @@
 <template>
-  <CommonBanner :img="newsData?.banner" breadTo="/news" breadText="新闻中心">
+  <CommonBanner
+    :img="`https://www.zo-film.com/${newsData?.classify_img}`"
+    breadTo="/news"
+    :breadText="newsData?.classify_name"
+  >
   </CommonBanner>
-  <CateName title="新闻中心" category="公司新闻" />
+  <CateName :title="newsData?.classify_name" category="公司新闻" />
   <div class="list-content">
     <div class="container">
       <el-row type="flex">
@@ -12,18 +16,20 @@
         </el-col>
         <el-col :span="16" :offset="2">
           <div class="news-list">
-            <h2>新闻中心</h2>
+            <h2>{{ newsData?.classify_name }}</h2>
             <div class="news-list-content">
               <div
                 class="news-item"
-                v-for="item in newsData?.newsList"
+                v-for="item in newsData?.children"
                 :key="item._id"
               >
                 <div class="news-item-time">
-                  <span>{{ item.time }}</span>
+                  <span>{{ formateDate(item.date + '000') }}</span>
                 </div>
-                <h3>{{ item.title }}</h3>
-                <nuxt-link :to="`/news/news/${item._id}`">查看文章</nuxt-link>
+                <h3>{{ item.news_title }}</h3>
+                <nuxt-link :to="`/news/news/${item.news_id}`"
+                  >查看文章</nuxt-link
+                >
               </div>
             </div>
           </div>
@@ -34,13 +40,9 @@
 </template>
 
 <script setup lang="ts">
+import { formateDate } from '@/utils';
 const { data: MenuList } = useFetch('/api/news/newsMenu');
-const { data: newsData } = useFetch('/api/news/news', {
-  params: {
-    type: 'news',
-  },
-});
-console.log(newsData.value);
+const { data: newsData } = await useFetch(`/api/news/news?classify_id=16`);
 </script>
 
 <style scoped lang="less">

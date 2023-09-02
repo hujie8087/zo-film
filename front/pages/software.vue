@@ -1,54 +1,115 @@
 <template>
   <CommonBanner
-    :img="softwareData?.banner"
+    :img="softwareData?.classify_img"
     breadTo="/software"
-    :breadText="softwareData?.title"
-    :title="softwareData?.title"
+    :breadText="softwareData?.classify_name"
+    :title="softwareData?.classify_name"
   />
-  <div
-    class="software-box"
-    v-for="(software, index) in softwareData?.list.slice(0, 6)"
-    :key="software._id"
-  >
+  <div class="software-box">
     <div class="container">
-      <el-row class="shop-list" v-if="index === 0" :gutter="30">
+      <el-row class="shop-list" :gutter="30">
         <el-col :span="14">
           <div class="software-left">
-            <h2>{{ software.title }}</h2>
-            <div class="software-content" v-html="software.desc"></div>
+            <h2>{{ getDate('50')?.classify_name }}</h2>
+            <div
+              class="software-content"
+              v-html="getDate('50')?.classify_intro2"
+            ></div>
             <nuxt-link to="/store" class="more-btn"
               >了解更多信息 <i class="fa fa-arrow-down"></i
             ></nuxt-link>
           </div>
         </el-col>
         <el-col :span="10">
-          <div class="software-right" v-html="software.content"></div>
+          <div
+            class="software-right"
+            v-html="getDate('50')?.classify_intro"
+          ></div>
         </el-col>
       </el-row>
-      <div class="video-wrap" v-if="index === 1">
-        <video :src="software.file" controls muted autoplay loop></video>
+    </div>
+  </div>
+  <div class="software-box">
+    <div class="container">
+      <div class="video-wrap">
+        <video
+          :src="getDate('51')?.children[0].down_video"
+          controls
+          muted
+          autoplay
+          loop
+        ></video>
       </div>
-      <div class="software-section" v-if="index === 2 || index === 4">
-        <h2>{{ software.title }}</h2>
+    </div>
+  </div>
+  <div class="software-box">
+    <div class="container">
+      <div class="software-section">
+        <h2>{{ getDate('52')?.classify_name }}</h2>
         <el-row type="flex" :gutter="50">
           <el-col :span="8">
-            <img :src="software.imageUrl" alt="" srcset="" />
-            <h3>{{ software.subtitle }}</h3>
-            <p>{{ software.address }}</p>
+            <img :src="getDate('52')?.classify_img" alt="" srcset="" />
+            <h3>{{ getDate('52')?.classify_name }}</h3>
+            <p>{{ getDate('52')?.sub_name }}</p>
           </el-col>
           <el-col :span="16">
-            <div class="content" v-html="software.content"></div>
+            <div class="content" v-html="getDate('52')?.classify_intro"></div>
           </el-col>
         </el-row>
       </div>
-      <div class="software-list" v-if="index === 3 || index === 5">
-        <h2>{{ software.title }}</h2>
+    </div>
+  </div>
+  <div class="software-box">
+    <div class="container">
+      <div class="software-list">
+        <h2>{{ getDate('53')?.classify_name }}</h2>
         <el-row type="flex">
-          <el-col :span="8" v-for="item in software.list" :key="item._id">
+          <el-col
+            :span="8"
+            v-for="item in getDate('53')?.children"
+            :key="item._id"
+          >
             <div class="item">
-              <img :src="item.imageUrl" alt="" srcset="" />
-              <h4>{{ item.title }}</h4>
-              <p v-html="item.content"></p>
+              <img :src="item.img" alt="" srcset="" />
+              <h4>{{ item.name }}</h4>
+              <div v-html="item.content"></div>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+    </div>
+  </div>
+  <div class="software-box">
+    <div class="container">
+      <div class="software-section">
+        <h2>{{ getDate('54')?.classify_name }}</h2>
+        <el-row type="flex" :gutter="50">
+          <el-col :span="8">
+            <img :src="getDate('54')?.classify_img" alt="" srcset="" />
+            <h3>{{ getDate('54')?.classify_name }}</h3>
+            <p>{{ getDate('54')?.en_name }}</p>
+          </el-col>
+          <el-col :span="16">
+            <div class="content" v-html="getDate('54')?.classify_intro"></div>
+          </el-col>
+        </el-row>
+      </div>
+    </div>
+  </div>
+  <div class="software-box">
+    <div class="container">
+      <div class="software-list">
+        <h2>{{ getDate('55')?.classify_name }}</h2>
+        <el-row type="flex">
+          <el-col
+            :span="8"
+            v-for="item in getDate('55')?.children"
+            :key="item._id"
+          >
+            <div class="item">
+              <img :src="item.img" alt="" srcset="" />
+              <h4>{{ item.name }}</h4>
+              <div v-html="item.content"></div>
             </div>
           </el-col>
         </el-row>
@@ -57,11 +118,11 @@
   </div>
   <div
     class="software-box"
-    v-for="software in softwareData?.list[6].list"
+    v-for="software in getDate('56')?.children"
     :key="software._id"
   >
     <div class="container">
-      <h4>{{ software.title }}</h4>
+      <h4>{{ software.name }}</h4>
       <div class="software-content" v-html="software.content"></div>
     </div>
   </div>
@@ -69,6 +130,11 @@
 
 <script setup lang="ts">
 const { data: softwareData } = useFetch('/api/software');
+const getDate = (id: string) => {
+  return softwareData.value?.children.find(
+    (item: any) => item.classify_id === id
+  );
+};
 </script>
 
 <style scoped lang="less">

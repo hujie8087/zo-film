@@ -7,7 +7,7 @@ import { useKeepAliveStore } from "./keepAlive";
 const keepAliveStore = useKeepAliveStore();
 
 export const useTabsStore = defineStore({
-  id: "geeker-tabs",
+  id: "zo-film-tabs",
   state: (): TabsState => ({
     tabsMenuList: []
   }),
@@ -61,5 +61,5 @@ export const useTabsStore = defineStore({
       });
     }
   },
-  persist: piniaPersistConfig("geeker-tabs")
+  persist: piniaPersistConfig("zo-film-tabs")
 });
