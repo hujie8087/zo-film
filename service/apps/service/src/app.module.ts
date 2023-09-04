@@ -30,7 +30,7 @@ import { ProductsModule } from './products/products.module';
   imports: [
     DbModule,
     MulterModule.register({
-      dest: 'uploads',
+      dest: '/Uploads',
     }),
     NewsModule,
     NewsTypeModule,

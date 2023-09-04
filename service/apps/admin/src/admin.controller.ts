@@ -25,11 +25,11 @@ export class AdminController {
   @ApiOperation({ summary: '单文件上传' })
   @UseInterceptors(
     FileInterceptor('file', {
-      dest: './uploads/newImages',
+      dest: '/uploads/newImages',
       storage: multer.diskStorage({
         // 上传文件保存目录，无则自动创建
         destination: function (req, file, cb) {
-          const dir = './Uploads/newImages/' + dayjs().format('YYYY/MM/DD');
+          const dir = '/Uploads/newImages/' + dayjs().format('YYYY/MM/DD');
           if (!existsSync(dir)) {
             mkdirSync(dir, {
               recursive: true,

@@ -35,6 +35,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from 'libs/lib';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
@@ -42,6 +43,9 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '60s' },
+    }),
+    MulterModule.register({
+      dest: '/Uploads',
     }),
     DbModule,
     UserModule,
