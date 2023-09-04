@@ -70,8 +70,8 @@ const loginRules = reactive({
 
 const loading = ref(false);
 const loginForm = reactive<Login.ReqLoginFormParams>({
-  username: "admin",
-  password: "123456",
+  username: "",
+  password: "",
   captcha: ""
 });
 

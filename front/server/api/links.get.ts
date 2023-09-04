@@ -1,6 +1,6 @@
 import { ClassifyType } from '../../types';
 
 export default defineEventHandler(async (event) => {
-  const data = await $fetch<ClassifyType[]>(`http://localhost:3100/links`);
+  const data = await $fetch<ClassifyType[]>(`http://127.0.0.1:3100/links`);
   return data;
 });

@@ -2,7 +2,7 @@ import { ResTrainType } from '../../types';
 
 export default defineEventHandler(async (event) => {
   const data = await $fetch<ResTrainType>(
-    `http://localhost:3100/solution/train`
+    `http://127.0.0.1:3100/solution/train`
   );
   return data;
   // return {

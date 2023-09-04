@@ -2,7 +2,7 @@ import { ClassifyType, MenuType, ResponseType } from '../../../types';
 
 export default defineEventHandler(async (event) => {
   const data = await $fetch<ClassifyType[]>(
-    'http://localhost:3100/news-type/menu'
+    'http://127.0.0.1:3100/news-type/menu'
   );
   const newsMenu = data.map((item) => {
     return {

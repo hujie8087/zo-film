@@ -8,7 +8,7 @@
       :disabled="drawerProps.isView"
       :model="drawerProps.rowData"
       :hide-required-asterisk="drawerProps.isView"
-      style="height: 70vh; overflow-y: auto; padding: 0 10px"
+      style="height: 70vh; padding: 0 10px; overflow-y: auto"
     >
       <el-form-item label="父级" prop="classify_pid">
         <el-tree-select

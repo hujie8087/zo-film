@@ -8,7 +8,7 @@
       :disabled="drawerProps.isView"
       :model="drawerProps.rowData"
       :hide-required-asterisk="drawerProps.isView"
-      style="height: 70vh; overflow-y: auto; padding: 0 10px"
+      style="height: 70vh; padding: 0 10px; overflow-y: auto"
     >
       <el-form-item label="主题" prop="theme">
         <el-input v-model="drawerProps.rowData!.theme" placeholder="请输入主题" clearable></el-input>

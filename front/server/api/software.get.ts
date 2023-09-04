@@ -1,7 +1,7 @@
 import { ResSoftwareType } from '../../types';
 
 export default defineEventHandler(async (event) => {
-  const data = await $fetch<ResSoftwareType>(`http://localhost:3100/software`);
+  const data = await $fetch<ResSoftwareType>(`http://127.0.0.1:3100/software`);
   return data;
   // return {
   //   banner:

@@ -4,7 +4,7 @@ export default defineEventHandler(async (event) => {
   let query = getQuery(event);
 
   const data = await $fetch<ResHelpType>(
-    `http://localhost:3100/help/list?id=${query.classify_id}`
+    `http://127.0.0.1:3100/help/list?id=${query.classify_id}`
   );
   return data;
 });

@@ -80,17 +80,4 @@ const props = defineProps({
 .swiper-button-next:after {
   display: none;
 }
-/* 定义新的样式 */
-.swiper-button-prev {
-  width: 35px;
-  height: 35px;
-  background: url('~/assets/imgs/nginx.jpg') no-repeat;
-  bottom: 15px;
-}
-.swiper-button-next {
-  width: 35px;
-  height: 35px;
-  background: url('~/assets/imgs/nginx.jpg') no-repeat;
-  bottom: 15px;
-}
 </style>

@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     '@/assets/css/font-awesome.min.css',
     '@/assets/css/index.less',
   ],
+  ssr: false,
   vite: {
     css: {
       postcss: {
@@ -33,7 +34,7 @@ export default defineNuxtConfig({
     server: {
       proxy: {
         '/Uploads': {
-          target: 'http://localhost:3100',
+          target: 'http://127.0.0.1:3100',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/Uploads/, '/Uploads'),
         },

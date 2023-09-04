@@ -2,7 +2,7 @@ import { ClassifyTreeType, ClassifyType } from '../../../types';
 
 export default defineEventHandler(async (event) => {
   const data = await $fetch<ClassifyTreeType<ClassifyType>>(
-    `http://localhost:3100/products`
+    `http://127.0.0.1:3100/products`
   );
   return data;
 });

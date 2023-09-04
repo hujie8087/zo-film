@@ -7,9 +7,9 @@
       label-suffix=" :"
       :rules="rules"
       :model="rowData"
-      style="height: 70vh; overflow-y: auto; padding: 0 10px"
+      style="height: 70vh; padding: 0 10px; overflow-y: auto"
     >
-      <h3 style="text-align: left; width: 100%">{{ rowData.version_name }}</h3>
+      <h3 style="width: 100%; text-align: left">{{ rowData.version_name }}</h3>
       <el-form-item label="标题" prop="title">
         <el-input v-model="rowData!.title" placeholder="请输入标题" clearable></el-input>
       </el-form-item>

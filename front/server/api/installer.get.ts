@@ -2,7 +2,7 @@ import { ResInstallerType } from '../../types';
 
 export default defineEventHandler(async (event) => {
   const data = await $fetch<ResInstallerType>(
-    `http://localhost:3100/solution/installer`
+    `http://127.0.0.1:3100/solution/installer`
   );
   return data;
   // return {

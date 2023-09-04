@@ -52,7 +52,10 @@ const models = TypegooseModule.forFeature([
 @Global()
 @Module({
   imports: [
-    TypegooseModule.forRoot('mongodb://localhost:27017/zo', {}),
+    TypegooseModule.forRoot(
+      'mongodb://zofilm:zofilm2023@119.28.7.148:27017/zofilm',
+      {},
+    ),
     models,
   ],
   providers: [DbService],

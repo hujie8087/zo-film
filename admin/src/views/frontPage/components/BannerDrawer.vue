@@ -8,7 +8,7 @@
       :disabled="drawerProps.isView"
       :model="drawerProps.rowData"
       :hide-required-asterisk="drawerProps.isView"
-      style="height: 70vh; overflow-y: auto; padding: 0 10px"
+      style="height: 70vh; padding: 0 10px; overflow-y: auto"
     >
       <el-form-item label="标题" prop="banner_title">
         <el-input v-model="drawerProps.rowData!.banner_title" placeholder="请输入标题" clearable></el-input>

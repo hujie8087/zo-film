@@ -235,21 +235,21 @@ const toRouter = (row: Comment.ResCommentList) => {
 }
 .image-slot {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
-  background: var(--el-fill-color-light);
-  color: var(--el-text-color-secondary);
   font-size: 30px;
+  color: var(--el-text-color-secondary);
+  background: var(--el-fill-color-light);
 }
 .image-slot .el-icon {
   font-size: 30px;
 }
 .item-text {
   width: 100%;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>
