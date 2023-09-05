@@ -109,7 +109,15 @@ const columns: ColumnProps<GoodsImg.ResGoodsImgList>[] = [
     render: scope => {
       return (
         <>
-          <img src={scope.row.imgs} alt="" srcset="" style={{ height: "50px" }} />
+          <el-image
+            src={scope.row.imgs}
+            style="height:50px"
+            preview-src-list={[scope.row.imgs]}
+            zoom-rate={1.2}
+            z-index={999}
+            preview-teleported
+            fit="cover"
+          ></el-image>
         </>
       );
     }

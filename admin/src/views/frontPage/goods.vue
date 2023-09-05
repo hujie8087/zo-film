@@ -92,7 +92,15 @@ const columns: ColumnProps<Goods.ResGoodsList>[] = [
     render: scope => {
       return (
         <>
-          <img src={scope.row.goods_img} alt="" srcset="" style={{ height: "50px" }} />
+          <el-image
+            src={scope.row.goods_img}
+            style="height:50px"
+            preview-src-list={[scope.row.goods_img]}
+            zoom-rate={1.2}
+            z-index={999}
+            preview-teleported
+            fit="cover"
+          ></el-image>
         </>
       );
     }
@@ -104,7 +112,15 @@ const columns: ColumnProps<Goods.ResGoodsList>[] = [
     render: scope => {
       return (
         <>
-          <img src={scope.row.goods_bigimg} alt="" srcset="" style={{ height: "50px" }} />
+          <el-image
+            src={scope.row.goods_bigimg}
+            style="height:50px"
+            preview-src-list={[scope.row.goods_bigimg]}
+            zoom-rate={1.2}
+            z-index={999}
+            preview-teleported
+            fit="cover"
+          ></el-image>
         </>
       );
     }

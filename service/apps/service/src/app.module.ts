@@ -29,8 +29,12 @@ import { ProductsModule } from './products/products.module';
 @Module({
   imports: [
     DbModule,
-    MulterModule.register({
-      dest: '/Uploads',
+    MulterModule.registerAsync({
+      useFactory() {
+        return {
+          dest: 'uploads',
+        };
+      },
     }),
     NewsModule,
     NewsTypeModule,

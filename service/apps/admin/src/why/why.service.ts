@@ -44,7 +44,7 @@ export class WhyService {
     const result = await Promise.all(
       data.map(async (item) => {
         const classify = await this.classifyModel.findOne({
-          _id: item.type_id,
+          classify_id: item.classify_id,
         });
         return {
           ...item._doc,

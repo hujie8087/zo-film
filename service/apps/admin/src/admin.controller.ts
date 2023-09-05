@@ -25,7 +25,7 @@ export class AdminController {
   @ApiOperation({ summary: '单文件上传' })
   @UseInterceptors(
     FileInterceptor('file', {
-      dest: '/uploads/newImages',
+      dest: '/Uploads/newImages',
       storage: multer.diskStorage({
         // 上传文件保存目录，无则自动创建
         destination: function (req, file, cb) {

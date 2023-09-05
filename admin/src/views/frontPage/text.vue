@@ -101,7 +101,15 @@ const columns: ColumnProps<Text.ResTextList>[] = [
     render: scope => {
       return (
         <>
-          <img src={scope.row.upload_img} alt="" srcset="" style={{ height: "50px" }} />
+          <el-image
+            src={scope.row.upload_img}
+            style="height:50px"
+            preview-src-list={[scope.row.upload_img]}
+            zoom-rate={1.2}
+            z-index={999}
+            preview-teleported
+            fit="cover"
+          ></el-image>
         </>
       );
     }

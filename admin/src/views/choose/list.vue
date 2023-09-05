@@ -29,7 +29,7 @@
   </div>
 </template>
 
-<script lang="tsx" setup name="chooseList">
+<script lang="tsx" setup>
 import { reactive, ref } from "vue";
 import { useHandleData } from "@/hooks/useHandleData";
 import ProTable from "@/components/ProTable/index.vue";
@@ -44,8 +44,8 @@ import { statusDict } from "@/utils/serviceDict";
 const route = useRoute();
 // 获取 ProTable 元素，调用其获取刷新数据方法（还能获取到当前查询参数，方便导出携带参数）
 const proTable = ref<ProTableInstance>();
-const typeId = route.query.type_id as string;
-const initParam = reactive({ type_id: typeId });
+const typeId = route.query.classify_id as string;
+const initParam = reactive({ classify_id: typeId });
 
 // 如果表格需要初始化请求参数，直接定义传给 ProTable(之后每次请求都会自动带上该参数，此参数更改之后也会一直带上，改变此参数会自动刷新表格数据)
 // dataCallback 是对于返回的表格数据做处理，如果你后台返回的数据不是 list && total && pageNum && pageSize 这些字段，那么你可以在这里进行处理成这些字段
@@ -95,7 +95,15 @@ const columns: ColumnProps<Choose.ResChooseList>[] = [
     render: scope => {
       return (
         <>
-          <img src={scope.row.img} alt="" srcset="" style={{ height: "50px" }} />
+          <el-image
+            src={scope.row.img}
+            style="height:50px"
+            preview-src-list={[scope.row.img]}
+            zoom-rate={1.2}
+            z-index={999}
+            preview-teleported
+            fit="cover"
+          ></el-image>
         </>
       );
     }

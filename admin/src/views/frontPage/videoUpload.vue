@@ -87,7 +87,15 @@ const columns: ColumnProps<VideoUpload.ResVideoUploadList>[] = [
     render: scope => {
       return (
         <>
-          <img src={scope.row.img} alt="" srcset="" style={{ height: "50px" }} />
+          <el-image
+            src={scope.row.img}
+            style="height:50px"
+            preview-src-list={[scope.row.img]}
+            zoom-rate={1.2}
+            z-index={999}
+            preview-teleported
+            fit="cover"
+          ></el-image>
         </>
       );
     }

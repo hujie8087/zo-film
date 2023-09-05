@@ -85,7 +85,15 @@ const columns: ColumnProps<Link.ResLinkList>[] = [
     render: scope => {
       return (
         <>
-          <img src={scope.row.link_img} alt="" srcset="" style={{ height: "50px" }} />
+          <el-image
+            src={scope.row.link_img}
+            style="height:50px"
+            preview-src-list={[scope.row.link_img]}
+            zoom-rate={1.2}
+            z-index={999}
+            preview-teleported
+            fit="cover"
+          ></el-image>
         </>
       );
     }

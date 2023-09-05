@@ -90,50 +90,46 @@ const login = (formEl: FormInstance | undefined) => {
   formEl.validate(async valid => {
     if (!valid) return;
     loading.value = true;
-    const data = await sendCaptcha({ captcha: loginForm.captcha });
-    if (data.code !== 200) {
-      ElNotification({
-        message: "验证码错误",
-        type: "error",
-        duration: 3000
-      });
-      loading.value = false;
-      return;
-    } else {
-      try {
-        // 1.执行登录接口
-        const res = await loginApi({ username: loginForm.username, password: loginForm.password });
-        if (res.code !== 200) {
-          userStore.setToken(res.data.access_token);
-          userStore.setUserInfo({ name: res.data.username });
+    await sendCaptcha({ captcha: loginForm.captcha })
+      .then(async () => {
+        try {
+          // 1.执行登录接口
+          const res = await loginApi({ username: loginForm.username, password: loginForm.password });
+          if (res.code !== 200) {
+            userStore.setToken(res.data.access_token);
+            userStore.setUserInfo({ name: res.data.username });
 
-          // 2.添加动态路由
-          await initDynamicRouter();
+            // 2.添加动态路由
+            await initDynamicRouter();
 
-          // 3.清空 tabs、keepAlive 数据
-          tabsStore.closeMultipleTab();
-          keepAliveStore.setKeepAliveName();
+            // 3.清空 tabs、keepAlive 数据
+            tabsStore.closeMultipleTab();
+            keepAliveStore.setKeepAliveName();
 
-          // 4.跳转到首页
-          router.push(HOME_URL);
-          ElNotification({
-            title: getTimeState(),
-            message: "欢迎登录 zo-film管理后台",
-            type: "success",
-            duration: 3000
-          });
-        } else {
+            // 4.跳转到首页
+            router.push(HOME_URL);
+            ElNotification({
+              title: getTimeState(),
+              message: "欢迎登录 zo-film管理后台",
+              type: "success",
+              duration: 3000
+            });
+          } else {
+            loading.value = false;
+            ElNotification({
+              message: res.msg || "登录失败",
+              type: "error",
+              duration: 3000
+            });
+          }
+        } finally {
           loading.value = false;
-          ElNotification({
-            message: res.msg || "登录失败",
-            type: "error",
-            duration: 3000
-          });
         }
-      } finally {
+      })
+      .catch(() => {
         loading.value = false;
-      }
-    }
+        return;
+      });
   });
 };
 

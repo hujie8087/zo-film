@@ -21,12 +21,42 @@
       <el-table-column prop="classify_name" label="栏目名称" header-align="center" />
       <el-table-column prop="classify_img" label="图片" align="center">
         <template #default="scope">
-          <img height="50" :src="scope.row.classify_img" alt="" srcset="" />
+          <el-image
+            v-if="scope.row.classify_img"
+            style="height: 40px"
+            :src="scope.row.classify_img"
+            :zoom-rate="1.2"
+            :preview-src-list="[scope.row.classify_img]"
+            :z-index="999"
+            preview-teleported
+            fit="cover"
+          >
+            <template #error>
+              <div class="image-slot">
+                <el-icon><icon-picture /></el-icon>
+              </div>
+            </template>
+          </el-image>
         </template>
       </el-table-column>
       <el-table-column prop="page_img" label="内页图片" align="center">
         <template #default="scope">
-          <img height="50" :src="scope.row.page_img" alt="" srcset="" />
+          <el-image
+            v-if="scope.row.page_img"
+            style="height: 40px"
+            :src="scope.row.page_img"
+            :zoom-rate="1.2"
+            :preview-src-list="[scope.row.page_img]"
+            :z-index="999"
+            preview-teleported
+            fit="cover"
+          >
+            <template #error>
+              <div class="image-slot">
+                <el-icon><icon-picture /></el-icon>
+              </div>
+            </template>
+          </el-image>
         </template>
       </el-table-column>
       <el-table-column prop="type_id" label="类型" align="center">
@@ -36,7 +66,7 @@
       </el-table-column>
       <el-table-column prop="listCount" label="内容列表" align="center">
         <template #default="scope">
-          <el-button link v-if="scope.row.listCount && scope.row.listCount !== 0" @click="toRouter(scope.row)">{{
+          <el-button type="danger" link v-if="scope.row.listCount && scope.row.listCount !== 0" @click="toRouter(scope.row)">{{
             `内容列表${scope.row.listCount}`
           }}</el-button>
         </template>
@@ -134,7 +164,7 @@ const toRouter = (row: Comment.ResCommentList) => {
   } else if (row.type_id === "3") {
     router.push({ path: "/goods", query: { type_id: row._id } });
   } else if (row.type_id === "73") {
-    router.push({ path: "/chooseList", query: { type_id: row._id } });
+    router.push({ path: "/chooseList", query: { classify_id: row.classify_id } });
   }
 };
 </script>

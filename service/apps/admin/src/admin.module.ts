@@ -44,8 +44,12 @@ import { MulterModule } from '@nestjs/platform-express';
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '60s' },
     }),
-    MulterModule.register({
-      dest: '/Uploads',
+    MulterModule.registerAsync({
+      useFactory() {
+        return {
+          dest: '/Uploads',
+        };
+      },
     }),
     DbModule,
     UserModule,
