@@ -1,6 +1,6 @@
 <template>
   <CommonBanner
-    :img="`https://www.zo-film.com/${coverData?.classify_img}`"
+    :img="`../${coverData?.classify_img}`"
     breadTo="/products"
     :breadText="coverData?.classify_name"
     :title="coverData?.classify_name"
@@ -9,7 +9,7 @@
     <div class="container">
       <div class="cover-video">
         <video
-          :src="'https://www.zo-film.com/' + coverData?.video.classify_img"
+          :src="'../' + coverData?.video.classify_img"
           controls
           muted
           autoplay
@@ -27,11 +27,7 @@
             <el-col :span="10">
               <div class="cover-image">
                 <nuxt-link :to="`/products/cover/${cover.goods_id}`">
-                  <img
-                    :src="`https://www.zo-film.com/${cover?.goods_img}`"
-                    alt=""
-                    srcset=""
-                  />
+                  <img :src="`../${cover?.goods_img}`" alt="" srcset="" />
                 </nuxt-link>
               </div>
             </el-col>

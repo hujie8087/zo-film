@@ -351,7 +351,9 @@ export interface ResHelpType extends ClassifyType {
   children: ClassifyType[];
   downloads: DownloadType[];
 }
-
+export interface ResQuestionType extends ClassifyType {
+  children: ClassifyTreeType<TextCType>[];
+}
 export interface GoodImg {
   _id: string;
   name: string;

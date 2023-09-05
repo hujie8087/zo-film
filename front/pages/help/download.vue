@@ -1,7 +1,7 @@
 <template>
   <CommonBanner
     breadTo="/help"
-    :img="`https://www.zo-film.com/${helpData?.classify_img}`"
+    :img="`../${helpData?.classify_img}`"
     :breadText="helpData?.classify_name"
   />
   <CateName :title="helpData?.classify_name" category="帮助" />
@@ -62,8 +62,7 @@
                 <div class="content">
                   <div v-html="item.download_content"></div>
                   <div class="download">
-                    下载:<a
-                      :href="`https://www.zo-film.com/${item.download_file}`"
+                    下载:<a :href="`../${item.download_file}`"
                       ><i class="fa fa-file-pdf-o"></i>
                     </a>
                   </div>

@@ -1,7 +1,7 @@
 <template>
   <CommonBanner
     breadTo="/help"
-    :img="`https://www.zo-film.com/${helpData?.classify_img}`"
+    :img="`../${helpData?.classify_img}`"
     :breadText="helpData?.classify_name"
   />
   <CateName :title="helpData?.classify_name" category="帮助" />

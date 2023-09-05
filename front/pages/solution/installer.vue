@@ -1,6 +1,6 @@
 <template>
   <CommonBanner
-    :img="`https://www.zo-film.com/${installerData?.classify_img}`"
+    :img="`../${installerData?.classify_img}`"
     :title="installerData?.classify_name"
     breadTo="/solution/train"
     :breadText="installerData?.classify_name"
@@ -42,10 +42,7 @@
             <div class="train-install">
               <h1>{{ installerData?.children[2].classify_name }}</h1>
               <img
-                :src="
-                  'https://www.zo-film.com/' +
-                  installerData?.children[2].classify_img
-                "
+                :src="'../' + installerData?.children[2].classify_img"
                 alt=""
                 srcset=""
               />
@@ -68,11 +65,7 @@
             :key="item._id"
           >
             <div class="item">
-              <img
-                :src="'https://www.zo-film.com/' + item.img"
-                alt=""
-                srcset=""
-              />
+              <img :src="'../' + item.img" alt="" srcset="" />
               <div class="content">
                 <h3>{{ item.name }}</h3>
                 <p v-html="item.content"></p>
@@ -101,11 +94,7 @@
               >
                 <div class="item">
                   <div class="link" @click="playVideo(video)">
-                    <img
-                      :src="'https://www.zo-film.com/' + video.img"
-                      :alt="video.name"
-                      srcset=""
-                    />
+                    <img :src="'../' + video.img" :alt="video.name" srcset="" />
                     <i class="fa fa-play-circle-o"></i>
                   </div>
                   <h5 class="title">{{ video.name }}</h5>

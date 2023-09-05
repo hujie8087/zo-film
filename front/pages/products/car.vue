@@ -1,6 +1,6 @@
 <template>
   <CommonBanner
-    :img="'https://www.zo-film.com/' + carData?.classify_img"
+    :img="'../' + carData?.classify_img"
     breadTo="/products"
     :breadText="carData?.classify_name"
   />
@@ -14,9 +14,7 @@
         <el-col :span="10">
           <div class="car-video">
             <video
-              :src="
-                'https://www.zo-film.com/' + carData?.children[0].classify_img
-              "
+              :src="'../' + carData?.children[0].classify_img"
               controls
               muted
             ></video>
@@ -36,11 +34,7 @@
             :key="item._id"
             class="item"
           >
-            <img
-              :src="'https://www.zo-film.com/' + item.classify_img"
-              alt=""
-              srcset=""
-            />
+            <img :src="'../' + item.classify_img" alt="" srcset="" />
             <h3>{{ item.classify_name }}</h3>
           </el-col>
         </el-row>
@@ -55,11 +49,7 @@
             v-for="item in carData?.children[1].children"
             :key="item._id"
           >
-            <img
-              :src="'https://www.zo-film.com/' + item.classify_img"
-              alt=""
-              srcset=""
-            />
+            <img :src="'../' + item.classify_img" alt="" srcset="" />
             <h3>{{ item.title }}</h3>
           </el-col>
         </el-row>
@@ -68,11 +58,7 @@
     <div class="car-list" v-for="item in carData?.children[2].children">
       <div class="container" :id="'more' + item.classify_id">
         <div class="car-item">
-          <img
-            :src="'https://www.zo-film.com/' + item.page_img"
-            alt=""
-            srcset=""
-          />
+          <img :src="'../' + item.page_img" alt="" srcset="" />
           <div class="car-content">
             <h2>{{ item.classify_name }}</h2>
 
@@ -81,11 +67,7 @@
             </nuxt-link>
             <el-row type="flex">
               <el-col :span="12">
-                <img
-                  :src="'https://www.zo-film.com/' + item.upload_img"
-                  alt=""
-                  srcset=""
-                />
+                <img :src="'../' + item.upload_img" alt="" srcset="" />
               </el-col>
               <el-col :span="12">
                 <div
@@ -93,7 +75,7 @@
                   v-html="
                     item.classify_intro2.replaceAll(
                       '&quot;Uploads',
-                      '&quot;https://www.zo-film.com/Uploads'
+                      '&quot;../Uploads'
                     )
                   "
                 ></div

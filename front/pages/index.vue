@@ -71,7 +71,9 @@
           </div>
         </el-col>
       </el-row>
-      <nuxt-link to="" class="more-btn">查看所有局部保护选项</nuxt-link>
+      <nuxt-link to="/products/mounting" class="more-btn"
+        >查看所有局部保护选项</nuxt-link
+      >
     </div>
   </div>
   <div class="video-layout-content">

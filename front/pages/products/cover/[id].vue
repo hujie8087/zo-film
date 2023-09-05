@@ -1,6 +1,6 @@
 <template>
   <CommonBanner
-    :img="`https://www.zo-film.com/${coverDetail?.data.goods_bigimg}`"
+    :img="`../../${coverDetail?.data.goods_bigimg}`"
     breadTo="/products"
     :breadText="coverDetail?.data.goods_name"
   />
@@ -14,7 +14,7 @@
             v-html="
               coverDetail?.data.goods_content.replaceAll(
                 '&quot;Uploads',
-                '&quot;https://www.zo-film.com/Uploads'
+                '&quot;../../Uploads'
               )
             "
           ></div>
@@ -39,7 +39,7 @@
     <div class="video-wrap">
       <div class="container">
         <video
-          :src="'https://www.zo-film.com/' + coverDetail?.data.upload_video"
+          :src="'../../' + coverDetail?.data.upload_video"
           controls
         ></video>
       </div>
@@ -54,11 +54,7 @@
             :key="item._id"
             class="item"
           >
-            <img
-              :src="'https://www.zo-film.com/' + item.imgs"
-              alt=""
-              srcset=""
-            />
+            <img :src="'../../' + item.imgs" alt="" srcset="" />
             <h3>{{ item.name }}</h3>
             <div class="content">{{ item.intro }}</div>
           </el-col>
@@ -85,7 +81,7 @@
                 <div class="item">
                   <div class="link" @click="playVideo(video)">
                     <img
-                      :src="'https://www.zo-film.com/' + video.img"
+                      :src="'../../' + video.img"
                       :alt="video.name"
                       srcset=""
                     />
@@ -126,7 +122,7 @@ const dialogTitle = ref('');
 const dialogVideo = ref('');
 const playVideo = (video: GoodVideo) => {
   dialogTitle.value = video.name;
-  dialogVideo.value = video.upload_video;
+  dialogVideo.value = '../../' + video.upload_video;
   dialogVisible.value = true;
 };
 </script>

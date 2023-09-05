@@ -1,6 +1,6 @@
 <template>
   <CommonBanner
-    :img="`https://www.zo-film.com/${trainData?.classify_img}`"
+    :img="`../${trainData?.classify_img}`"
     :title="trainData?.classify_name"
     breadTo="/solution/train"
     :breadText="trainData?.classify_name"
@@ -49,7 +49,7 @@
             <div class="train-install">
               <h1>{{ trainData?.children[1].classify_name }}</h1>
               <img
-                :src="`https://www.zo-film.com/${trainData?.children[1].classify_img}`"
+                :src="`../${trainData?.children[1].classify_img}`"
                 alt=""
                 srcset=""
               />
@@ -64,7 +64,7 @@
             :span="8"
             v-for="(item, index) in trainData?.children[0].children"
           >
-            <img :src="`https://www.zo-film.com/${item.upload_img}`" />
+            <img :src="`../${item.upload_img}`" />
           </el-col>
         </el-row>
       </div>

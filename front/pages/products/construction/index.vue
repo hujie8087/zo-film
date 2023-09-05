@@ -18,7 +18,7 @@
             <el-col :span="10">
               <nuxt-link :to="`/products/construction/${item.classify_id}`">
                 <img
-                  :src="'https://www.zo-film.com/' + item.classify_img"
+                  :src="'../' + item.classify_img"
                   :alt="item.classify_name"
                   srcset=""
                 />

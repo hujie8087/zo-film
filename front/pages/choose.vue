@@ -1,7 +1,7 @@
 <template>
   <CommonBanner
     :title="chooseData?.classify_name"
-    img="https://www.zo-film.com/Uploads/images/2020/10/29/1603959885_classify_img.jpg"
+    :img="chooseData?.classify_img"
   >
   </CommonBanner>
   <div class="choose-section">
@@ -42,16 +42,14 @@
               >
               <div v-else>
                 <strong class="tip">电子邮件</strong>
-                <nuxt-link
-                  class="link-arrow"
-                  to="mailto:dowcause@dowcause.com.cn"
-                  >dowcause@dowcause.com.cn
+                <nuxt-link class="link-arrow" :to="'mailto:' + supply.e_mail"
+                  >{{ supply.e_mail }}
                 </nuxt-link>
                 <span class="link-pipe">|</span>
                 <strong class="tip">联系电话</strong>
-                <nuxt-link class="link-arrow" to="tel:4006999590"
-                  >4006999590</nuxt-link
-                >
+                <nuxt-link class="link-arrow" :to="'tel:' + supply.phone">{{
+                  supply.phone
+                }}</nuxt-link>
               </div>
             </el-col>
           </el-row>

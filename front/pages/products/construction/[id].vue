@@ -8,7 +8,30 @@
       <el-row type="flex" :gutter="30" class="detail-info">
         <el-col :span="6">
           <keep-alive>
-            <NewsMenu :active="active" :menuList="menuList!" />
+            <div class="list-info-nav">
+              <el-menu
+                class="news-menu"
+                background-color="#1c1b1b"
+                text-color="#fff"
+                active-text-color="#f5af05"
+                :default-active="active"
+                router
+              >
+                <template v-for="menu in menuList" :key="menu._id">
+                  <el-menu-item :index="menu.path">
+                    <span>{{ menu.title }}</span>
+                    <i class="fa fa-arrow-right"> </i>
+                  </el-menu-item>
+                  <!-- <el-menu-item
+                    v-else
+                    @click="handleClickMenu(menu.classify_url)"
+                  >
+                    <span>{{ menu.classify_name }}</span>
+                    <i class="fa fa-arrow-right"></i>
+                  </el-menu-item> -->
+                </template>
+              </el-menu>
+            </div>
           </keep-alive>
         </el-col>
         <el-col :span="12">
@@ -41,11 +64,7 @@
             {{ detailData?.children[2].classify_name }}
             <i class="fa fa-arrow-right"></i>
           </nuxt-link>
-          <img
-            :src="'https://www.zo-film.com/' + detailData?.page_img"
-            alt=""
-            srcset=""
-          />
+          <img :src="'../../' + detailData?.page_img" alt="" srcset="" />
         </el-col>
       </el-row>
     </div>
@@ -60,13 +79,16 @@ const { data: detailData } = useFetch('/api/products/constructionDetail', {
     id: route.params.id,
   },
 });
+const menuList = ref<{ _id: string; title: string; path: string }[]>([]);
 const active = ref(`/products/construction/${route.params.id}`);
-const menuList = constructionMenu.value?.children.map((item) => {
-  return {
-    _id: item._id,
-    title: item.classify_name,
-    path: '/products/construction/' + item.classify_id,
-  };
+onMounted(() => {
+  menuList.value = constructionMenu.value?.children.map((item) => {
+    return {
+      _id: item._id,
+      title: item.classify_name,
+      path: '/products/construction/' + item.classify_id,
+    };
+  })!;
 });
 </script>
 
@@ -129,6 +151,24 @@ const menuList = constructionMenu.value?.children.map((item) => {
     img {
       width: 50%;
       margin-top: 50px;
+    }
+  }
+}
+.list-info-nav {
+  padding: 0 13px;
+  .el-menu-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    border-bottom: 2px solid #323232;
+    &:last-child {
+      border-bottom: none;
+    }
+    &.is-active {
+      background-color: #323232;
+    }
+    .fa {
+      color: #f5af05;
     }
   }
 }

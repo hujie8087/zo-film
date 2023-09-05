@@ -1,6 +1,6 @@
 <template>
   <CommonBanner
-    :img="`https://www.zo-film.com/${coverData?.classify_img}`"
+    :img="`../${coverData?.classify_img}`"
     breadTo="/products"
     :breadText="coverData?.classify_name"
     :title="coverData?.classify_name"
@@ -18,7 +18,7 @@
           >
             <div class="item">
               <img
-                :src="'https://www.zo-film.com/' + mounting.goods_img"
+                :src="'../' + mounting.goods_img"
                 :alt="mounting.goods_name"
                 srcset=""
               />
@@ -40,11 +40,7 @@
             <el-col :span="10">
               <div class="cover-image">
                 <nuxt-link :to="`/products/cover/${cover.goods_id}`">
-                  <img
-                    :src="`https://www.zo-film.com/${cover?.goods_img}`"
-                    alt=""
-                    srcset=""
-                  />
+                  <img :src="`../${cover?.goods_img}`" alt="" srcset="" />
                 </nuxt-link>
               </div>
             </el-col>
