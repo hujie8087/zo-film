@@ -79,6 +79,9 @@ const { data: detailData } = useFetch('/api/products/constructionDetail', {
     id: route.params.id,
   },
 });
+useHead({
+  title: detailData.value?.classify_name,
+});
 const menuList = ref<{ _id: string; title: string; path: string }[]>([]);
 const active = ref(`/products/construction/${route.params.id}`);
 onMounted(() => {

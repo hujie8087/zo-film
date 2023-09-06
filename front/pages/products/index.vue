@@ -31,6 +31,9 @@
 
 <script setup lang="ts">
 const { data: productData } = useFetch('/api/products/products');
+useHead({
+  title: productData.value?.classify_name,
+});
 </script>
 
 <style scoped lang="less">

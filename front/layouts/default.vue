@@ -9,11 +9,21 @@
 </template>
 
 <script setup lang="ts">
-const route = useRoute();
-
+const { data: siteInfo } = await useFetch('/api/site');
+const site = useWebSite();
+site.value = siteInfo.value!;
 useHead({
-  meta: [{ property: 'og:title', content: `Z&O - ${route.meta.title}` }],
-  title: `Z&O - ${route.meta.title}`,
+  meta: [
+    {
+      name: 'keywords',
+      content: siteInfo.value?.keywords,
+    },
+    {
+      name: 'description',
+      content: siteInfo.value?.description,
+    },
+  ],
+  title: `${siteInfo.value?.title}`,
 });
 </script>
 

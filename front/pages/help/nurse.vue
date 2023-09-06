@@ -83,7 +83,9 @@ const getData = async () => {
 const { data: helpMenu } = useFetch('/api/helpMenu');
 const activeNames = ref<string[]>([]);
 getData();
-
+useHead({
+  title: helpData.value?.classify_name,
+});
 const handleClickMenu = (url: string) => {
   return window.open(url);
 };

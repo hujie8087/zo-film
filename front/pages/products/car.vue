@@ -90,6 +90,9 @@
 
 <script lang="ts" setup>
 const { data: carData } = useFetch('/api/products/car');
+useHead({
+  title: carData.value?.classify_name,
+});
 </script>
 
 <style lang="less" scoped>

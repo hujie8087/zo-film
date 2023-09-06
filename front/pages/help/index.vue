@@ -89,7 +89,9 @@ onMounted(() => {
     (item) => item.classify_id === classifyId.value
   )?.classify_url!;
 });
-
+useHead({
+  title: helpData.value?.classify_name,
+});
 const handleClickMenu = (url: string) => {
   return window.open(url);
 };

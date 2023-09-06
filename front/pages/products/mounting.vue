@@ -78,6 +78,9 @@ const { data: coverData } = useFetch('/api/products/cover', {
     id: '88',
   },
 });
+useHead({
+  title: coverData.value?.classify_name,
+});
 </script>
 
 <style scoped lang="less">

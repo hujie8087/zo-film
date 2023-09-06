@@ -11,35 +11,39 @@
         <el-col :span="16">
           <div class="home-section-link">
             <ul>
-              <li v-for="link in footLinks" :key="link.classify_id">
-                <nuxt-link :to="link.classify_url">
-                  <i
-                    class="fa"
-                    :class="
-                      link.classify_id === '25'
-                        ? 'fa-file-text'
-                        : 'fa-map-marker'
-                    "
-                  ></i
-                  >{{ link.classify_name }}<i class="fa fa-arrow-right"></i>
-                </nuxt-link>
-              </li>
-              <li v-for="link in links" :key="link.classify_id">
-                <nuxt-link class="outline" :to="link.classify_url"
-                  ><img
-                    v-if="link.classify_id === '128'"
-                    src="~/assets/images/tm1.png"
-                    alt=""
-                    srcset=""
-                  />
-                  <img
-                    v-else-if="link.classify_id === '129'"
-                    src="~/assets/images/jd1.png"
-                    alt=""
-                    srcset=""
-                  />
-                </nuxt-link>
-              </li>
+              <template v-for="link in footLinks" :key="link.classify_id">
+                <li>
+                  <nuxt-link :to="link.classify_url">
+                    <i
+                      class="fa"
+                      :class="
+                        link.classify_id === '25'
+                          ? 'fa-file-text'
+                          : 'fa-map-marker'
+                      "
+                    ></i
+                    >{{ link.classify_name }}<i class="fa fa-arrow-right"></i>
+                  </nuxt-link>
+                </li>
+              </template>
+              <template v-for="link in links" :key="link.classify_id">
+                <li>
+                  <nuxt-link class="outline" :to="link.classify_url"
+                    ><img
+                      v-if="link.classify_id === '128'"
+                      src="~/assets/images/tm1.png"
+                      alt=""
+                      srcset=""
+                    />
+                    <img
+                      v-else-if="link.classify_id === '129'"
+                      src="~/assets/images/jd1.png"
+                      alt=""
+                      srcset=""
+                    />
+                  </nuxt-link>
+                </li>
+              </template>
             </ul>
           </div>
         </el-col>
@@ -126,20 +130,26 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Pagination, A11y } from 'swiper/modules';
 import { VideoType } from 'types';
 
+const siteInfo = useWebSite();
 const modules = [Navigation, Pagination, A11y];
 const footLinks = useFootLinks();
 const links = useLinks();
 const { data: homeData } = await useFetch('/api/homeData');
-
 const dialogVisible = ref(false);
 const dialogTitle = ref('');
 const dialogVideo = ref('');
-
 const playVideo = (video: VideoType) => {
   dialogTitle.value = video.name;
   dialogVideo.value = video.upload_video;
   dialogVisible.value = true;
 };
+useHead({
+  title: '首页',
+  meta: [
+    { name: 'description', content: siteInfo.value.description },
+    { name: 'keywords', content: siteInfo.value.keywords },
+  ],
+});
 </script>
 
 <style scoped lang="less">

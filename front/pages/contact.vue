@@ -98,6 +98,14 @@ const onSubmit = () => {
 const reset = () => {
   ruleFormRef.value?.resetFields();
 };
+const siteInfo = useWebSite();
+useHead({
+  title: contactData.value?.classify_name || siteInfo.value.title,
+  meta: [
+    { name: 'description', content: siteInfo.value.description },
+    { name: 'keywords', content: siteInfo.value.keywords },
+  ],
+});
 </script>
 
 <style scoped lang="less">

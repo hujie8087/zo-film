@@ -135,6 +135,14 @@ const getDate = (id: string) => {
     (item: any) => item.classify_id === id
   );
 };
+const siteInfo = useWebSite();
+useHead({
+  title: softwareData.value?.classify_name || siteInfo.value.title,
+  meta: [
+    { name: 'description', content: siteInfo.value.description },
+    { name: 'keywords', content: siteInfo.value.keywords },
+  ],
+});
 </script>
 
 <style scoped lang="less">

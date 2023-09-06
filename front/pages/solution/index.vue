@@ -79,7 +79,9 @@ import { VideoType } from 'types';
 
 const { data: solutionData } = useFetch('/api/solution');
 const modules = [Navigation, Pagination, A11y];
-
+useHead({
+  title: solutionData.value?.classify_name,
+});
 const dialogVisible = ref(false);
 const dialogTitle = ref('');
 const dialogVideo = ref('');

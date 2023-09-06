@@ -56,6 +56,9 @@
 
 <script lang="ts" setup>
 const { data: constructionData } = useFetch('/api/products/construction');
+useHead({
+  title: constructionData.value?.classify_name,
+});
 </script>
 
 <style lang="less" scoped>

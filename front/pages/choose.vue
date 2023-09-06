@@ -126,32 +126,25 @@ import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Pagination, A11y } from 'swiper/modules';
 import { VideoType } from 'types';
+const siteInfo = useWebSite();
 const menuList = await useMenuList();
 const routeInfo = menuList.value.find(
   (item) => item.classify_url === '/choose'
 );
-onMounted(() => {
-  if (routeInfo) {
-    definePageMeta({
-      title: '挑选专业门店',
-      description: '挑选专业门店',
-      keywords: '挑选专业门店',
-    });
-  }
-});
-
 const modules = [Navigation, Pagination, A11y];
 const { data: chooseData } = await useFetch('/api/choose');
 const dialogVisible = ref(false);
 const dialogTitle = ref('');
 const dialogVideo = ref('');
-console.log(chooseData.value);
-
 const playVideo = (video: VideoType) => {
   dialogTitle.value = video.name;
   dialogVideo.value = video.upload_video;
   dialogVisible.value = true;
 };
+
+useHead({
+  title: routeInfo?.classify_name || siteInfo.value.title,
+});
 </script>
 
 <style scoped lang="less">

@@ -49,6 +49,9 @@ const route = useRoute();
 const { data: newsDetail } = useFetch(
   `/api/news/newsDetail?id=${route.params.id}`
 );
+useHead({
+  title: newsDetail.value?.news_title,
+});
 </script>
 
 <style scoped lang="less">

@@ -122,7 +122,9 @@ import { VideoType } from 'types';
 const { data: installerData } = useFetch('/api/installer');
 
 const modules = [Navigation, Pagination, A11y];
-
+useHead({
+  title: installerData.value?.classify_name,
+});
 const dialogVisible = ref(false);
 const dialogTitle = ref('');
 const dialogVideo = ref('');

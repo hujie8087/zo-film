@@ -54,6 +54,9 @@
 <script setup lang="ts">
 const { data: MenuList } = useFetch('/api/news/newsMenu');
 const { data: management } = useFetch('/api/news/management');
+useHead({
+  title: management.value?.classify_name,
+});
 </script>
 
 <style scoped lang="less">

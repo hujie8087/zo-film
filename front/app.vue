@@ -20,4 +20,31 @@ const nuxtApp = useNuxtApp();
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   nuxtApp.vueApp.component(key, component);
 }
+const webSiteInfo = useWebSite();
+useHead({
+  // as a string,
+  // where `%s` is replaced with the title
+  // titleTemplate: '%s - Site Title',
+  // ... or as a function
+  titleTemplate: (productCategory) => {
+    return productCategory
+      ? `${productCategory} - ${webSiteInfo.value.title}`
+      : webSiteInfo.value.title;
+  },
+  meta: [
+    {
+      name: 'viewport',
+      content:
+        'width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover',
+    },
+    {
+      name: 'keywords',
+      content: webSiteInfo.value.keywords,
+    },
+    {
+      name: 'description',
+      content: webSiteInfo.value.description,
+    },
+  ],
+});
 </script>

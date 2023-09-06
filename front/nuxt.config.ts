@@ -9,7 +9,6 @@ export default defineNuxtConfig({
     '@/assets/css/font-awesome.min.css',
     '@/assets/css/index.less',
   ],
-  ssr: false,
   vite: {
     css: {
       postcss: {

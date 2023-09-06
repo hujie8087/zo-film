@@ -116,7 +116,9 @@ const { data: coverDetail } = useFetch('/api/products/coverDetail', {
     id: route.params.id,
   },
 });
-
+useHead({
+  title: coverDetail.value?.data.goods_name,
+});
 const dialogVisible = ref(false);
 const dialogTitle = ref('');
 const dialogVideo = ref('');

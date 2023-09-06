@@ -46,11 +46,13 @@
 const { data: MenuList } = useFetch('/api/news/newsMenu');
 const { data: newsData } = await useFetch(`/api/news/news?classify_id=16`);
 const route = useRoute();
-console.log(route.params.id);
 
 const { data: newsDetail } = useFetch(
   `/api/news/newsDetail?id=${route.params.id}`
 );
+useHead({
+  title: newsDetail.value?.news_title,
+});
 </script>
 
 <style scoped lang="less">

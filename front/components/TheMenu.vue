@@ -238,7 +238,6 @@ const { data: productOther } = await useFetch('/api/header');
   position: absolute;
   border-radius: var(--el-popper-border-radius);
   background-color: #fff;
-  margin-left: 100px;
   display: flex;
   .el-row {
     .item {
@@ -294,6 +293,6 @@ const { data: productOther } = await useFetch('/api/header');
   }
 }
 .solution {
-  margin-left: -150px;
+  margin-left: -250px;
 }
 </style>

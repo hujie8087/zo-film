@@ -81,12 +81,13 @@ const helpData = ref();
 const getData = async () => {
   const { data } = await useFetch(`/api/help?classify_id=84`);
   helpData.value = data.value;
-  console.log(helpData.value);
 };
 const { data: helpMenu } = useFetch('/api/helpMenu');
 const activeNames = ref<string[]>([]);
 getData();
-
+useHead({
+  title: helpData.value?.classify_name,
+});
 const handleClickMenu = (url: string) => {
   return window.open(url);
 };

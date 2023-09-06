@@ -74,6 +74,9 @@
 
 <script setup lang="ts">
 const { data: trainData } = useFetch('/api/train');
+useHead({
+  title: trainData.value?.classify_name,
+});
 </script>
 
 <style scoped lang="less">

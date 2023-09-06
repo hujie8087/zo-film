@@ -43,6 +43,9 @@
 import { formateDate } from '@/utils';
 const { data: MenuList } = useFetch('/api/news/newsMenu');
 const { data: newsData } = await useFetch(`/api/news/news?classify_id=16`);
+useHead({
+  title: newsData.value?.classify_name,
+});
 </script>
 
 <style scoped lang="less">

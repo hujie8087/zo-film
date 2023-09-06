@@ -108,6 +108,11 @@
 <script setup lang="ts">
 import { RegionType } from 'types';
 const { data: storeData } = await useFetch('/api/store');
+const siteInfo = useWebSite();
+useHead({
+  title: storeData.value?.classify_name || siteInfo.value.title,
+});
+
 const locations = ref<RegionType[]>([]);
 const cityList = ref<RegionType[]>([]);
 const { data: provinceList } = await useFetch('/api/region', {
