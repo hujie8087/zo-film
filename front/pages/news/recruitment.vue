@@ -16,7 +16,6 @@
         </el-col>
         <el-col :span="16" :offset="2">
           <div class="news-list">
-            <h2>{{ newsData?.classify_name }}</h2>
             <div class="news-list-content">
               <div v-html="newsData?.classify_intro"></div>
             </div>

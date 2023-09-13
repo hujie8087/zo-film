@@ -9,7 +9,7 @@
     <div class="container">
       <h2>{{ solutionData?.sub_name }}</h2>
       <div class="content" v-html="solutionData?.classify_intro"></div>
-      <nuxt-link class="more" to="#"
+      <nuxt-link class="more" to="/solution"
         >请求更多信息 <i class="fa fa-arrow-down"></i
       ></nuxt-link>
       <div class="solution-train">
@@ -94,6 +94,7 @@ const playVideo = (video: VideoType) => {
 
 <style lang="less" scoped>
 .solution {
+  margin: 0 !important;
   h2 {
     text-align: center;
     margin-top: 30px;

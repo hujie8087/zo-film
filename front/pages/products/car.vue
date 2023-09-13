@@ -50,7 +50,7 @@
             :key="item._id"
           >
             <img :src="'../' + item.classify_img" alt="" srcset="" />
-            <h3>{{ item.title }}</h3>
+            <h3>{{ item.classify_name }}</h3>
           </el-col>
         </el-row>
       </div>
@@ -188,11 +188,11 @@ useHead({
   }
   .more {
     display: block;
-    text-align: center;
+    text-indent: 9px;
     margin: 30px 0;
     width: 180px;
     color: #323232;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     height: 60px;
     line-height: 60px;

@@ -5,7 +5,9 @@
       <el-row type="flex">
         <el-col :span="8">
           <div class="logo">
-            <img :src="homeData?.picture?.classify_img" alt="" srcset="" />
+            <nuxt-link to="/">
+              <img :src="homeData?.picture?.classify_img" alt="" srcset="" />
+            </nuxt-link>
           </div>
         </el-col>
         <el-col :span="16">
@@ -105,7 +107,9 @@
           </div>
         </swiper-slide>
       </swiper>
-      <nuxt-link to="" class="more-btn">查看更多视频</nuxt-link>
+      <nuxt-link to="/" class="more-btn" style="margin-top: 30px"
+        >查看更多视频</nuxt-link
+      >
     </div>
   </div>
   <div class="home-section5">
@@ -144,7 +148,6 @@ const playVideo = (video: VideoType) => {
   dialogVisible.value = true;
 };
 useHead({
-  title: '首页',
   meta: [
     { name: 'description', content: siteInfo.value.description },
     { name: 'keywords', content: siteInfo.value.keywords },

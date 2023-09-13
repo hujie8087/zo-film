@@ -68,10 +68,39 @@ const validate_email = (rule: any, value: any, callback: any) => {
     callback();
   }
 };
+const validate_qq = (rule: any, value: any, callback: any) => {
+  var emailRegExp = /^[1-9][0-9]{4,10}$/g;
+  if (!emailRegExp.test(value) && value != '') {
+    callback(new Error('请输入有效的QQ号码！'));
+  } else {
+    callback();
+  }
+};
+const validate_tel = (rule: any, value: any, callback: any) => {
+  var emailRegExp = /^1[3456789]\d{9}$/;
+  if (!emailRegExp.test(value) && value != '') {
+    callback(new Error('请输入有效的手机号码！'));
+  } else {
+    callback();
+  }
+};
+
 const rules = reactive({
   theme: [{ required: true, message: '请输入主题', trigger: 'blur' }],
-  tel: [{ required: true, message: '请输入联系电话', trigger: 'blur' }],
-  qq: [{ required: true, message: '请输入QQ号', trigger: 'blur' }],
+  tel: [
+    {
+      validator: validate_tel,
+      trigger: 'blur',
+    },
+    { required: true, message: '请输入联系电话', trigger: 'blur' },
+  ],
+  qq: [
+    {
+      validator: validate_qq,
+      trigger: 'blur',
+    },
+    { required: true, message: '请输入QQ号', trigger: 'blur' },
+  ],
   e_mail: [
     { validator: validate_email, trigger: ['blur'] },
     { required: true, message: '请输入邮箱地址', trigger: 'blur' },

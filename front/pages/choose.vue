@@ -90,6 +90,7 @@
       </el-dialog>
     </client-only>
   </div>
+  <el-divider style="margin-bottom: 50px"></el-divider>
   <div class="choose-approval">
     <div class="container">
       <h2 class="title">{{ chooseData?.children[1].classify_name }}</h2>

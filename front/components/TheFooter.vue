@@ -51,7 +51,7 @@
           </el-row>
         </div>
         <div class="footer-main-social">
-          <ul style="display: flex; float: right; padding-right: 50px">
+          <ul style="display: flex; float: right;>
             <li v-for="link in footData?.links" :key="link._id">
               <a
                 :href="link.classify_url || 'javascript:;'"
@@ -212,10 +212,10 @@ footLink.value = footLinks.value!;
       }
     }
     .footer-main-social ul {
-      text-align: center;
+      text-align: right;
       li {
         display: inline-block;
-        margin-right: 20px;
+        margin-left: 20px;
         &:last-of-type {
           margin-right: 0;
         }

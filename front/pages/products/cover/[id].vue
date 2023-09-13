@@ -131,7 +131,7 @@ const playVideo = (video: GoodVideo) => {
 
 <style lang="less" scoped>
 .cover-detail {
-  padding: 60px 0;
+  padding: 60px 0 0;
   h1 {
     font-size: 36px;
     font-weight: 600;
@@ -142,6 +142,7 @@ const playVideo = (video: GoodVideo) => {
     font-size: 16px;
     line-height: 1.8;
     color: #1c1b1b;
+    margin-bottom: 30px;
   }
   .store-btn {
     padding: 20px 24px;

@@ -72,7 +72,7 @@ useHead({
 
 <style scoped lang="less">
 .cover {
-  padding: 80px 0;
+  padding: 80px 0 0;
   .cover-video {
     margin-bottom: 60px;
     padding: 0 100px;
@@ -82,7 +82,7 @@ useHead({
     }
   }
   .cover-list {
-    padding: 50px 0;
+    padding: 50px 0 0;
     h3 {
       text-align: center;
       font-size: 32px;

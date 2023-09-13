@@ -138,7 +138,7 @@ const playVideo = (video: VideoType) => {
 <style scoped lang="less">
 .installer {
   .shop-list {
-    padding: 50px 0;
+    padding: 70px 0 30px;
     h2,
     h1 {
       font-size: 30px;

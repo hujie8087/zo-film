@@ -142,7 +142,7 @@ watch(
   }
 }
 .list-info-nav {
-  padding: 0 13px;
+  padding-right: 26px;
   .el-menu-item {
     display: flex;
     justify-content: space-between;
