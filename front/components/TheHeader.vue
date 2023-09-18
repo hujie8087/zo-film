@@ -3,7 +3,7 @@
     <div class="container">
       <div class="header__logo">
         <nuxt-link to="/">
-          <img src="~/assets/logo.png" alt="logo" />
+          <img :src="siteInfo.logo_img" alt="logo" />
         </nuxt-link>
       </div>
       <div class="header__menu">
@@ -13,7 +13,9 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const siteInfo = useWebSite();
+</script>
 
 <style scoped lang="less">
 .header {

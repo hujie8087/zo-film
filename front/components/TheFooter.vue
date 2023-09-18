@@ -51,7 +51,7 @@
           </el-row>
         </div>
         <div class="footer-main-social">
-          <ul style="display: flex; float: right;>
+          <ul style="display: flex; float: right">
             <li v-for="link in footData?.links" :key="link._id">
               <a
                 :href="link.classify_url || 'javascript:;'"
