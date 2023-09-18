@@ -1,3 +1,4 @@
+import { VideoDown } from '@libs/db/models/video_down.model';
 import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { HomeDataService } from './home-data.service';
@@ -34,5 +35,9 @@ export class HomeDataController {
   @Get('head-other')
   getHeadOther() {
     return this.homeDataService.getHeaderOther();
+  }
+  @Get('home-video')
+  getHomeVideo(){
+    return this.homeDataService.getHomeVideo()
   }
 }

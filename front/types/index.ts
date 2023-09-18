@@ -390,3 +390,9 @@ export interface ResHeadProduct {
   carList: ClassifyType[];
   solutionList: ClassifyTreeType<ClassifyType>[];
 }
+
+export interface ResHomeVideo {
+  data: ClassifyType;
+  videoList: VideoUploadType[];
+  children: ClassifyTreeType<VideoUploadType>[];
+}
