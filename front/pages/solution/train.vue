@@ -90,7 +90,7 @@ useHead({
       font-weight: bold;
     }
     .train-left {
-      padding: 0 15px;
+      padding-right: 15px;
       h1 {
         margin: 0 0 40px;
       }
@@ -98,6 +98,9 @@ useHead({
     .train-content {
       font-size: 16px;
       margin-bottom: 20px;
+      p {
+        margin: 0;
+      }
     }
     .train-right {
       background-color: #f5af05;

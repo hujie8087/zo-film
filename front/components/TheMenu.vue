@@ -64,7 +64,7 @@
                         </nuxt-link>
                       </li>
                     </template>
-                    <template v-if="child.classify_id === '101'">
+                    <template v-else-if="child.classify_id === '101'">
                       <li
                         v-for="son in productOther?.carList"
                         :key="son.classify_id"

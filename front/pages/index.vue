@@ -5,7 +5,13 @@
       <el-row type="flex">
         <el-col :span="8">
           <div class="logo">
-            <nuxt-link to="/">
+            <nuxt-link
+              :to="
+                homeData?.picture.classify_url
+                  ? homeData?.picture.classify_url
+                  : '/'
+              "
+            >
               <img :src="homeData?.picture?.classify_img" alt="" srcset="" />
             </nuxt-link>
           </div>

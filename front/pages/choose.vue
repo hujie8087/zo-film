@@ -260,7 +260,7 @@ useHead({
   }
 }
 .choose-approval {
-  padding: 60px 0;
+  padding: 60px 0 30px;
   text-align: center;
   .title {
     font-size: 36px;
@@ -281,6 +281,8 @@ useHead({
     .item {
       width: 100%;
       margin-bottom: 40px;
+      padding-bottom: 40px;
+      border-bottom: 2px solid #ebebeb;
       .approval-image {
         width: 200px;
         height: 200px;
