@@ -230,23 +230,29 @@ export class HomeDataService {
       solutionList,
     };
   }
-  async getHomeVideo(){
-    const data = await this.classifyModel.findOne({'classify_id':'70'});
-    const videoList = this.videoUploadModel.find({'pid':'70','is_delete':false})
-    const child = await this.classifyModel.find({'classify_pid':'70'});
+  async getHomeVideo() {
+    const data = await this.classifyModel.findOne({ classify_id: '70' });
+    const videoList = await this.videoUploadModel.find({
+      pid: '70',
+      is_delete: false,
+    });
+    const child = await this.classifyModel.find({ classify_pid: '70' });
     const children = await Promise.all(
-      child.map(async (item)=>{
-        const list = await this.videoUploadModel.find({'pid':item.classify_id,'is_delete':false})
+      child.map(async (item) => {
+        const list = await this.videoUploadModel.find({
+          pid: item.classify_id,
+          is_delete: false,
+        });
         return {
           ...item._doc,
-          children:list,
+          children: list,
         };
-      })
-    )
-    return{
+      }),
+    );
+    return {
       data,
       videoList,
-      children
-    }
+      children,
+    };
   }
 }

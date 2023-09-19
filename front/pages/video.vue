@@ -31,6 +31,7 @@
                   <i class="fa fa-play-circle-o"></i>
                 </div>
                 <h5 class="title">{{ video.name }}</h5>
+                <div class="subtitle">{{ video.intro }}</div>
               </div>
             </swiper-slide>
           </swiper></el-col
@@ -45,7 +46,7 @@
         v-for="item in videoData?.children"
         :key="item.classify_id"
       >
-        <h3>{{ item.classify_name }}</h3>
+        <h3 class="video-title">{{ item.classify_name }}</h3>
         <el-row type="flex">
           <el-col :span="20" :offset="2">
             <swiper
@@ -67,6 +68,7 @@
                     <i class="fa fa-play-circle-o"></i>
                   </div>
                   <h5 class="title">{{ video.name }}</h5>
+                  <div class="subtitle">{{ video.intro }}</div>
                 </div>
               </swiper-slide>
             </swiper></el-col
@@ -116,40 +118,48 @@ const playVideo = (video: VideoUploadType) => {
 }
 .video-wrap {
   text-align: center;
-  margin: 50px 0;
+  margin-bottom: 50px;
   padding: 40px;
   background-color: #1c1b1b;
   .item {
-    text-align: left;
-    cursor: pointer;
-    .link {
-      position: relative;
-      img {
-        width: 100%;
-        height: auto;
-      }
-      i {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 50px;
-        color: #f5af05;
-        z-index: 9;
-      }
-    }
     .title {
-      font-size: 20px;
-      font-weight: 600;
-      margin-top: 25px;
       color: #ffffff;
     }
-    .content {
-      font-size: 16px;
-      margin-top: 10px;
+  }
+}
+.item {
+  text-align: left;
+  cursor: pointer;
+  .link {
+    position: relative;
+    img {
+      width: 100%;
+      height: auto;
+    }
+    i {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 50px;
       color: #f5af05;
+      z-index: 9;
     }
   }
+  .title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 25px;
+    color: #333;
+  }
+  .subtitle {
+    font-size: 16px;
+    margin-top: 10px;
+    color: #f5af05;
+  }
+}
+.video-list {
+  margin-bottom: 50px;
 }
 :deep(.el-dialog__body) {
   padding: 0 20px 20px;

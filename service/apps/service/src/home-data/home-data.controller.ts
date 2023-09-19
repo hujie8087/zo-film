@@ -37,7 +37,7 @@ export class HomeDataController {
     return this.homeDataService.getHeaderOther();
   }
   @Get('home-video')
-  getHomeVideo(){
-    return this.homeDataService.getHomeVideo()
+  getHomeVideo() {
+    return this.homeDataService.getHomeVideo();
   }
 }

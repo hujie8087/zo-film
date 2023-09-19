@@ -107,7 +107,7 @@
           </div>
         </swiper-slide>
       </swiper>
-      <nuxt-link to="/" class="more-btn" style="margin-top: 30px"
+      <nuxt-link to="/video" class="more-btn" style="margin-top: 30px"
         >查看更多视频</nuxt-link
       >
     </div>
