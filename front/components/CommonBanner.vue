@@ -1,9 +1,13 @@
 <template>
-  <div class="common-banner">
+  <div
+    class="common-banner"
+    :style="{
+      backgroundImage: `url(${img})`,
+    }"
+  >
     <div class="mark" v-if="title">
       <h1>{{ title }}</h1>
     </div>
-    <img :src="img" alt="" srcset="" />
     <div class="container">
       <BreadCrumbsItem v-if="breadTo" :to="breadTo" :text="breadText" />
     </div>
@@ -34,12 +38,10 @@ const { title, img } = defineProps({
 <style scoped lang="less">
 .common-banner {
   width: 100%;
-  height: auto;
+  height: 425px;
   position: relative;
-  img {
-    width: 100%;
-    height: auto;
-  }
+  background-size: cover;
+  background-position: center;
   .mark {
     background-color: rgba(0, 0, 0, 0.35);
     position: absolute;
