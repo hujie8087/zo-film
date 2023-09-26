@@ -3,7 +3,7 @@
     <div class="container">
       <div class="header__logo">
         <nuxt-link to="/">
-          <img v-lazy="siteInfo.logo_img" alt="logo" />
+          <el-image :src="siteInfo.logo_img" alt="logo" lazy />
         </nuxt-link>
       </div>
       <div class="header__menu">

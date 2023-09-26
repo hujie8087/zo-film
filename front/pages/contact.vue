@@ -5,10 +5,10 @@
         <BreadCrumbsItem to="/contact" :text="contactData?.classify_name" />
       </div>
       <div class="contact-content">
-        <img
-          v-lazy="contactData?.classify_img"
+        <el-image
+          :src="contactData?.classify_img"
           :alt="contactData?.classify_name"
-          srcset=""
+          lazy
         />
         <div v-html="contactData?.classify_intro"></div>
       </div>
