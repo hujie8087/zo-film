@@ -49,7 +49,7 @@
             <div class="train-install">
               <h1>{{ trainData?.children[1].classify_name }}</h1>
               <img
-                :src="`../${trainData?.children[1].classify_img}`"
+                v-lazy="`../${trainData?.children[1].classify_img}`"
                 alt=""
                 srcset=""
               />
@@ -64,7 +64,7 @@
             :span="8"
             v-for="(item, index) in trainData?.children[0].children"
           >
-            <img :src="`../${item.upload_img}`" />
+            <img v-lazy="`../${item.upload_img}`" />
           </el-col>
         </el-row>
       </div>

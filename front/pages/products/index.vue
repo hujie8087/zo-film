@@ -16,7 +16,7 @@
           <nuxt-link :to="product.classify_url">
             <div class="item">
               <div class="images">
-                <img :src="product.page_img" alt="" srcset="" />
+                <img v-lazy="product.page_img" alt="" srcset="" />
               </div>
               <h4>
                 {{ product.classify_name }} <i class="fa fa-arrow-right"></i>

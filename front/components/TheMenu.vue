@@ -24,10 +24,7 @@
               <div class="coverage">
                 <nuxt-link :to="productOther?.other.classify_url">
                   <img
-                    :src="
-                      'https://www.zo-film.com/' +
-                      productOther?.other.classify_img
-                    "
+                    v-lazy="productOther?.other.classify_img"
                     alt=""
                     srcset=""
                   />

@@ -48,7 +48,7 @@
         <h2>{{ getDate('52')?.classify_name }}</h2>
         <el-row type="flex" :gutter="50">
           <el-col :span="8">
-            <img :src="getDate('52')?.classify_img" alt="" srcset="" />
+            <img v-lazy="getDate('52')?.classify_img" alt="" srcset="" />
             <h3>{{ getDate('52')?.classify_name }}</h3>
             <p>{{ getDate('52')?.sub_name }}</p>
           </el-col>
@@ -70,7 +70,7 @@
             :key="item._id"
           >
             <div class="item">
-              <img :src="item.img" alt="" srcset="" />
+              <img v-lazy="item.img" alt="" srcset="" />
               <h4>{{ item.name }}</h4>
               <div v-html="item.content"></div>
             </div>
@@ -85,7 +85,7 @@
         <h2>{{ getDate('54')?.classify_name }}</h2>
         <el-row type="flex" :gutter="50">
           <el-col :span="8">
-            <img :src="getDate('54')?.classify_img" alt="" srcset="" />
+            <img v-lazy="getDate('54')?.classify_img" alt="" srcset="" />
             <h3>{{ getDate('54')?.classify_name }}</h3>
             <p>{{ getDate('54')?.en_name }}</p>
           </el-col>
@@ -107,7 +107,7 @@
             :key="item._id"
           >
             <div class="item">
-              <img :src="item.img" alt="" srcset="" />
+              <img v-lazy="item.img" alt="" srcset="" />
               <h4>{{ item.name }}</h4>
               <div v-html="item.content"></div>
             </div>

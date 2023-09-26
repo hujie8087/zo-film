@@ -29,7 +29,7 @@
             <el-col :span="10" style="padding: 0 15px">
               <img
                 class="supply-image"
-                :src="supply.img"
+                v-lazy="supply.img"
                 :alt="supply.name"
                 srcset=""
               />
@@ -75,7 +75,7 @@
         >
           <div class="item">
             <div class="link" @click="playVideo(video)">
-              <img :src="video.img" :alt="video.name" srcset="" />
+              <img v-lazy="video.img" :alt="video.name" srcset="" />
               <i class="fa fa-play-circle-o"></i>
             </div>
             <h5 class="item-title">{{ video.name }}</h5>
@@ -106,7 +106,7 @@
           :key="approval._id"
         >
           <div class="approval-image">
-            <img :src="approval.img" :alt="approval.name" srcset="" />
+            <img v-lazy="approval.img" :alt="approval.name" srcset="" />
           </div>
           <h4>
             <i class="fa fa-quote-left"></i>

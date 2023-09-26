@@ -27,7 +27,7 @@
             <el-col :span="10">
               <div class="cover-image">
                 <nuxt-link :to="`/products/cover/${cover.goods_id}`">
-                  <img :src="`../${cover?.goods_img}`" alt="" srcset="" />
+                  <img v-lazy="`../${cover?.goods_img}`" alt="" srcset="" />
                 </nuxt-link>
               </div>
             </el-col>

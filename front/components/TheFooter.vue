@@ -126,7 +126,7 @@
         :close-on-click-modal="false"
       >
         <div style="text-align: center">
-          <img :src="weixinUrl" alt="" style="width: 200px; height: 200px" />
+          <img v-lazy="weixinUrl" alt="" style="width: 200px; height: 200px" />
         </div> </el-dialog
     ></client-only>
   </div>

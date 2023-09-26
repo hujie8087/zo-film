@@ -64,7 +64,7 @@
             {{ detailData?.children[2].classify_name }}
             <i class="fa fa-arrow-right"></i>
           </nuxt-link>
-          <img :src="'../../' + detailData?.page_img" alt="" srcset="" />
+          <img v-lazy="'../../' + detailData?.page_img" alt="" srcset="" />
         </el-col>
       </el-row>
     </div>

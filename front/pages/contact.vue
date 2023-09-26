@@ -6,7 +6,7 @@
       </div>
       <div class="contact-content">
         <img
-          :src="contactData?.classify_img"
+          v-lazy="contactData?.classify_img"
           :alt="contactData?.classify_name"
           srcset=""
         />

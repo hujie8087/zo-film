@@ -14,7 +14,7 @@
         <el-col :span="10">
           <div class="car-video">
             <video
-              :src="'../' + carData?.children[0].classify_img"
+              v-lazy="'../' + carData?.children[0].classify_img"
               controls
               muted
             ></video>
@@ -34,7 +34,7 @@
             :key="item._id"
             class="item"
           >
-            <img :src="'../' + item.classify_img" alt="" srcset="" />
+            <img v-lazy="'../' + item.classify_img" alt="" srcset="" />
             <h3>{{ item.classify_name }}</h3>
           </el-col>
         </el-row>
@@ -49,7 +49,7 @@
             v-for="item in carData?.children[1].children"
             :key="item._id"
           >
-            <img :src="'../' + item.classify_img" alt="" srcset="" />
+            <img v-lazy="'../' + item.classify_img" alt="" srcset="" />
             <h3>{{ item.classify_name }}</h3>
           </el-col>
         </el-row>
@@ -58,7 +58,7 @@
     <div class="car-list" v-for="item in carData?.children[2].children">
       <div class="container" :id="'more' + item.classify_id">
         <div class="car-item">
-          <img :src="'../' + item.page_img" alt="" srcset="" />
+          <img v-lazy="'../' + item.page_img" alt="" srcset="" />
           <div class="car-content">
             <h2>{{ item.classify_name }}</h2>
 
@@ -67,7 +67,7 @@
             </nuxt-link>
             <el-row type="flex">
               <el-col :span="12">
-                <img :src="'../' + item.upload_img" alt="" srcset="" />
+                <img v-lazy="'../' + item.upload_img" alt="" srcset="" />
               </el-col>
               <el-col :span="12">
                 <div

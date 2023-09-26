@@ -54,7 +54,7 @@
             :key="item._id"
             class="item"
           >
-            <img :src="'../../' + item.imgs" alt="" srcset="" />
+            <img v-lazy="'../../' + item.imgs" alt="" srcset="" />
             <h3>{{ item.name }}</h3>
             <div class="content">{{ item.intro }}</div>
           </el-col>
@@ -81,7 +81,7 @@
                 <div class="item">
                   <div class="link" @click="playVideo(video)">
                     <img
-                      :src="'../../' + video.img"
+                      v-lazy="'../../' + video.img"
                       :alt="video.name"
                       srcset=""
                     />

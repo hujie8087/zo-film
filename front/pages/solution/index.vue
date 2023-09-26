@@ -21,7 +21,11 @@
           >
             <div class="item">
               <nuxt-link :to="item.classify_url">
-                <img :src="item.page_img" :alt="item.classify_name" srcset="" />
+                <img
+                  v-lazy="item.page_img"
+                  :alt="item.classify_name"
+                  srcset=""
+                />
                 <h4>
                   {{ item.classify_name }}<i class="fa fa-arrow-right"></i>
                 </h4>
@@ -50,7 +54,7 @@
               >
                 <div class="item">
                   <div class="link" @click="playVideo(video)">
-                    <img :src="video.img" :alt="video.goods_name" srcset="" />
+                    <img v-lazy="video.img" :alt="video.goods_name" srcset="" />
                     <i class="fa fa-play-circle-o"></i>
                   </div>
                   <h5 class="title">{{ video.name }}</h5>

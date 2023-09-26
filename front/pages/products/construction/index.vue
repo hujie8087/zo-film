@@ -18,7 +18,7 @@
             <el-col :span="10">
               <nuxt-link :to="`/products/construction/${item.classify_id}`">
                 <img
-                  :src="'../' + item.classify_img"
+                  v-lazy="'../' + item.classify_img"
                   :alt="item.classify_name"
                   srcset=""
                 />

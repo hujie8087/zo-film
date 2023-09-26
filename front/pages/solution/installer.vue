@@ -42,7 +42,7 @@
             <div class="train-install">
               <h1>{{ installerData?.children[2].classify_name }}</h1>
               <img
-                :src="'../' + installerData?.children[2].classify_img"
+                v-lazy="'../' + installerData?.children[2].classify_img"
                 alt=""
                 srcset=""
               />
@@ -65,7 +65,7 @@
             :key="item._id"
           >
             <div class="item">
-              <img :src="'../' + item.img" alt="" srcset="" />
+              <img v-lazy="'../' + item.img" alt="" srcset="" />
               <div class="content">
                 <h3>{{ item.name }}</h3>
                 <p v-html="item.content"></p>
@@ -94,7 +94,11 @@
               >
                 <div class="item">
                   <div class="link" @click="playVideo(video)">
-                    <img :src="'../' + video.img" :alt="video.name" srcset="" />
+                    <img
+                      v-lazy="'../' + video.img"
+                      :alt="video.name"
+                      srcset=""
+                    />
                     <i class="fa fa-play-circle-o"></i>
                   </div>
                   <h5 class="title">{{ video.name }}</h5>

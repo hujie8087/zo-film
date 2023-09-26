@@ -18,7 +18,7 @@
           >
             <div class="item">
               <img
-                :src="'../' + mounting.goods_img"
+                v-lazy="'../' + mounting.goods_img"
                 :alt="mounting.goods_name"
                 srcset=""
               />
@@ -40,7 +40,7 @@
             <el-col :span="10">
               <div class="cover-image">
                 <nuxt-link :to="`/products/cover/${cover.goods_id}`">
-                  <img :src="`../${cover?.goods_img}`" alt="" srcset="" />
+                  <img v-lazy="`../${cover?.goods_img}`" alt="" srcset="" />
                 </nuxt-link>
               </div>
             </el-col>

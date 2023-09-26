@@ -10,7 +10,6 @@ async function bootstrap() {
 
   app.use(session({ secret: 'zo-film', rolling: true, name: 'My.sid' }));
   // 开启静态文件托管
-  console.log(join(__dirname, '../../../Uploads'));
 
   app.useStaticAssets(join(__dirname, '../../../Uploads'), {
     prefix: '/uploads',

@@ -24,7 +24,7 @@
               <div class="item">
                 <div class="link" @click="playVideo(video)">
                   <img
-                    :src="'../../' + video.img"
+                    v-lazy="'../../' + video.img"
                     :alt="video.name"
                     srcset=""
                   />
@@ -61,7 +61,7 @@
                 <div class="item">
                   <div class="link" @click="playVideo(video)">
                     <img
-                      :src="'../../' + video.img"
+                      v-lazy="'../../' + video.img"
                       :alt="video.name"
                       srcset=""
                     />

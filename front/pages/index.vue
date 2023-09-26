@@ -12,7 +12,7 @@
                   : '/'
               "
             >
-              <img :src="homeData?.picture?.classify_img" alt="" srcset="" />
+              <img v-lazy="homeData?.picture?.classify_img" alt="" srcset="" />
             </nuxt-link>
           </div>
         </el-col>
@@ -60,7 +60,7 @@
   </div>
   <div class="home-section">
     <div class="home-banner">
-      <img :src="homeData?.picture?.page_img" alt="" srcset="" />
+      <img v-lazy="homeData?.picture?.page_img" alt="" srcset="" />
     </div>
   </div>
   <div class="home-section2">
@@ -74,11 +74,7 @@
           :key="mounting._id"
         >
           <div class="item">
-            <img
-              :src="mounting.goods_img"
-              :alt="mounting.goods_name"
-              srcset=""
-            />
+            <img v-lazy="mounting.goods_img" :alt="mounting.goods_name" />
             <h5>{{ mounting.goods_name }}</h5>
           </div>
         </el-col>
@@ -105,7 +101,7 @@
         >
           <div class="item">
             <div class="link" @click="playVideo(video)">
-              <img :src="video.img" :alt="video.name" srcset="" />
+              <img v-lazy="video.img" :alt="video.name" srcset="" />
               <i class="fa fa-play-circle-o"></i>
             </div>
             <h5 class="title">{{ video.name }}</h5>
