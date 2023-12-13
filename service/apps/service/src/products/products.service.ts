@@ -61,7 +61,7 @@ export class ProductsService {
   }
   async findGoodDetail(id: string) {
     const data = await this.goodModel.findOne({
-      goods_classify_id: id,
+      goods_id: id,
       is_delete: false,
     });
     const imgList = await this.goodsImgModel.find({
@@ -69,9 +69,11 @@ export class ProductsService {
       is_delete: false,
     });
     const videoList = await this.goodsVideoModel.find({
-      goods_id:data.goods_id,
+      goods_id: data.goods_id,
       is_delete: false,
     });
+    console.log(data);
+
     return {
       data,
       imgList,

@@ -34,6 +34,7 @@ export default defineNuxtConfig({
       proxy: {
         '/Uploads': {
           target: 'http://127.0.0.1:3100',
+          // target: 'http://119.28.7.148:3100',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/Uploads/, '/Uploads'),
         },

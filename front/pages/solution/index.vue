@@ -9,7 +9,7 @@
     <div class="container">
       <h2>{{ solutionData?.sub_name }}</h2>
       <div class="content" v-html="solutionData?.classify_intro"></div>
-      <nuxt-link class="more" to="/solution"
+      <nuxt-link class="more" to="/solution" @click="scrollTop"
         >请求更多信息 <i class="fa fa-arrow-down"></i
       ></nuxt-link>
       <div class="solution-train">
@@ -93,6 +93,12 @@ const playVideo = (video: VideoType) => {
   dialogTitle.value = video.name;
   dialogVideo.value = video.upload_video;
   dialogVisible.value = true;
+};
+const scrollTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
 };
 </script>
 

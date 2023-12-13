@@ -245,6 +245,7 @@ footLink.value = footLinks.value!;
     color: #949494;
     .footer-legal-copyright {
       float: right;
+      margin-right: 36px;
       p {
         float: right;
         margin: 5px;

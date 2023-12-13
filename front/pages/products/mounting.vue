@@ -49,9 +49,7 @@
                 <h2>{{ cover.goods_name }}</h2></nuxt-link
               >
               <h4>{{ cover.erji_title }}</h4>
-              <div class="cover-content">
-                {{ cover.goods_intro }}
-              </div>
+              <div class="cover-content" v-html="cover.goods_intro"></div>
               <div class="cover-link">
                 <nuxt-link to="/store" class="store-btn btn">
                   <i class="fa fa-map-marker"></i> 挑选专业门店

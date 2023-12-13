@@ -158,7 +158,11 @@ const link = useLinks();
 link.value = links.value!;
 const { data: productOther } = await useFetch('/api/header');
 </script>
-
+<style>
+.el-menu.el-menu--popup {
+  min-width: 320px !important;
+}
+</style>
 <style scoped lang="less">
 .menu {
   height: 98px;
